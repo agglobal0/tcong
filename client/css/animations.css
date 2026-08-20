@@ -1,0 +1,137 @@
+/* =====================================================
+   Scroll Reveal & Scroll-Driven Animations System
+   ===================================================== */
+
+/* Base state for revealable elements - fast fade, subtle offset, visible fallback */
+.reveal,
+[data-reveal] {
+  opacity: 0;
+  visibility: visible;
+  will-change: opacity, transform;
+  transition: opacity var(--reveal-duration, 0.18s) cubic-bezier(0.16, 1, 0.3, 1),
+              transform var(--reveal-duration, 0.18s) cubic-bezier(0.16, 1, 0.3, 1);
+  transition-delay: var(--reveal-delay, 0s);
+}
+
+/* Revealed active state */
+.reveal.is-revealed,
+[data-reveal].is-revealed {
+  opacity: 1 !important;
+  visibility: visible !important;
+  transform: translate3d(0, 0, 0) scale(1) rotate(0deg) !important;
+  filter: blur(0px) !important;
+}
+
+/* Direction Variants - Fast, Subtle Offsets */
+.reveal,
+.reveal-up,
+[data-reveal="fade-up"] {
+  transform: translate3d(0, 10px, 0);
+}
+
+.reveal-down,
+[data-reveal="fade-down"] {
+  transform: translate3d(0, -10px, 0);
+}
+
+.reveal-left,
+[data-reveal="fade-left"] {
+  transform: translate3d(-12px, 0, 0);
+}
+
+.reveal-right,
+[data-reveal="fade-right"] {
+  transform: translate3d(-18px, 0, 0);
+}
+
+.reveal-zoom,
+[data-reveal="zoom-in"] {
+  transform: scale(0.97);
+}
+
+.reveal-zoom-out,
+[data-reveal="zoom-out"] {
+  transform: scale(1.03);
+}
+
+.reveal-blur,
+[data-reveal="blur"] {
+  filter: blur(2px);
+  transform: scale(0.98);
+}
+
+.reveal-flip,
+[data-reveal="flip-up"] {
+  transform: perspective(1000px) rotateX(8deg) translate3d(0, 10px, 0);
+}
+
+/* Delay Helpers - Fast Delays */
+.delay-100 { transition-delay: 20ms !important; }
+.delay-150 { transition-delay: 30ms !important; }
+.delay-200 { transition-delay: 40ms !important; }
+.delay-250 { transition-delay: 50ms !important; }
+.delay-300 { transition-delay: 60ms !important; }
+.delay-400 { transition-delay: 80ms !important; }
+.delay-500 { transition-delay: 100ms !important; }
+.delay-600 { transition-delay: 120ms !important; }
+.delay-700 { transition-delay: 140ms !important; }
+.delay-800 { transition-delay: 160ms !important; }
+.delay-900 { transition-delay: 180ms !important; }
+.delay-1000 { transition-delay: 200ms !important; }
+
+/* Word-by-Word & One-by-One Text Sequence Animation */
+.word-reveal {
+  display: inline-block;
+  opacity: 0;
+  transform: translateY(6px);
+  will-change: opacity, transform;
+  transition: opacity 0.15s cubic-bezier(0.16, 1, 0.3, 1),
+              transform 0.15s cubic-bezier(0.16, 1, 0.3, 1);
+  transition-delay: var(--word-delay, 0ms);
+}
+
+.is-revealed .word-reveal,
+.word-reveal.is-revealed {
+  opacity: 1 !important;
+  transform: translateY(0) scale(1) !important;
+  filter: blur(0px) !important;
+}
+
+/* Image reveal overlay / zoom-in animation effect */
+.img-reveal-wrapper {
+  overflow: hidden;
+  position: relative;
+}
+
+.img-reveal-wrapper img {
+  transform: scale(1.02);
+  transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.18s ease;
+  opacity: 0.95;
+}
+
+.img-reveal-wrapper.is-revealed img,
+.is-revealed .img-reveal-wrapper img {
+  transform: scale(1);
+  opacity: 1;
+}
+
+/* Accessibility: Fallback if JS disabled or prefers-reduced-motion */
+@media (prefers-reduced-motion: reduce) {
+  .reveal,
+  .reveal-up,
+  .reveal-down,
+  .reveal-left,
+  .reveal-right,
+  .reveal-zoom,
+  .reveal-blur,
+  .reveal-flip,
+  .word-reveal,
+  [data-reveal] {
+    opacity: 1 !important;
+    visibility: visible !important;
+    transform: none !important;
+    filter: none !important;
+    transition: none !important;
+  }
+}
+

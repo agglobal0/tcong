@@ -1,0 +1,172 @@
+/* Responsive breakpoint overrides */
+
+/* Extra large screens */
+@media (min-width: 1400px) {
+  .container-custom {
+    max-width: 1320px;
+  }
+  .hero-title {
+    font-size: 5rem;
+  }
+}
+
+/* Large screens */
+@media (max-width: 1200px) {
+  :root {
+    --header-height: 72px;
+  }
+}
+
+/* Tablet */
+@media (max-width: 992px) {
+  .hero {
+    min-height: 75vh;
+  }
+  .hero-title {
+    font-size: var(--text-4xl);
+  }
+  .hero-description {
+    font-size: var(--text-lg);
+  }
+
+  .grid-3,
+  .grid-4 {
+    grid-template-columns: repeat(2, 1fr) !important;
+    gap: var(--space-6) !important;
+  }
+}
+
+/* Small tablet / Large phone */
+@media (max-width: 768px) {
+  :root {
+    --header-height: 64px;
+    --space-20: 3.5rem;
+  }
+
+  .container-custom {
+    padding: 0 var(--space-4);
+  }
+
+  .hero {
+    min-height: 70vh;
+    padding: var(--space-12) 0;
+  }
+  .hero-title {
+    font-size: var(--text-3xl);
+  }
+  .hero-description {
+    font-size: var(--text-base);
+  }
+  .hero-actions {
+    flex-direction: column;
+    width: 100%;
+    gap: var(--space-3);
+  }
+  .hero-actions .btn {
+    width: 100%;
+    justify-content: center;
+  }
+
+  .grid-2,
+  .grid-3,
+  .grid-4 {
+    grid-template-columns: 1fr !important;
+    gap: var(--space-5) !important;
+  }
+
+  .section {
+    padding: var(--space-12) 0;
+  }
+
+  .footer-grid {
+    grid-template-columns: 1fr;
+    gap: var(--space-6);
+  }
+  .footer-about {
+    max-width: 100%;
+  }
+  .footer-bottom-inner {
+    flex-direction: column;
+    text-align: center;
+    gap: var(--space-3);
+  }
+
+  .prayer-form-wrapper {
+    padding: var(--space-5);
+  }
+
+  .page-header {
+    padding: var(--space-12) var(--space-4) var(--space-6);
+  }
+  .page-header-title {
+    font-size: var(--text-3xl);
+  }
+
+  /* Admin Table Responsive Wrapper */
+  .table-responsive {
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    width: 100%;
+  }
+
+  /* Modal scaling on mobile */
+  .modal-content {
+    margin: var(--space-3);
+    max-height: 85vh;
+  }
+}
+
+/* Small Mobile Phones */
+@media (max-width: 480px) {
+  .container-custom {
+    padding: 0 var(--space-3);
+  }
+
+  .hero-title {
+    font-size: var(--text-2xl);
+  }
+  .section-title {
+    font-size: var(--text-xl);
+  }
+  .donation-amounts {
+    grid-template-columns: repeat(2, 1fr);
+    gap: var(--space-2);
+  }
+  .bible-verse-text {
+    font-size: var(--text-base);
+  }
+  .cta-banner {
+    padding: var(--space-6) var(--space-4);
+  }
+  .cta-banner-title {
+    font-size: var(--text-xl);
+  }
+
+  .btn-lg {
+    padding: var(--space-3) var(--space-6);
+    font-size: var(--text-sm);
+  }
+}
+
+/* Print styles */
+@media print {
+  .site-header,
+  .site-footer,
+  .hero-scroll,
+  .mobile-menu,
+  .hamburger,
+  .btn,
+  .newsletter-section,
+  .cta-banner {
+    display: none !important;
+  }
+  .main-content {
+    padding-top: 0 !important;
+  }
+  body {
+    font-size: 12pt;
+    color: #000;
+    background: #fff;
+  }
+}
+

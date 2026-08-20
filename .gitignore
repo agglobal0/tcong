@@ -1,0 +1,65 @@
+# ==========================================
+# Dependencies
+# ==========================================
+node_modules/
+**/node_modules/
+.pnpm-store/
+.yarn/
+
+# ==========================================
+# Environment Variables & Secrets
+# ==========================================
+.env
+.env.*
+!.env.example
+*.env
+
+# ==========================================
+# Build & Distribution Outputs
+# ==========================================
+dist/
+**/dist/
+build/
+**/build/
+out/
+*.tsbuildinfo
+*.timestamp-*.mjs
+vite.config.js.timestamp*
+
+# ==========================================
+# User Uploads & Media Files
+# ==========================================
+uploads/*
+!uploads/.gitkeep
+server/uploads/*
+!server/uploads/.gitkeep
+
+# ==========================================
+# Logs & Caches
+# ==========================================
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+.eslintcache
+.cache/
+
+# ==========================================
+# OS & System Files
+# ==========================================
+.DS_Store
+.DS_Store?
+._*
+Thumbs.db
+ehthumbs.db
+
+# ==========================================
+# IDE & Code Editors
+# ==========================================
+.vscode/*
+!.vscode/extensions.json
+.idea/
+*.swp
+*.swo
+
