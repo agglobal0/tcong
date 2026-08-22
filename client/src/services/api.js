@@ -2,7 +2,7 @@
  * Centralized API Service for TCONG React Application
  */
 
-const API_BASE = import.meta.env.VITE_API_URL || '/api';
+const API_BASE = import.meta.env.VITE_API_URL || 'https://tcong.onrender.com/api';
 
 export const api = {
   async request(endpoint, options = {}) {
