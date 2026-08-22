@@ -7,8 +7,10 @@ const API_BASE = import.meta.env.VITE_API_URL || '/api';
 export const api = {
   async request(endpoint, options = {}) {
     const url = `${API_BASE}${endpoint}`;
+    const token = typeof window !== 'undefined' ? localStorage.getItem('token') : null;
     const headers = {
       ...(!options.body || !(options.body instanceof FormData) ? { 'Content-Type': 'application/json' } : {}),
+      ...(token ? { 'Authorization': `Bearer ${token}` } : {}),
       ...options.headers,
     };
 
