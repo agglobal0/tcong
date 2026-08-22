@@ -10,7 +10,7 @@ export const PrayerRequestPage = () => {
     name: '',
     email: '',
     phone: '',
-    category: 'General',
+    category: 'other',
     request_text: '',
     is_anonymous: false,
     is_private: true,
@@ -153,12 +153,12 @@ export const PrayerRequestPage = () => {
                         value={formData.category}
                         onChange={(e) => setFormData({ ...formData, category: e.target.value })}
                       >
-                        <option value="General">General Prayer</option>
-                        <option value="Healing">Healing & Health</option>
-                        <option value="Family">Family & Relationships</option>
-                        <option value="Financial">Financial & Job Provision</option>
-                        <option value="Spiritual">Spiritual Growth & Guidance</option>
-                        <option value="Salvation">Salvation of Loved Ones</option>
+                        <option value="other">General Prayer</option>
+                        <option value="health">Healing & Health</option>
+                        <option value="family">Family & Relationships</option>
+                        <option value="financial">Financial & Job Provision</option>
+                        <option value="spiritual">Spiritual Growth & Guidance</option>
+                        <option value="career">Career & Education</option>
                       </select>
                     </div>
 

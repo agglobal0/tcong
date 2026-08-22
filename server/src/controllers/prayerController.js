@@ -13,16 +13,21 @@ const { parsePagination, buildPaginationMeta } = require('../utils/pagination');
 async function submitPrayerRequest(req, res, next) {
   try {
     const { name, email, phone, request_text, category, is_anonymous, consent } = req.body;
+    
+    const allowedCategories = ['family', 'career', 'education', 'spiritual', 'financial', 'relationships', 'health', 'other'];
+    const validCategory = (category && allowedCategories.includes(String(category).toLowerCase())) 
+      ? String(category).toLowerCase() 
+      : 'other';
 
     const result = await query(
       `INSERT INTO prayer_requests (name, email, phone, request_text, category, is_anonymous, consent, status, priority)
        VALUES (?, ?, ?, ?, ?, ?, ?, 'new', 'medium')`,
       [
-        is_anonymous ? 'Anonymous' : name,
+        is_anonymous ? 'Anonymous' : (name || 'Anonymous User'),
         email || null,
         phone || null,
         request_text,
-        category || 'other',
+        validCategory,
         is_anonymous ? 1 : 0,
         consent ? 1 : 0
       ]
