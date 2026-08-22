@@ -16,7 +16,10 @@ async function runSeeders() {
     user: process.env.DB_USER || 'root',
     password: process.env.DB_PASSWORD || '',
     database: process.env.DB_NAME || 'tcong_db',
-    multipleStatements: true
+    multipleStatements: true,
+    ssl: (process.env.DB_SSL === 'true' || process.env.NODE_ENV === 'production' || (process.env.DB_HOST && process.env.DB_HOST !== 'localhost' && process.env.DB_HOST !== '127.0.0.1'))
+      ? { rejectUnauthorized: false }
+      : undefined
   });
 
   try {

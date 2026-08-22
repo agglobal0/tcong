@@ -17,7 +17,10 @@ async function runMigrations() {
     port: parseInt(process.env.DB_PORT, 10) || 3306,
     user: process.env.DB_USER || 'root',
     password: process.env.DB_PASSWORD || '',
-    multipleStatements: true
+    multipleStatements: true,
+    ssl: (process.env.DB_SSL === 'true' || process.env.NODE_ENV === 'production' || (process.env.DB_HOST && process.env.DB_HOST !== 'localhost' && process.env.DB_HOST !== '127.0.0.1'))
+      ? { rejectUnauthorized: false }
+      : undefined
   });
 
   try {

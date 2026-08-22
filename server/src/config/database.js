@@ -20,7 +20,11 @@ const pool = mysql.createPool({
   // Timezone
   timezone: '+00:00',
   // Support multiple statements for migrations
-  multipleStatements: false
+  multipleStatements: false,
+  // SSL support for cloud databases (Aiven, Railway, etc.)
+  ssl: (process.env.DB_SSL === 'true' || process.env.NODE_ENV === 'production' || (process.env.DB_HOST && process.env.DB_HOST !== 'localhost' && process.env.DB_HOST !== '127.0.0.1'))
+    ? { rejectUnauthorized: false }
+    : undefined
 });
 
 /**
