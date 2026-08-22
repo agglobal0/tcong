@@ -73,6 +73,17 @@ if (require('fs').existsSync(distPath)) {
 // ========================
 const authRoutes = require('./routes/authRoutes');
 
+// Diagnostic health check route
+app.get('/api/health', async (req, res) => {
+  try {
+    const { pool } = require('./config/database');
+    const [rows] = await pool.query('SELECT 1 + 1 AS result');
+    res.json({ status: 'ok', db: 'connected', result: rows[0].result });
+  } catch (err) {
+    res.status(500).json({ status: 'error', message: err.message, code: err.code, stack: err.stack });
+  }
+});
+
 // Auth
 app.use('/api/auth', authRoutes);
 
