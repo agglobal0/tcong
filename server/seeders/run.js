@@ -130,8 +130,9 @@ async function runSeeders() {
     const passwordHash = await bcrypt.hash(adminPassword, salt);
 
     await connection.query(`
-      INSERT IGNORE INTO users (email, password_hash, first_name, last_name, role_id, is_active)
+      INSERT INTO users (email, password_hash, first_name, last_name, role_id, is_active)
       VALUES (?, ?, 'Super', 'Admin', ?, 1)
+      ON DUPLICATE KEY UPDATE password_hash = VALUES(password_hash), is_active = 1
     `, [adminEmail, passwordHash, roleMap['super_admin']]);
 
     // =====================
