@@ -75,6 +75,8 @@ export const AdminLoginPage = () => {
               <label className="form-label fw-semibold small text-secondary">Email Address</label>
               <input
                 type="email"
+                name="admin_email"
+                autoComplete="off"
                 className="form-control"
                 placeholder="admin@tcong.org"
                 value={email}
@@ -87,6 +89,8 @@ export const AdminLoginPage = () => {
               <label className="form-label fw-semibold small text-secondary">Password</label>
               <input
                 type="password"
+                name="admin_password"
+                autoComplete="new-password"
                 className="form-control"
                 placeholder="••••••••"
                 value={password}
