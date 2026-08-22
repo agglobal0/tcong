@@ -20,13 +20,14 @@ if (!fs.existsSync(uploadsDir)) {
 async function startServer() {
   // Test database connection
   const dbConnected = await testConnection();
-  
+
   if (!dbConnected) {
     console.error('⚠️  Server starting without database connection.');
     console.error('   Make sure MySQL is running and .env is configured.');
   }
 
   app.listen(PORT, () => {
+    const hostUrl = process.env.RENDER_EXTERNAL_URL || process.env.CLIENT_URL || `http://localhost:${PORT}`;
     console.log(`
 ╔══════════════════════════════════════════════╗
 ║                                              ║
@@ -34,9 +35,9 @@ async function startServer() {
 ║   Server running on port ${PORT}               ║
 ║   Environment: ${process.env.NODE_ENV || 'development'}              ║
 ║                                              ║
-║   Client: http://localhost:${PORT}              ║
-║   Admin:  http://localhost:${PORT}/admin        ║
-║   API:    http://localhost:${PORT}/api          ║
+║   URL:   ${hostUrl}
+║   Admin: ${hostUrl}/admin
+║   API:   ${hostUrl}/api
 ║                                              ║
 ╚══════════════════════════════════════════════╝
     `);

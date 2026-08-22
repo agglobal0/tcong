@@ -11,18 +11,27 @@ const mysql = require('mysql2/promise');
 async function runMigrations() {
   console.log('🔄 Running database migrations...\n');
 
-  // Create connection with multipleStatements enabled
-  const connection = await mysql.createConnection({
-    host: process.env.DB_HOST || 'localhost',
-    port: parseInt(process.env.DB_PORT, 10) || 3306,
-    user: process.env.DB_USER || 'root',
-    password: process.env.DB_PASSWORD || '',
-    database: process.env.DB_NAME || 'tcong_db',
-    multipleStatements: true,
-    ssl: (process.env.DB_SSL === 'true' || process.env.NODE_ENV === 'production' || (process.env.DB_HOST && process.env.DB_HOST !== 'localhost' && process.env.DB_HOST !== '127.0.0.1'))
-      ? { rejectUnauthorized: false }
-      : undefined
-  });
+  const dbUri = process.env.MYSQL_URL || process.env.DATABASE_URL || process.env.JAWSDB_URL || process.env.CLEARDB_DATABASE_URL;
+  const sslOption = (
+    process.env.DB_SSL === 'true' ||
+    process.env.NODE_ENV === 'production' ||
+    !!dbUri ||
+    (process.env.DB_HOST && process.env.DB_HOST !== 'localhost' && process.env.DB_HOST !== '127.0.0.1')
+  ) ? { rejectUnauthorized: false } : undefined;
+
+  const connConfig = dbUri
+    ? { uri: dbUri, multipleStatements: true, ssl: sslOption }
+    : {
+        host: process.env.DB_HOST || 'localhost',
+        port: parseInt(process.env.DB_PORT, 10) || 3306,
+        user: process.env.DB_USER || 'root',
+        password: process.env.DB_PASSWORD || '',
+        database: process.env.DB_NAME || 'tcong_db',
+        multipleStatements: true,
+        ssl: sslOption
+      };
+
+  const connection = await mysql.createConnection(connConfig);
 
   try {
     const migrationsDir = __dirname;
@@ -40,10 +49,14 @@ async function runMigrations() {
     console.log('🎉 All migrations completed successfully!');
   } catch (error) {
     console.error('❌ Migration failed:', error.message);
-    process.exit(1);
+    throw error;
   } finally {
     await connection.end();
   }
 }
 
-runMigrations();
+if (require.main === module) {
+  runMigrations().catch(() => process.exit(1));
+}
+
+module.exports = { runMigrations };

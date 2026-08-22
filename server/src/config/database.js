@@ -4,28 +4,45 @@
  */
 const mysql = require('mysql2/promise');
 
-const pool = mysql.createPool({
-  host: process.env.DB_HOST || 'localhost',
-  port: parseInt(process.env.DB_PORT, 10) || 3306,
-  user: process.env.DB_USER || 'root',
-  password: process.env.DB_PASSWORD || '',
-  database: process.env.DB_NAME || 'tcong_db',
-  waitForConnections: true,
-  connectionLimit: 20,
-  queueLimit: 0,
-  enableKeepAlive: true,
-  keepAliveInitialDelay: 0,
-  // Return rows as plain objects
-  typeCast: true,
-  // Timezone
-  timezone: '+00:00',
-  // Support multiple statements for migrations
-  multipleStatements: false,
-  // SSL support for cloud databases (Aiven, Railway, etc.)
-  ssl: (process.env.DB_SSL === 'true' || process.env.NODE_ENV === 'production' || (process.env.DB_HOST && process.env.DB_HOST !== 'localhost' && process.env.DB_HOST !== '127.0.0.1'))
-    ? { rejectUnauthorized: false }
-    : undefined
-});
+const dbUri = process.env.MYSQL_URL || process.env.DATABASE_URL || process.env.JAWSDB_URL || process.env.CLEARDB_DATABASE_URL;
+
+const sslOption = (
+  process.env.DB_SSL === 'true' ||
+  process.env.NODE_ENV === 'production' ||
+  !!dbUri ||
+  (process.env.DB_HOST && process.env.DB_HOST !== 'localhost' && process.env.DB_HOST !== '127.0.0.1')
+) ? { rejectUnauthorized: false } : undefined;
+
+const poolConfig = dbUri
+  ? {
+      uri: dbUri,
+      waitForConnections: true,
+      connectionLimit: 20,
+      queueLimit: 0,
+      enableKeepAlive: true,
+      keepAliveInitialDelay: 0,
+      typeCast: true,
+      timezone: '+00:00',
+      ssl: sslOption
+    }
+  : {
+      host: process.env.DB_HOST || 'localhost',
+      port: parseInt(process.env.DB_PORT, 10) || 3306,
+      user: process.env.DB_USER || 'root',
+      password: process.env.DB_PASSWORD || '',
+      database: process.env.DB_NAME || 'tcong_db',
+      waitForConnections: true,
+      connectionLimit: 20,
+      queueLimit: 0,
+      enableKeepAlive: true,
+      keepAliveInitialDelay: 0,
+      typeCast: true,
+      timezone: '+00:00',
+      multipleStatements: false,
+      ssl: sslOption
+    };
+
+const pool = mysql.createPool(poolConfig);
 
 /**
  * Execute a parameterized query

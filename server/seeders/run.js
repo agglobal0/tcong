@@ -10,17 +10,27 @@ const bcrypt = require('bcryptjs');
 async function runSeeders() {
   console.log('🌱 Running database seeders...\n');
 
-  const connection = await mysql.createConnection({
-    host: process.env.DB_HOST || 'localhost',
-    port: parseInt(process.env.DB_PORT, 10) || 3306,
-    user: process.env.DB_USER || 'root',
-    password: process.env.DB_PASSWORD || '',
-    database: process.env.DB_NAME || 'tcong_db',
-    multipleStatements: true,
-    ssl: (process.env.DB_SSL === 'true' || process.env.NODE_ENV === 'production' || (process.env.DB_HOST && process.env.DB_HOST !== 'localhost' && process.env.DB_HOST !== '127.0.0.1'))
-      ? { rejectUnauthorized: false }
-      : undefined
-  });
+  const dbUri = process.env.MYSQL_URL || process.env.DATABASE_URL || process.env.JAWSDB_URL || process.env.CLEARDB_DATABASE_URL;
+  const sslOption = (
+    process.env.DB_SSL === 'true' ||
+    process.env.NODE_ENV === 'production' ||
+    !!dbUri ||
+    (process.env.DB_HOST && process.env.DB_HOST !== 'localhost' && process.env.DB_HOST !== '127.0.0.1')
+  ) ? { rejectUnauthorized: false } : undefined;
+
+  const connConfig = dbUri
+    ? { uri: dbUri, multipleStatements: true, ssl: sslOption }
+    : {
+        host: process.env.DB_HOST || 'localhost',
+        port: parseInt(process.env.DB_PORT, 10) || 3306,
+        user: process.env.DB_USER || 'root',
+        password: process.env.DB_PASSWORD || '',
+        database: process.env.DB_NAME || 'tcong_db',
+        multipleStatements: true,
+        ssl: sslOption
+      };
+
+  const connection = await mysql.createConnection(connConfig);
 
   try {
     // =====================
@@ -63,7 +73,7 @@ async function runSeeders() {
     // 3. ROLE-PERMISSION MAPPING
     // =====================
     console.log('📌 Seeding role-permissions...');
-    
+
     // Get role IDs
     const [roles] = await connection.query('SELECT id, slug FROM roles');
     const roleMap = {};
@@ -342,4 +352,8 @@ async function runSeeders() {
   }
 }
 
-runSeeders();
+if (require.main === module) {
+  runSeeders().catch(() => process.exit(1));
+}
+
+module.exports = { runSeeders };
