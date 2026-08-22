@@ -18,7 +18,9 @@ export const AdminLoginPage = () => {
     setSubmitting(true);
 
     try {
-      await login(email, password);
+      const cleanEmail = String(email).trim().toLowerCase();
+      const cleanPassword = String(password).trim();
+      await login(cleanEmail, cleanPassword);
       addToast('Welcome to TCONG Admin Portal', 'success');
       navigate('/admin/dashboard');
     } catch (err) {

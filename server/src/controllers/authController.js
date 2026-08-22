@@ -14,14 +14,18 @@ const { getClientIp } = require('../utils/helpers');
  */
 async function login(req, res, next) {
   try {
-    const { email, password } = req.body;
+    const rawEmail = req.body.email || '';
+    const rawPassword = req.body.password || '';
+
+    const email = String(rawEmail).trim().toLowerCase();
+    const password = String(rawPassword).trim();
 
     // Find user with role
     const users = await query(
       `SELECT u.*, r.slug as role_slug, r.name as role_name
        FROM users u
        JOIN roles r ON u.role_id = r.id
-       WHERE u.email = ?`,
+       WHERE LOWER(TRIM(u.email)) = ?`,
       [email]
     );
 
