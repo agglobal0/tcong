@@ -28,7 +28,8 @@ async function authenticate(req, res, next) {
     }
 
     // Verify token
-    const decoded = jwt.verify(token, process.env.JWT_SECRET);
+    const secret = process.env.JWT_SECRET || 'your_jwt_secret_key_change_this_in_production';
+    const decoded = jwt.verify(token, secret);
 
     // Fetch user from DB to ensure they still exist and are active
     const users = await query(
