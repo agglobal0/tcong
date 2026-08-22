@@ -24,6 +24,21 @@ async function startServer() {
   if (!dbConnected) {
     console.error('⚠️  Server starting without database connection.');
     console.error('   Make sure MySQL is running and .env is configured.');
+  } else {
+    try {
+      const { pool } = require('./src/config/database');
+      const [tables] = await pool.query("SHOW TABLES LIKE 'users'");
+      if (tables.length === 0) {
+        console.log('🔄 No database tables found in current database. Running automatic migrations...');
+        const { runMigrations } = require('./migrations/run');
+        await runMigrations();
+        console.log('🌱 Seeding initial database data...');
+        const { runSeeders } = require('./seeders/run');
+        await runSeeders();
+      }
+    } catch (err) {
+      console.error('⚠️ Auto-migration check error:', err.message);
+    }
   }
 
   app.listen(PORT, () => {
