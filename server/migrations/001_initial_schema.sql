@@ -3,9 +3,6 @@
 -- MySQL 8.0+ Required
 -- =====================================================
 
-CREATE DATABASE IF NOT EXISTS tcong_db CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
-USE tcong_db;
-
 -- =====================================================
 -- AUTHENTICATION & USERS
 -- =====================================================
