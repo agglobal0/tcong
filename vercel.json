@@ -1,6 +1,14 @@
 {
   "buildCommand": "cd client && npm install && npm run build",
   "outputDirectory": "client/dist",
+  "headers": [
+    {
+      "source": "/(.*)",
+      "headers": [
+        { "key": "Cache-Control", "value": "no-cache, no-store, must-revalidate" }
+      ]
+    }
+  ],
   "rewrites": [
     { "source": "/api/:path*", "destination": "https://tcong.onrender.com/api/:path*" },
     { "source": "/uploads/:path*", "destination": "https://tcong.onrender.com/uploads/:path*" },
