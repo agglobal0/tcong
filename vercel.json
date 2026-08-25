@@ -2,8 +2,8 @@
   "buildCommand": "cd client && npm install && npm run build",
   "outputDirectory": "client/dist",
   "rewrites": [
-    { "source": "/api/(.*)", "destination": "https://tcong.onrender.com/api/$1" },
-    { "source": "/uploads/(.*)", "destination": "https://tcong.onrender.com/uploads/$1" },
-    { "source": "/(.*)", "destination": "/index.html" }
+    { "source": "/api/:path*", "destination": "https://tcong.onrender.com/api/:path*" },
+    { "source": "/uploads/:path*", "destination": "https://tcong.onrender.com/uploads/:path*" },
+    { "source": "/:path*", "destination": "/index.html" }
   ]
 }
