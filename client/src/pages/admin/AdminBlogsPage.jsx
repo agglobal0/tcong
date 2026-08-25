@@ -13,8 +13,14 @@ export const AdminBlogsPage = () => {
     setLoading(true);
     api.admin
       .getBlogs()
-      .then((res) => setBlogs(res.data || []))
-      .catch(console.error)
+      .then((res) => {
+        const list = Array.isArray(res?.data) ? res.data : Array.isArray(res) ? res : [];
+        setBlogs(list);
+      })
+      .catch((err) => {
+        console.error('Failed to fetch blogs:', err);
+        addToast(err?.message || 'Failed to load blogs', 'error');
+      })
       .finally(() => setLoading(false));
   };
 

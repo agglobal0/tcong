@@ -11,8 +11,14 @@ export const AdminMessagesPage = () => {
     setLoading(true);
     api.admin
       .getMessages()
-      .then((res) => setMessages(res.data || []))
-      .catch(console.error)
+      .then((res) => {
+        const list = Array.isArray(res?.data) ? res.data : Array.isArray(res) ? res : [];
+        setMessages(list);
+      })
+      .catch((err) => {
+        console.error('Failed to fetch messages:', err);
+        addToast(err?.message || 'Failed to load messages', 'error');
+      })
       .finally(() => setLoading(false));
   };
 

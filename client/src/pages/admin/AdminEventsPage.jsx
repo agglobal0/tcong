@@ -13,8 +13,14 @@ export const AdminEventsPage = () => {
     setLoading(true);
     api.admin
       .getEvents()
-      .then((res) => setEvents(res.data || []))
-      .catch(console.error)
+      .then((res) => {
+        const list = Array.isArray(res?.data) ? res.data : Array.isArray(res) ? res : [];
+        setEvents(list);
+      })
+      .catch((err) => {
+        console.error('Failed to fetch events:', err);
+        addToast(err?.message || 'Failed to load events', 'error');
+      })
       .finally(() => setLoading(false));
   };
 

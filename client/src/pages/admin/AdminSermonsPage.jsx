@@ -13,8 +13,14 @@ export const AdminSermonsPage = () => {
     setLoading(true);
     api.admin
       .getSermons()
-      .then((res) => setSermons(res.data || []))
-      .catch(console.error)
+      .then((res) => {
+        const list = Array.isArray(res?.data) ? res.data : Array.isArray(res) ? res : [];
+        setSermons(list);
+      })
+      .catch((err) => {
+        console.error('Failed to fetch sermons:', err);
+        addToast(err?.message || 'Failed to load sermons', 'error');
+      })
       .finally(() => setLoading(false));
   };
 
