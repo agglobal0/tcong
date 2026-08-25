@@ -4,9 +4,6 @@
 
 const getApiBase = () => {
   if (import.meta.env.VITE_API_URL) return import.meta.env.VITE_API_URL;
-  if (typeof window !== 'undefined' && window.location.hostname.includes('vercel.app')) {
-    return 'https://tcong.onrender.com/api';
-  }
   return '/api';
 };
 
