@@ -22,8 +22,9 @@ export const api = {
     const fallbackUrl = `${RENDER_BACKEND_URL}${endpoint}`;
 
     const token = typeof window !== 'undefined' ? localStorage.getItem('token') : null;
+    const hasBody = options.body && !(options.body instanceof FormData);
     const headers = {
-      ...(!options.body || !(options.body instanceof FormData) ? { 'Content-Type': 'application/json' } : {}),
+      ...(hasBody ? { 'Content-Type': 'application/json' } : {}),
       ...(token ? { 'Authorization': `Bearer ${token}` } : {}),
       ...options.headers,
     };
