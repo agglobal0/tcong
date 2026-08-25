@@ -11,8 +11,14 @@ export const AdminPrayersPage = () => {
     setLoading(true);
     api.admin
       .getPrayers()
-      .then((res) => setPrayers(res.data || []))
-      .catch(console.error)
+      .then((res) => {
+        const list = Array.isArray(res?.data) ? res.data : Array.isArray(res) ? res : [];
+        setPrayers(list);
+      })
+      .catch((err) => {
+        console.error('Failed to fetch prayers:', err);
+        addToast(err?.message || 'Failed to load prayer requests', 'error');
+      })
       .finally(() => setLoading(false));
   };
 
