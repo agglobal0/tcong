@@ -16,6 +16,8 @@ export const AdminDashboardPage = () => {
       .then((res) => {
         if (res && res.data) {
           setDashboardData(res.data);
+        } else if (res) {
+          setDashboardData(res);
         }
       })
       .catch((err) => {
