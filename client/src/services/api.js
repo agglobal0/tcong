@@ -2,8 +2,15 @@
  * Centralized API Service for TCONG React Application
  */
 
+const RENDER_BACKEND_URL = 'https://tcong.onrender.com/api';
+
 const getApiBase = () => {
-  if (import.meta.env.VITE_API_URL) return import.meta.env.VITE_API_URL;
+  if (import.meta.env.VITE_API_URL && !import.meta.env.VITE_API_URL.includes('tcong-server')) {
+    return import.meta.env.VITE_API_URL;
+  }
+  if (typeof window !== 'undefined' && window.location.hostname.includes('vercel.app')) {
+    return RENDER_BACKEND_URL;
+  }
   return '/api';
 };
 
@@ -12,6 +19,8 @@ const API_BASE = getApiBase();
 export const api = {
   async request(endpoint, options = {}) {
     const primaryUrl = `${API_BASE}${endpoint}`;
+    const fallbackUrl = `${RENDER_BACKEND_URL}${endpoint}`;
+
     const token = typeof window !== 'undefined' ? localStorage.getItem('token') : null;
     const headers = {
       ...(!options.body || !(options.body instanceof FormData) ? { 'Content-Type': 'application/json' } : {}),
@@ -28,10 +37,16 @@ export const api = {
     try {
       let response = await fetch(primaryUrl, config);
 
-      if (response.status === 404 && !primaryUrl.startsWith('https://')) {
-        const fallbackUrl = `https://tcong.onrender.com/api${endpoint}`;
-        const fallbackConfig = { ...config, credentials: 'omit' };
-        response = await fetch(fallbackUrl, fallbackConfig);
+      if (!response.ok && primaryUrl !== fallbackUrl) {
+        try {
+          const fallbackConfig = { ...config, credentials: 'omit' };
+          const fallbackRes = await fetch(fallbackUrl, fallbackConfig);
+          if (fallbackRes.ok) {
+            response = fallbackRes;
+          }
+        } catch (e) {
+          // ignore fallback error
+        }
       }
 
       const data = await response.json().catch(() => ({}));
@@ -48,15 +63,14 @@ export const api = {
 
       return data;
     } catch (error) {
-      if (error.status && error.message) throw error;
+      if (error.status && error.message && error.status !== 404) throw error;
 
-      if (!primaryUrl.startsWith('https://')) {
+      if (primaryUrl !== fallbackUrl) {
         try {
-          const fallbackUrl = `https://tcong.onrender.com/api${endpoint}`;
           const fallbackConfig = { ...config, credentials: 'omit' };
-          const response = await fetch(fallbackUrl, fallbackConfig);
-          const data = await response.json().catch(() => ({}));
-          if (response.ok) return data;
+          const fallbackRes = await fetch(fallbackUrl, fallbackConfig);
+          const fallbackData = await fallbackRes.json().catch(() => ({}));
+          if (fallbackRes.ok) return fallbackData;
         } catch (e) {
           // ignore fallback error
         }
