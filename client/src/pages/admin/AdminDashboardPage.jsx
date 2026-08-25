@@ -22,6 +22,7 @@ export const AdminDashboardPage = () => {
       })
       .catch((err) => {
         console.error('Dashboard fetch error:', err);
+        setDashboardData(null);
       })
       .finally(() => setLoading(false));
   };
