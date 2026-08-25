@@ -21,7 +21,7 @@ export const api = {
 
     const config = {
       headers,
-      credentials: 'include',
+      credentials: 'same-origin',
       ...options,
     };
 
@@ -31,16 +31,17 @@ export const api = {
 
       if (!response.ok) {
         if (response.status === 401 && !endpoint.includes('/auth/login')) {
-          if (window.location.pathname.startsWith('/admin')) {
+          if (typeof window !== 'undefined' && window.location.pathname.startsWith('/admin')) {
             window.dispatchEvent(new CustomEvent('unauthorized'));
           }
         }
-        throw { status: response.status, ...data };
+        const message = data.message || `Request failed with status ${response.status}`;
+        throw { status: response.status, message, ...data };
       }
 
       return data;
     } catch (error) {
-      if (error.status) throw error;
+      if (error.status && error.message) throw error;
       console.error('API Error:', error);
       throw { success: false, message: error.message || 'Network error. Please check your connection.' };
     }
