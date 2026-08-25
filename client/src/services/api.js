@@ -11,7 +11,7 @@ const API_BASE = getApiBase();
 
 export const api = {
   async request(endpoint, options = {}) {
-    const url = `${API_BASE}${endpoint}`;
+    const primaryUrl = `${API_BASE}${endpoint}`;
     const token = typeof window !== 'undefined' ? localStorage.getItem('token') : null;
     const headers = {
       ...(!options.body || !(options.body instanceof FormData) ? { 'Content-Type': 'application/json' } : {}),
@@ -26,7 +26,14 @@ export const api = {
     };
 
     try {
-      const response = await fetch(url, config);
+      let response = await fetch(primaryUrl, config);
+
+      if (response.status === 404 && !primaryUrl.startsWith('https://')) {
+        const fallbackUrl = `https://tcong.onrender.com/api${endpoint}`;
+        const fallbackConfig = { ...config, credentials: 'omit' };
+        response = await fetch(fallbackUrl, fallbackConfig);
+      }
+
       const data = await response.json().catch(() => ({}));
 
       if (!response.ok) {
@@ -42,6 +49,19 @@ export const api = {
       return data;
     } catch (error) {
       if (error.status && error.message) throw error;
+
+      if (!primaryUrl.startsWith('https://')) {
+        try {
+          const fallbackUrl = `https://tcong.onrender.com/api${endpoint}`;
+          const fallbackConfig = { ...config, credentials: 'omit' };
+          const response = await fetch(fallbackUrl, fallbackConfig);
+          const data = await response.json().catch(() => ({}));
+          if (response.ok) return data;
+        } catch (e) {
+          // ignore fallback error
+        }
+      }
+
       console.error('API Error:', error);
       throw { success: false, message: error.message || 'Network error. Please check your connection.' };
     }
