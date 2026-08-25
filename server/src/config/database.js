@@ -2,9 +2,11 @@
  * MySQL Database Connection Pool
  * Uses mysql2 with promise support for async/await queries
  */
+require('dotenv').config({ path: require('path').join(__dirname, '../../.env') });
 const mysql = require('mysql2/promise');
 
-const dbUri = process.env.MYSQL_URL || process.env.DATABASE_URL || process.env.JAWSDB_URL || process.env.CLEARDB_DATABASE_URL;
+let dbUri = process.env.MYSQL_URL || process.env.DATABASE_URL || process.env.JAWSDB_URL || process.env.CLEARDB_DATABASE_URL;
+if (dbUri) dbUri = dbUri.replace(/[\?&]ssl-mode=[^&]+/gi, '');
 
 const sslOption = (
   process.env.DB_SSL === 'true' ||

@@ -10,7 +10,8 @@ const bcrypt = require('bcryptjs');
 async function runSeeders() {
   console.log('🌱 Running database seeders...\n');
 
-  const dbUri = process.env.MYSQL_URL || process.env.DATABASE_URL || process.env.JAWSDB_URL || process.env.CLEARDB_DATABASE_URL;
+  let dbUri = process.env.MYSQL_URL || process.env.DATABASE_URL || process.env.JAWSDB_URL || process.env.CLEARDB_DATABASE_URL;
+  if (dbUri) dbUri = dbUri.replace(/[\?&]ssl-mode=[^&]+/gi, '');
   const sslOption = (
     process.env.DB_SSL === 'true' ||
     process.env.NODE_ENV === 'production' ||
@@ -347,7 +348,11 @@ async function runSeeders() {
   } catch (error) {
     console.error('❌ Seeding failed:', error.message);
     console.error(error);
-    process.exit(1);
+    if (require.main === module) {
+      process.exit(1);
+    } else {
+      throw error;
+    }
   } finally {
     await connection.end();
   }
