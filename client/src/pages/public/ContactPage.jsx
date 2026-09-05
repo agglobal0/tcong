@@ -44,7 +44,7 @@ export const ContactPage = () => {
       <section className="bg-primary text-white py-5 text-center" style={{ background: 'linear-gradient(135deg, #0F172A 0%, #1E293B 100%)' }}>
         <div className="container py-4">
           <TextSequence
-            text="Visit & Contact TCONG — Melbourne, Australia"
+            text="Contact Us - We'd Love to Hear From You"
             as="h1"
             className="display-4 fw-bold mb-3 text-white"
             delay={100}

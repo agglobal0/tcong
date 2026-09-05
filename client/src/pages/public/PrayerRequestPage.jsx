@@ -56,7 +56,7 @@ export const PrayerRequestPage = () => {
       <section className="bg-primary text-white py-5 text-center" style={{ background: 'linear-gradient(135deg, #4C1D95 0%, #6B21A8 100%)' }}>
         <div className="container py-4">
           <TextSequence
-            text="Submit Your Prayer Request — 24/7 Intercession Tower"
+            text="Prayer Request - We're Here for You 24/7"
             as="h1"
             className="display-4 fw-bold mb-3 text-white"
             delay={100}

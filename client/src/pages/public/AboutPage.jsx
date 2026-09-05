@@ -19,7 +19,7 @@ export const AboutPage = () => {
       <section className="bg-dark text-white py-5 text-center" style={{ background: 'linear-gradient(135deg, #0F172A 0%, #1E1B4B 100%)' }}>
         <div className="container py-4">
           <TextSequence
-            text="About TCONG — Our Church, Ministry & Story"
+            text="About Us - The Church of New Generation"
             as="h1"
             className="display-4 fw-bold mb-3 text-white"
             delay={100}

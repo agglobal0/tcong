@@ -31,7 +31,7 @@ export const BlogPage = () => {
       <section className="bg-dark text-white py-5 text-center" style={{ background: 'linear-gradient(135deg, #111827 0%, #1F2937 100%)' }}>
         <div className="container py-4">
           <TextSequence
-            text="Faith Devotionals, Articles & Biblical Reflections"
+            text="Blog - Faith, Devotionals & Reflections"
             as="h1"
             className="display-4 fw-bold mb-3 text-white"
             delay={100}

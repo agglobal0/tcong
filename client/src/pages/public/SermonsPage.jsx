@@ -30,7 +30,7 @@ export const SermonsPage = () => {
       <section className="bg-dark text-white py-5 text-center" style={{ background: 'linear-gradient(135deg, #1E1B4B 0%, #311B92 100%)' }}>
         <div className="container py-4">
           <TextSequence
-            text="Pastor Jaskaran Heer — Hindi & English Sermon Archive"
+            text="Sermons - Watch & Listen Online"
             as="h1"
             className="display-4 fw-bold mb-3 text-white"
             delay={100}

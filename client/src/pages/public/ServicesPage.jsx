@@ -19,7 +19,7 @@ export const ServicesPage = () => {
       <section className="bg-primary text-white py-5 text-center" style={{ background: 'linear-gradient(135deg, #1E1B4B 0%, #4338CA 100%)' }}>
         <div className="container py-4">
           <TextSequence
-            text="Anointed Worship Services & Gatherings"
+            text="Our Services - Worship, Prayer & Fellowship"
             as="h1"
             className="display-4 fw-bold mb-3 text-white"
             delay={100}

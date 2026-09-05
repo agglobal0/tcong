@@ -30,7 +30,7 @@ export const EventsPage = () => {
       <section className="bg-dark text-white py-5 text-center" style={{ background: 'linear-gradient(135deg, #0F172A 0%, #1E293B 100%)' }}>
         <div className="container py-4">
           <TextSequence
-            text="Upcoming TCONG Melbourne Church Events & Special Services"
+            text="Events - What's Coming Up"
             as="h1"
             className="display-4 fw-bold mb-3 text-white"
             delay={100}
