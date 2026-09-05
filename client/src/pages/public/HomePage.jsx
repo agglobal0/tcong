@@ -108,31 +108,36 @@ export const HomePage = () => {
 
   return (
     <div className="home-page">
-      {/* ═══════ HERO BANNER WITH NATURAL CHURCH PHOTO (NO HEAVY PURPLE SHADE) ═══════ */}
+      {/* ═══════ HERO BANNER WITH NATURAL CHURCH PHOTO ═══════ */}
       <section
-        className="hero-section text-center text-white py-5 position-relative overflow-hidden"
+        className="hero-section text-center text-white py-4 py-md-5 position-relative overflow-hidden"
         style={{
-          backgroundImage: 'linear-gradient(180deg, rgba(0, 0, 0, 0.45) 0%, rgba(0, 0, 0, 0.65) 100%), url("/assets/hero-bg.jpg")',
+          backgroundImage: 'linear-gradient(180deg, rgba(0, 0, 0, 0.5) 0%, rgba(0, 0, 0, 0.72) 100%), url("/assets/hero-bg.jpg")',
           backgroundSize: 'cover',
           backgroundPosition: 'center center',
           backgroundRepeat: 'no-repeat',
-          minHeight: '70vh',
+          minHeight: '75vh',
           display: 'flex',
           alignItems: 'center',
         }}
       >
-        <div className="container py-5 position-relative" style={{ zIndex: 2 }}>
+        <div className="container py-3 py-md-5 position-relative px-3 px-sm-4" style={{ zIndex: 2 }}>
           <ScrollReveal animation="fade-down" delay={0}>
             <span
-              className="badge px-4 py-2 rounded-pill mb-3 border shadow-sm"
+              className="badge rounded-pill mb-3 border shadow-sm hero-welcome-badge"
               style={{
-                background: 'rgba(0, 0, 0, 0.4)',
+                background: 'rgba(0, 0, 0, 0.45)',
                 backdropFilter: 'blur(8px)',
                 color: '#FFFFFF',
-                fontSize: '0.92rem',
-                letterSpacing: '1px',
-                borderColor: 'rgba(255, 255, 255, 0.4)',
+                fontSize: 'clamp(0.72rem, 2.2vw, 0.9rem)',
+                letterSpacing: '0.8px',
+                borderColor: 'rgba(255, 255, 255, 0.35)',
                 textShadow: '0 1px 3px rgba(0,0,0,0.8)',
+                padding: '8px 16px',
+                maxWidth: '96%',
+                whiteSpace: 'normal',
+                lineHeight: '1.35',
+                display: 'inline-block',
               }}
             >
               WELCOME TO TCONG MINISTRIES — PASTOR JASKARAN HEER
@@ -142,23 +147,26 @@ export const HomePage = () => {
           <TextSequence
             text="Transforming Lives Through Anointed Word & Prayer"
             as="h1"
-            className="display-3 fw-extrabold mb-4 text-white"
+            className="fw-extrabold mb-3 mb-md-4 text-white hero-headline"
             style={{
               textShadow: '0 3px 14px rgba(0, 0, 0, 0.9)',
               letterSpacing: '-0.5px',
+              fontSize: 'clamp(1.85rem, 5vw, 3.4rem)',
+              lineHeight: '1.2',
             }}
             delay={0}
             wordDelay={20}
           />
 
-
           <ScrollReveal animation="fade-up" delay={0}>
             <p
-              className="lead max-w-2xl mx-auto mb-5 text-white fw-medium"
+              className="lead max-w-2xl mx-auto mb-4 mb-md-5 text-white fw-medium hero-lead-text"
               style={{
-                maxWidth: '750px',
+                maxWidth: '720px',
                 textShadow: '0 2px 10px rgba(0, 0, 0, 0.9)',
-                fontSize: '1.25rem',
+                fontSize: 'clamp(0.95rem, 2.4vw, 1.2rem)',
+                lineHeight: '1.6',
+                padding: '0 10px',
               }}
             >
               Join Pastor Jaskaran Heer & The Church of New Generation. Watch latest sermon broadcasts, request prayer 24/7, and receive God's promise.
@@ -166,15 +174,16 @@ export const HomePage = () => {
           </ScrollReveal>
 
           <ScrollReveal animation="zoom-in" delay={0}>
-            <div className="d-flex justify-content-center gap-3 flex-wrap">
+            <div className="d-flex justify-content-center gap-3 flex-wrap hero-btn-group">
               <Link
                 to="/prayer-request"
-                className="btn btn-lg px-4 py-3 shadow-lg fw-bold rounded-pill"
+                className="btn btn-lg px-4 py-3 shadow-lg fw-bold rounded-pill hero-cta-btn"
                 style={{
                   backgroundColor: '#A855F7',
                   color: '#FFFFFF',
                   border: 'none',
                   boxShadow: '0 8px 20px rgba(168, 85, 247, 0.5)',
+                  fontSize: 'clamp(0.9rem, 2.2vw, 1.05rem)',
                 }}
               >
                 Request Prayer 24/7
@@ -183,11 +192,12 @@ export const HomePage = () => {
                 href="https://www.youtube.com/@Pastorjaskaranheer"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="btn btn-outline-light btn-lg px-4 py-3 fw-semibold rounded-pill d-flex align-items-center gap-2"
+                className="btn btn-outline-light btn-lg px-4 py-3 fw-semibold rounded-pill d-flex align-items-center justify-content-center gap-2 hero-yt-btn"
                 style={{
                   backdropFilter: 'blur(6px)',
-                  backgroundColor: 'rgba(0,0,0,0.3)',
+                  backgroundColor: 'rgba(0,0,0,0.35)',
                   borderWidth: '2px',
+                  fontSize: 'clamp(0.85rem, 2.2vw, 1rem)',
                 }}
               >
                 <i className="fab fa-youtube text-danger fs-4"></i> Subscribe @Pastorjaskaranheer
@@ -198,15 +208,15 @@ export const HomePage = () => {
       </section>
 
       {/* ═══════ VIDEO GALLERY — CONTINUOUS RIGHT-TO-LEFT AUTOMATIC SLIDING ANIMATION ═══════ */}
-      <section className="py-5 bg-white position-relative overflow-hidden">
-        <div className="container-fluid px-4 py-3">
+      <section className="py-4 py-md-5 bg-white position-relative overflow-hidden">
+        <div className="container-fluid px-2 px-sm-4 py-2">
           <ScrollReveal animation="fade-up" delay={0}>
             <h2
-              className="text-center fw-bold mb-4"
+              className="text-center fw-bold mb-3 mb-md-4"
               style={{
                 color: '#B91C1C',
                 fontStyle: 'italic',
-                fontSize: '2.5rem',
+                fontSize: 'clamp(1.8rem, 4vw, 2.5rem)',
                 fontFamily: 'serif, sans-serif',
               }}
             >
@@ -216,13 +226,13 @@ export const HomePage = () => {
 
           {/* Continuous Automatic Right-to-Left Sliding Track */}
           <div
-            className="overflow-hidden position-relative py-3 px-2"
+            className="overflow-hidden position-relative py-2 px-1"
             onMouseEnter={() => setIsHovered(true)}
             onMouseLeave={() => setIsHovered(false)}
             style={{ width: '100%' }}
           >
             <div
-              className="d-flex gap-4"
+              className="d-flex gap-3 gap-md-4"
               style={{
                 width: 'max-content',
                 animation: 'rightToLeftMarquee 26s linear infinite',
@@ -234,8 +244,8 @@ export const HomePage = () => {
                 <div
                   key={`${vid.id}_${idx}`}
                   style={{
-                    width: '360px',
-                    height: '225px',
+                    width: 'clamp(280px, 78vw, 360px)',
+                    aspectRatio: '16/10',
                     flexShrink: 0,
                   }}
                 >
@@ -256,7 +266,7 @@ export const HomePage = () => {
 
           {/* View More Red Outline Button */}
           <ScrollReveal animation="fade-up" delay={0}>
-            <div className="text-center mt-4">
+            <div className="text-center mt-3 mt-md-4">
               <a
                 href="https://www.youtube.com/@Pastorjaskaranheer"
                 target="_blank"
@@ -291,9 +301,9 @@ export const HomePage = () => {
       </section>
 
       {/* ═══════ OUR MINISTRIES SECTION ═══════ */}
-      <section className="py-5 bg-white">
-        <div className="container py-3">
-          <div className="text-center max-w-2xl mx-auto mb-5" style={{ maxWidth: '650px' }}>
+      <section className="py-4 py-md-5 bg-white">
+        <div className="container py-2 py-md-3">
+          <div className="text-center max-w-2xl mx-auto mb-4 mb-md-5" style={{ maxWidth: '650px' }}>
             <ScrollReveal animation="fade-down" delay={0}>
               <span className="badge px-3 py-2 rounded-pill mb-2" style={{ backgroundColor: '#F3E8FF', color: '#6B21A8', fontWeight: 'bold' }}>
                 OUR MINISTRIES
@@ -301,13 +311,13 @@ export const HomePage = () => {
             </ScrollReveal>
 
             <ScrollReveal animation="fade-up" delay={30}>
-              <h2 className="fw-bold mb-2 text-center" style={{ color: '#581C87', fontSize: '2.2rem' }}>
+              <h2 className="fw-bold mb-2 text-center" style={{ color: '#581C87', fontSize: 'clamp(1.75rem, 4vw, 2.3rem)' }}>
                 Serving God & Building Community
               </h2>
             </ScrollReveal>
 
             <ScrollReveal animation="fade-up" delay={50}>
-              <p className="text-muted text-center mb-0">
+              <p className="text-muted text-center mb-0" style={{ fontSize: 'clamp(0.9rem, 2vw, 1rem)' }}>
                 Explore our vibrant ministry arms designed to nurture faith, serve families, and impact lives.
               </p>
             </ScrollReveal>
@@ -315,15 +325,15 @@ export const HomePage = () => {
 
           {/* Featured Worship Ministry Spotlight Photo */}
           <ScrollReveal animation="zoom-in" delay={50}>
-            <div className="card border-0 shadow-lg rounded-4 overflow-hidden mb-5" style={{ backgroundColor: '#FAF5FF' }}>
+            <div className="card border-0 shadow-lg rounded-4 overflow-hidden mb-4 mb-md-5" style={{ backgroundColor: '#FAF5FF' }}>
               <div className="row g-0 align-items-center">
                 <div className="col-lg-6">
-                  <div className="position-relative overflow-hidden img-reveal-wrapper" style={{ minHeight: '340px' }}>
+                  <div className="position-relative overflow-hidden img-reveal-wrapper" style={{ minHeight: 'clamp(220px, 40vw, 340px)' }}>
                     <img
                       src="/assets/worship-ministry.jpg"
                       alt="Worship Choir & Band Ministry"
                       className="w-100 h-100"
-                      style={{ objectFit: 'cover', minHeight: '340px' }}
+                      style={{ objectFit: 'cover', minHeight: 'clamp(220px, 40vw, 340px)' }}
                     />
                     <div
                       className="position-absolute bottom-0 start-0 end-0 p-3 text-white d-flex align-items-center gap-2"
@@ -343,11 +353,13 @@ export const HomePage = () => {
                   <span className="badge bg-purple text-white px-3 py-2 rounded-pill mb-3" style={{ backgroundColor: '#7E22CE' }}>
                     FEATURED SPOTLIGHT
                   </span>
-                  <h3 className="fw-bold mb-3" style={{ color: '#581C87' }}>Anointed Praise & Music Ministry</h3>
-                  <p className="text-muted mb-4" style={{ lineHeight: '1.7' }}>
+                  <h3 className="fw-bold mb-3" style={{ color: '#581C87', fontSize: 'clamp(1.4rem, 3vw, 1.85rem)' }}>
+                    Anointed Praise & Music Ministry
+                  </h3>
+                  <p className="text-muted mb-4" style={{ lineHeight: '1.7', fontSize: '0.95rem' }}>
                     Our worship team brings together passionate vocalists, guitarists, keyboardists, and intercessors dedicated to ushering the congregation into a powerful atmosphere of God's presence and glory every week.
                   </p>
-                  <div className="d-flex align-items-center gap-3">
+                  <div className="d-flex align-items-center gap-2 flex-wrap">
                     <span className="badge bg-white text-purple shadow-sm px-3 py-2 rounded-pill" style={{ color: '#6B21A8', border: '1px solid #E9D5FF' }}>
                       <i className="fas fa-microphone me-1"></i> Live Vocal Choir
                     </span>
@@ -360,7 +372,7 @@ export const HomePage = () => {
             </div>
           </ScrollReveal>
 
-          <StaggerSequence as="div" className="row g-4 mb-4" initialDelay={50} staggerDelay={40} animation="fade-up">
+          <StaggerSequence as="div" className="row g-3 g-md-4 mb-4" initialDelay={50} staggerDelay={40} animation="fade-up">
             {ministries.map((m) => (
               <div className="col-md-6 col-lg-4" key={m.id}>
                 <div
@@ -381,17 +393,17 @@ export const HomePage = () => {
                   <div
                     className="mb-3 d-flex align-items-center justify-content-center rounded-4"
                     style={{
-                      width: '56px',
-                      height: '56px',
+                      width: '52px',
+                      height: '52px',
                       backgroundColor: m.color,
                       color: '#FFFFFF',
-                      fontSize: '24px',
+                      fontSize: '22px',
                       boxShadow: '0 4px 12px rgba(0,0,0,0.15)',
                     }}
                   >
                     <i className={m.icon}></i>
                   </div>
-                  <h4 className="fw-bold mb-2" style={{ color: '#1E293B' }}>{m.name}</h4>
+                  <h4 className="fw-bold mb-2" style={{ color: '#1E293B', fontSize: '1.2rem' }}>{m.name}</h4>
                   <p className="text-secondary small mb-0" style={{ lineHeight: '1.6' }}>{m.desc}</p>
                 </div>
               </div>
@@ -401,9 +413,9 @@ export const HomePage = () => {
       </section>
 
       {/* ═══════ TESTIMONIALS & PRAISE REPORTS SECTION ═══════ */}
-      <section className="py-5" style={{ backgroundColor: '#F9FAFB' }}>
-        <div className="container py-3">
-          <div className="text-center max-w-2xl mx-auto mb-5" style={{ maxWidth: '650px' }}>
+      <section className="py-4 py-md-5" style={{ backgroundColor: '#F9FAFB' }}>
+        <div className="container py-2 py-md-3">
+          <div className="text-center max-w-2xl mx-auto mb-4 mb-md-5" style={{ maxWidth: '650px' }}>
             <ScrollReveal animation="fade-down" delay={0}>
               <span className="badge px-3 py-2 rounded-pill mb-2" style={{ backgroundColor: '#F3E8FF', color: '#6B21A8', fontWeight: 'bold' }}>
                 PRAISE REPORTS & MIRACLES
@@ -411,13 +423,13 @@ export const HomePage = () => {
             </ScrollReveal>
 
             <ScrollReveal animation="fade-up" delay={30}>
-              <h2 className="fw-bold mb-2 text-center" style={{ color: '#581C87', fontSize: '2.2rem' }}>
+              <h2 className="fw-bold mb-2 text-center" style={{ color: '#581C87', fontSize: 'clamp(1.75rem, 4vw, 2.3rem)' }}>
                 Testimonies of God's Greatness
               </h2>
             </ScrollReveal>
 
             <ScrollReveal animation="fade-up" delay={50}>
-              <p className="text-muted text-center mb-0">
+              <p className="text-muted text-center mb-0" style={{ fontSize: 'clamp(0.9rem, 2vw, 1rem)' }}>
                 Read how prayer and faith are transforming lives, bringing physical healing, financial provision, and family breakthroughs.
               </p>
             </ScrollReveal>
@@ -425,15 +437,15 @@ export const HomePage = () => {
 
           {/* Featured Testimony Family Photo Showcase */}
           <ScrollReveal animation="zoom-in" delay={50}>
-            <div className="card border-0 shadow-lg rounded-4 overflow-hidden mb-5" style={{ backgroundColor: '#FFFFFF' }}>
+            <div className="card border-0 shadow-lg rounded-4 overflow-hidden mb-4 mb-md-5" style={{ backgroundColor: '#FFFFFF' }}>
               <div className="row g-0 align-items-center">
                 <div className="col-lg-6">
-                  <div className="position-relative overflow-hidden img-reveal-wrapper" style={{ minHeight: '340px' }}>
+                  <div className="position-relative overflow-hidden img-reveal-wrapper" style={{ minHeight: 'clamp(220px, 40vw, 340px)' }}>
                     <img
                       src="/assets/testimony-family.jpg"
                       alt="Families Experiencing Miracles in Church Service"
                       className="w-100 h-100"
-                      style={{ objectFit: 'cover', minHeight: '340px' }}
+                      style={{ objectFit: 'cover', minHeight: 'clamp(220px, 40vw, 340px)' }}
                     />
                     <div
                       className="position-absolute bottom-0 start-0 end-0 p-3 text-white d-flex align-items-center gap-2"
@@ -453,11 +465,13 @@ export const HomePage = () => {
                   <span className="badge bg-purple text-white px-3 py-2 rounded-pill mb-3" style={{ backgroundColor: '#7E22CE' }}>
                     FAITH & MIRACLES
                   </span>
-                  <h3 className="fw-bold mb-3" style={{ color: '#581C87' }}>Real Stories of Healing & Hope</h3>
-                  <p className="text-muted mb-4" style={{ lineHeight: '1.7' }}>
+                  <h3 className="fw-bold mb-3" style={{ color: '#581C87', fontSize: 'clamp(1.4rem, 3vw, 1.85rem)' }}>
+                    Real Stories of Healing & Hope
+                  </h3>
+                  <p className="text-muted mb-4" style={{ lineHeight: '1.7', fontSize: '0.95rem' }}>
                     Every week, men, women, and families witness divine intervention — from sicknesses cured to restored relationships and financial breakthroughs through intercessory prayer.
                   </p>
-                  <div className="d-flex align-items-center gap-3">
+                  <div className="d-flex align-items-center gap-2 flex-wrap">
                     <span className="badge bg-light text-purple shadow-sm px-3 py-2 rounded-pill" style={{ color: '#6B21A8', border: '1px solid #E9D5FF' }}>
                       <i className="fas fa-pray me-1"></i> Intercessory Prayer
                     </span>
@@ -470,7 +484,7 @@ export const HomePage = () => {
             </div>
           </ScrollReveal>
 
-          <StaggerSequence as="div" className="row g-4 mb-4" initialDelay={50} staggerDelay={40} animation="zoom-in">
+          <StaggerSequence as="div" className="row g-3 g-md-4 mb-4" initialDelay={50} staggerDelay={40} animation="zoom-in">
             {testimonials.map((t) => (
               <div className="col-md-4" key={t.id}>
                 <div className="card h-100 border-0 shadow-sm rounded-4 p-4 d-flex flex-column justify-content-between" style={{ backgroundColor: '#FFFFFF', borderLeft: '4px solid #7E22CE' }}>
@@ -483,7 +497,7 @@ export const HomePage = () => {
                         {t.category}
                       </span>
                     </div>
-                    <p className="text-secondary mb-4" style={{ fontStyle: 'italic', fontSize: '0.98rem', lineHeight: '1.6' }}>
+                    <p className="text-secondary mb-4" style={{ fontStyle: 'italic', fontSize: '0.95rem', lineHeight: '1.6' }}>
                       "{t.text}"
                     </p>
                   </div>
@@ -516,5 +530,3 @@ export const HomePage = () => {
     </div>
   );
 };
-
-

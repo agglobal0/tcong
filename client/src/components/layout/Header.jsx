@@ -1,9 +1,10 @@
 import React, { useState, useEffect } from 'react';
-import { NavLink, Link } from 'react-router-dom';
+import { NavLink, Link, useLocation } from 'react-router-dom';
 
 export const Header = () => {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
+  const location = useLocation();
 
   useEffect(() => {
     const handleScroll = () => {
@@ -12,6 +13,23 @@ export const Header = () => {
     window.addEventListener('scroll', handleScroll, { passive: true });
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
+
+  // Close mobile drawer on route change
+  useEffect(() => {
+    setMobileMenuOpen(false);
+  }, [location.pathname]);
+
+  // Lock body scroll when mobile menu is open
+  useEffect(() => {
+    if (mobileMenuOpen) {
+      document.body.style.overflow = 'hidden';
+    } else {
+      document.body.style.overflow = '';
+    }
+    return () => {
+      document.body.style.overflow = '';
+    };
+  }, [mobileMenuOpen]);
 
   const navItems = [
     { label: 'Home', path: '/' },
@@ -59,6 +77,7 @@ export const Header = () => {
             className={`hamburger ${mobileMenuOpen ? 'active' : ''}`}
             onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
             aria-label="Toggle navigation"
+            aria-expanded={mobileMenuOpen}
           >
             <span></span>
             <span></span>
@@ -68,7 +87,12 @@ export const Header = () => {
       </header>
 
       {/* Mobile Drawer */}
-      <div className={`mobile-menu ${mobileMenuOpen ? 'open' : ''}`}>
+      <div
+        className={`mobile-menu ${mobileMenuOpen ? 'open' : ''}`}
+        onClick={(e) => {
+          if (e.target === e.currentTarget) setMobileMenuOpen(false);
+        }}
+      >
         <div className="mobile-menu-inner">
           {navItems.map((item) => (
             <Link
@@ -95,4 +119,3 @@ export const Header = () => {
     </>
   );
 };
-

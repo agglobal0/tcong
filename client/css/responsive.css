@@ -1,4 +1,4 @@
-/* Responsive breakpoint overrides */
+/* Responsive breakpoint overrides & Modern Fluid Layout Rules */
 
 /* Extra large screens */
 @media (min-width: 1400px) {
@@ -6,7 +6,7 @@
     max-width: 1320px;
   }
   .hero-title {
-    font-size: 5rem;
+    font-size: 4.8rem;
   }
 }
 
@@ -34,13 +34,19 @@
     grid-template-columns: repeat(2, 1fr) !important;
     gap: var(--space-6) !important;
   }
+
+  .welcome-grid,
+  .location-grid {
+    grid-template-columns: 1fr;
+    gap: var(--space-8);
+  }
 }
 
 /* Small tablet / Large phone */
 @media (max-width: 768px) {
   :root {
     --header-height: 64px;
-    --space-20: 3.5rem;
+    --space-20: 3rem;
   }
 
   .container-custom {
@@ -49,22 +55,44 @@
 
   .hero {
     min-height: 70vh;
-    padding: var(--space-12) 0;
+    padding: var(--space-10) 0;
   }
+
   .hero-title {
     font-size: var(--text-3xl);
   }
+
   .hero-description {
     font-size: var(--text-base);
   }
+
   .hero-actions {
     flex-direction: column;
     width: 100%;
+    max-width: 360px;
+    margin-left: auto;
+    margin-right: auto;
     gap: var(--space-3);
   }
+
   .hero-actions .btn {
     width: 100%;
     justify-content: center;
+  }
+
+  .hero-btn-group {
+    flex-direction: column;
+    align-items: stretch;
+    width: 100%;
+    max-width: 360px;
+    margin: 0 auto;
+    gap: 12px !important;
+  }
+
+  .hero-btn-group .btn {
+    width: 100%;
+    justify-content: center;
+    padding: 14px 20px !important;
   }
 
   .grid-2,
@@ -75,16 +103,18 @@
   }
 
   .section {
-    padding: var(--space-12) 0;
+    padding: var(--space-10) 0;
   }
 
   .footer-grid {
     grid-template-columns: 1fr;
     gap: var(--space-6);
   }
+
   .footer-about {
     max-width: 100%;
   }
+
   .footer-bottom-inner {
     flex-direction: column;
     text-align: center;
@@ -98,6 +128,7 @@
   .page-header {
     padding: var(--space-12) var(--space-4) var(--space-6);
   }
+
   .page-header-title {
     font-size: var(--text-3xl);
   }
@@ -112,39 +143,85 @@
   /* Modal scaling on mobile */
   .modal-content {
     margin: var(--space-3);
-    max-height: 85vh;
+    max-height: 88vh;
+  }
+
+  /* Safe Area Padding for notch & gesture bar */
+  .site-header {
+    padding-top: env(safe-area-inset-top, 0px);
+  }
+
+  .site-footer {
+    padding-bottom: max(var(--space-8), env(safe-area-inset-bottom, 20px));
   }
 }
 
-/* Small Mobile Phones */
+/* Small Mobile Phones (iPhone SE, Galaxy A, etc.) */
 @media (max-width: 480px) {
   .container-custom {
     padding: 0 var(--space-3);
   }
 
+  .hero-section {
+    min-height: 70vh;
+    padding-top: 2rem !important;
+    padding-bottom: 2rem !important;
+  }
+
+  .hero-welcome-badge {
+    font-size: 0.72rem !important;
+    padding: 6px 12px !important;
+    letter-spacing: 0.5px !important;
+  }
+
+  .hero-headline {
+    font-size: 1.85rem !important;
+    line-height: 1.25 !important;
+    margin-bottom: 0.75rem !important;
+  }
+
+  .hero-lead-text {
+    font-size: 0.95rem !important;
+    line-height: 1.55 !important;
+    padding: 0 4px !important;
+    margin-bottom: 1.5rem !important;
+  }
+
   .hero-title {
     font-size: var(--text-2xl);
   }
+
   .section-title {
     font-size: var(--text-xl);
   }
+
   .donation-amounts {
     grid-template-columns: repeat(2, 1fr);
     gap: var(--space-2);
   }
+
   .bible-verse-text {
     font-size: var(--text-base);
   }
+
   .cta-banner {
     padding: var(--space-6) var(--space-4);
   }
+
   .cta-banner-title {
     font-size: var(--text-xl);
   }
 
   .btn-lg {
-    padding: var(--space-3) var(--space-6);
+    padding: var(--space-3) var(--space-5);
     font-size: var(--text-sm);
+  }
+
+  /* Card paddings on small screens */
+  .card-body,
+  .card.p-4,
+  .card.p-md-5 {
+    padding: 1.25rem !important;
   }
 }
 
@@ -157,7 +234,8 @@
   .hamburger,
   .btn,
   .newsletter-section,
-  .cta-banner {
+  .cta-banner,
+  .floating-widgets-container {
     display: none !important;
   }
   .main-content {
@@ -169,4 +247,3 @@
     background: #fff;
   }
 }
-

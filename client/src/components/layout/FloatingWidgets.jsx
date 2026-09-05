@@ -1,112 +1,96 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 
 export const FloatingWidgets = () => {
+  const [showScrollTop, setShowScrollTop] = useState(false);
+  const [isExpanded, setIsExpanded] = useState(false);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      setShowScrollTop(window.scrollY > 280);
+    };
+    window.addEventListener('scroll', handleScroll, { passive: true });
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
+
   const scrollToTop = () => {
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
   return (
-    <div
-      style={{
-        position: 'fixed',
-        right: '20px',
-        bottom: '80px',
-        zIndex: 999,
-        display: 'flex',
-        flexDirection: 'column',
-        alignItems: 'center',
-        gap: '16px',
-      }}
-    >
-      {/* Call Action */}
-      <a
-        href="tel:+919876543210"
-        style={{
-          display: 'flex',
-          flexDirection: 'column',
-          alignItems: 'center',
-          textDecoration: 'none',
-        }}
-      >
-        <div
-          style={{
-            width: '48px',
-            height: '48px',
-            borderRadius: '50%',
-            backgroundColor: '#FFFFFF',
-            color: '#1E293B',
-            border: '2px solid #000000',
-            display: 'flex',
-            alignItems: 'center',
-            justifyContent: 'center',
-            fontSize: '18px',
-            boxShadow: '0 4px 12px rgba(0,0,0,0.15)',
-            transition: 'transform 0.2s',
-          }}
-          onMouseEnter={(e) => (e.currentTarget.style.transform = 'scale(1.1)')}
-          onMouseLeave={(e) => (e.currentTarget.style.transform = 'scale(1)')}
-        >
-          <i className="fas fa-phone-alt"></i>
-        </div>
-        <span style={{ fontSize: '11px', color: '#1E293B', fontWeight: 'bold', marginTop: '4px' }}>Call</span>
-      </a>
-
-      {/* Pray Action */}
-      <Link
-        to="/prayer-request"
-        style={{
-          display: 'flex',
-          flexDirection: 'column',
-          alignItems: 'center',
-          textDecoration: 'none',
-        }}
-      >
-        <div
-          style={{
-            width: '48px',
-            height: '48px',
-            borderRadius: '50%',
-            backgroundColor: '#FFFFFF',
-            color: '#1E293B',
-            border: '2px solid #000000',
-            display: 'flex',
-            alignItems: 'center',
-            justifyContent: 'center',
-            fontSize: '18px',
-            boxShadow: '0 4px 12px rgba(0,0,0,0.15)',
-            transition: 'transform 0.2s',
-          }}
-          onMouseEnter={(e) => (e.currentTarget.style.transform = 'scale(1.1)')}
-          onMouseLeave={(e) => (e.currentTarget.style.transform = 'scale(1)')}
-        >
-          <i className="fas fa-hands"></i>
-        </div>
-        <span style={{ fontSize: '11px', color: '#1E293B', fontWeight: 'bold', marginTop: '4px' }}>Pray</span>
-      </Link>
-
-      {/* Scroll to Top */}
+    <div className="floating-widgets-container" id="floatingWidgets">
+      {/* Scroll to Top Button - Appears only when scrolled */}
       <button
         onClick={scrollToTop}
-        style={{
-          width: '36px',
-          height: '36px',
-          borderRadius: '50%',
-          backgroundColor: '#6B7280',
-          color: '#FFFFFF',
-          border: 'none',
-          cursor: 'pointer',
-          display: 'flex',
-          alignItems: 'center',
-          justifyContent: 'center',
-          fontSize: '14px',
-          boxShadow: '0 2px 8px rgba(0,0,0,0.2)',
-          marginTop: '8px',
-        }}
+        className={`floating-scroll-top-btn ${showScrollTop ? 'visible' : ''}`}
         aria-label="Scroll to top"
+        title="Scroll to top"
       >
         <i className="fas fa-chevron-up"></i>
       </button>
+
+      {/* Expanded Quick Action Menu Overlay / Speed Dial Items */}
+      <div className={`floating-actions-menu ${isExpanded ? 'open' : ''}`}>
+        {/* Telephone Action */}
+        <a
+          href="tel:+919876543210"
+          className="floating-action-item call-action"
+          onClick={() => setIsExpanded(false)}
+          title="Call 24/7 Prayer Tower"
+        >
+          <div className="action-icon">
+            <i className="fas fa-phone-alt"></i>
+          </div>
+          <div className="action-text">
+            <span className="action-title">Call 24/7 Prayer Tower</span>
+            <span className="action-sub">+91 98765 43210</span>
+          </div>
+        </a>
+
+        {/* Prayer Request Action */}
+        <Link
+          to="/prayer-request"
+          className="floating-action-item prayer-action"
+          onClick={() => setIsExpanded(false)}
+          title="Submit Prayer Request"
+        >
+          <div className="action-icon">
+            <i className="fas fa-hands-praying"></i>
+          </div>
+          <div className="action-text">
+            <span className="action-title">Request Prayer 24/7</span>
+            <span className="action-sub">Confidential Intercession</span>
+          </div>
+        </Link>
+      </div>
+
+      {/* Main Floating Trigger Button (Speed Dial) */}
+      <button
+        type="button"
+        className={`floating-main-trigger ${isExpanded ? 'active' : ''}`}
+        onClick={() => setIsExpanded(!isExpanded)}
+        aria-label="Toggle Quick Prayer & Call Actions"
+        title={isExpanded ? 'Close Quick Menu' : 'Prayer & Help'}
+      >
+        <span className="trigger-icon-closed">
+          <i className="fas fa-hands-praying"></i>
+        </span>
+        <span className="trigger-icon-open">
+          <i className="fas fa-times"></i>
+        </span>
+        <span className="trigger-label d-none d-sm-inline-block">
+          {isExpanded ? 'Close' : 'Prayer 24/7'}
+        </span>
+        {!isExpanded && <span className="trigger-pulse"></span>}
+      </button>
+
+      {/* Backdrop for mobile to easily close menu when tapped outside */}
+      {isExpanded && (
+        <div
+          className="floating-backdrop"
+          onClick={() => setIsExpanded(false)}
+        />
+      )}
     </div>
   );
 };
