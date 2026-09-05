@@ -1,18 +1,28 @@
 const RENDER_BACKEND_URL = 'https://tcong.onrender.com/api';
 
 const getApiBase = () => {
-  if (import.meta.env.VITE_API_URL) {
-    return import.meta.env.VITE_API_URL;
+  let url = import.meta.env.VITE_API_URL;
+  if (!url || typeof url !== 'string' || !url.trim()) {
+    return '/api';
   }
-  return '/api';
+  url = url.trim().replace(/\/+$/, '');
+  if (!url.endsWith('/api')) {
+    url = `${url}/api`;
+  }
+  return url;
 };
 
 const API_BASE = getApiBase();
 
 export const api = {
   async request(endpoint, options = {}) {
-    const primaryUrl = `${API_BASE}${endpoint}`;
-    const fallbackUrl = `${RENDER_BACKEND_URL}${endpoint}`;
+    let cleanEndpoint = endpoint.startsWith('/') ? endpoint : `/${endpoint}`;
+    if (cleanEndpoint.startsWith('/api/')) {
+      cleanEndpoint = cleanEndpoint.replace(/^\/api/, '');
+    }
+
+    const primaryUrl = `${API_BASE}${cleanEndpoint}`;
+    const fallbackUrl = `${RENDER_BACKEND_URL}${cleanEndpoint}`;
 
     const token = typeof window !== 'undefined' ? localStorage.getItem('token') : null;
     const hasBody = options.body && !(options.body instanceof FormData);
@@ -29,18 +39,27 @@ export const api = {
 
     try {
       let response = await fetch(primaryUrl, config);
+      const isJson = (response.headers.get('content-type') || '').includes('application/json');
 
-      if (!response.ok && primaryUrl !== fallbackUrl) {
+      if ((!response.ok || !isJson) && primaryUrl !== fallbackUrl) {
         try {
           const fbRes = await fetch(fallbackUrl, config);
-          if (fbRes.ok) response = fbRes;
+          const fbIsJson = (fbRes.headers.get('content-type') || '').includes('application/json');
+          if (fbRes.ok && fbIsJson) {
+            response = fbRes;
+          }
         } catch (e) {}
+      }
+
+      const finalIsJson = (response.headers.get('content-type') || '').includes('application/json');
+      if (!finalIsJson && !response.ok) {
+        throw { status: response.status, message: `Server returned non-JSON response (${response.status})` };
       }
 
       const data = await response.json().catch(() => ({}));
 
       if (!response.ok) {
-        if (response.status === 401 && !endpoint.includes('/auth/login')) {
+        if (response.status === 401 && !cleanEndpoint.includes('/auth/login')) {
           if (typeof window !== 'undefined' && window.location.pathname.startsWith('/admin')) {
             window.dispatchEvent(new CustomEvent('unauthorized'));
           }
@@ -54,8 +73,11 @@ export const api = {
       if (primaryUrl !== fallbackUrl) {
         try {
           const fbRes = await fetch(fallbackUrl, config);
-          const fbData = await fbRes.json().catch(() => ({}));
-          if (fbRes.ok) return fbData;
+          const fbIsJson = (fbRes.headers.get('content-type') || '').includes('application/json');
+          if (fbRes.ok && fbIsJson) {
+            const fbData = await fbRes.json();
+            return fbData;
+          }
         } catch (e) {}
       }
       if (error.status && error.message) throw error;
