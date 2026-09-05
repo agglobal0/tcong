@@ -11,12 +11,28 @@ export const BlogPage = () => {
   const [blogs, setBlogs] = useState([]);
   const [loading, setLoading] = useState(true);
 
-  useEffect(() => {
+  const loadBlogs = (retryCount = 0) => {
+    setLoading(true);
     api.public
       .getBlogs()
-      .then((res) => setBlogs(res.data || []))
-      .catch(console.error)
+      .then((res) => {
+        const list = res.data || [];
+        setBlogs(list);
+        if (list.length === 0 && retryCount < 2) {
+          setTimeout(() => loadBlogs(retryCount + 1), 2000);
+        }
+      })
+      .catch((err) => {
+        console.error(err);
+        if (retryCount < 3) {
+          setTimeout(() => loadBlogs(retryCount + 1), 2500);
+        }
+      })
       .finally(() => setLoading(false));
+  };
+
+  useEffect(() => {
+    loadBlogs();
   }, []);
 
   return (

@@ -10,12 +10,28 @@ export const SermonsPage = () => {
   const [sermons, setSermons] = useState([]);
   const [loading, setLoading] = useState(true);
 
-  useEffect(() => {
+  const loadSermons = (retryCount = 0) => {
+    setLoading(true);
     api.public
       .getSermons()
-      .then((res) => setSermons(res.data || []))
-      .catch(console.error)
+      .then((res) => {
+        const list = res.data || [];
+        setSermons(list);
+        if (list.length === 0 && retryCount < 2) {
+          setTimeout(() => loadSermons(retryCount + 1), 2000);
+        }
+      })
+      .catch((err) => {
+        console.error(err);
+        if (retryCount < 3) {
+          setTimeout(() => loadSermons(retryCount + 1), 2500);
+        }
+      })
       .finally(() => setLoading(false));
+  };
+
+  useEffect(() => {
+    loadSermons();
   }, []);
 
   return (

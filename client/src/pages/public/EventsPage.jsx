@@ -10,12 +10,28 @@ export const EventsPage = () => {
   const [events, setEvents] = useState([]);
   const [loading, setLoading] = useState(true);
 
-  useEffect(() => {
+  const loadEvents = (retryCount = 0) => {
+    setLoading(true);
     api.public
       .getEvents()
-      .then((res) => setEvents(res.data || []))
-      .catch(console.error)
+      .then((res) => {
+        const list = res.data || [];
+        setEvents(list);
+        if (list.length === 0 && retryCount < 2) {
+          setTimeout(() => loadEvents(retryCount + 1), 2000);
+        }
+      })
+      .catch((err) => {
+        console.error(err);
+        if (retryCount < 3) {
+          setTimeout(() => loadEvents(retryCount + 1), 2500);
+        }
+      })
       .finally(() => setLoading(false));
+  };
+
+  useEffect(() => {
+    loadEvents();
   }, []);
 
   return (
@@ -55,8 +71,8 @@ export const EventsPage = () => {
                   {events.map((evt) => (
                     <div className="col-md-6 col-lg-4" key={evt.id}>
                       <div className="card h-100 border-0 shadow-sm rounded-4 overflow-hidden img-reveal-wrapper">
-                        {evt.image_url && (
-                          <img src={evt.image_url} alt={evt.title} className="card-img-top" style={{ height: '220px', objectFit: 'cover' }} />
+                        {(evt.featured_image || evt.image_url) && (
+                          <img src={evt.featured_image || evt.image_url} alt={evt.title} className="card-img-top" style={{ height: '220px', objectFit: 'cover' }} />
                         )}
                         <div className="card-body p-4 d-flex flex-column">
                           <span className="badge bg-primary-subtle text-primary mb-2 align-self-start">

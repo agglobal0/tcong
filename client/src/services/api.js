@@ -1,6 +1,4 @@
-/**
- * Centralized API Service for TCONG React Application
- */
+const RENDER_BACKEND_URL = 'https://tcong.onrender.com/api';
 
 const getApiBase = () => {
   if (import.meta.env.VITE_API_URL) {
@@ -13,7 +11,8 @@ const API_BASE = getApiBase();
 
 export const api = {
   async request(endpoint, options = {}) {
-    const url = `${API_BASE}${endpoint}`;
+    const primaryUrl = `${API_BASE}${endpoint}`;
+    const fallbackUrl = `${RENDER_BACKEND_URL}${endpoint}`;
 
     const token = typeof window !== 'undefined' ? localStorage.getItem('token') : null;
     const hasBody = options.body && !(options.body instanceof FormData);
@@ -29,7 +28,15 @@ export const api = {
     };
 
     try {
-      const response = await fetch(url, config);
+      let response = await fetch(primaryUrl, config);
+
+      if (!response.ok && primaryUrl !== fallbackUrl) {
+        try {
+          const fbRes = await fetch(fallbackUrl, config);
+          if (fbRes.ok) response = fbRes;
+        } catch (e) {}
+      }
+
       const data = await response.json().catch(() => ({}));
 
       if (!response.ok) {
@@ -44,6 +51,13 @@ export const api = {
 
       return data;
     } catch (error) {
+      if (primaryUrl !== fallbackUrl) {
+        try {
+          const fbRes = await fetch(fallbackUrl, config);
+          const fbData = await fbRes.json().catch(() => ({}));
+          if (fbRes.ok) return fbData;
+        } catch (e) {}
+      }
       if (error.status && error.message) throw error;
       console.error('API Error:', error);
       throw { success: false, message: error.message || 'Network error. Please check your connection.' };
