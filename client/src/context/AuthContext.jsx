@@ -9,13 +9,21 @@ export const AuthProvider = ({ children }) => {
 
   const checkAuth = async () => {
     try {
+      const token = typeof window !== 'undefined' ? localStorage.getItem('token') : null;
+      if (!token) {
+        setUser(null);
+        setLoading(false);
+        return;
+      }
       const res = await api.auth.me();
       if (res.success && res.data) {
         setUser(res.data);
       } else {
+        if (typeof window !== 'undefined') localStorage.removeItem('token');
         setUser(null);
       }
     } catch {
+      if (typeof window !== 'undefined') localStorage.removeItem('token');
       setUser(null);
     } finally {
       setLoading(false);
