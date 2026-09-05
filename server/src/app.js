@@ -24,22 +24,13 @@ app.use(helmet({
 }));
 
 app.use(cors({
-  origin: function (origin, callback) {
-    if (!origin) return callback(null, true);
-    if (
-      process.env.NODE_ENV !== 'production' ||
-      origin.includes('vercel.app') ||
-      origin.includes('localhost') ||
-      (process.env.CLIENT_URL && origin === process.env.CLIENT_URL)
-    ) {
-      return callback(null, true);
-    }
-    return callback(null, true);
-  },
+  origin: true,
   credentials: true,
-  methods: ['GET', 'POST', 'PUT', 'DELETE', 'PATCH'],
-  allowedHeaders: ['Content-Type', 'Authorization']
+  methods: ['GET', 'HEAD', 'PUT', 'PATCH', 'POST', 'DELETE', 'OPTIONS'],
+  allowedHeaders: ['*'],
+  exposedHeaders: ['*']
 }));
+app.options('*', cors());
 
 // ========================
 // Body Parsing
