@@ -32,38 +32,27 @@ export const StaggerSequence = ({
       items.forEach((item) => item.classList.add('is-revealed'));
     };
 
-    const rect = el.getBoundingClientRect();
-    const viewHeight = window.innerHeight || document.documentElement.clientHeight;
-    if (rect.top <= viewHeight + 150) {
-      revealItems();
-      return;
+    revealItems();
+    const timer = setTimeout(revealItems, 60);
+
+    if (typeof window !== 'undefined' && 'IntersectionObserver' in window) {
+      const observer = new IntersectionObserver(
+        ([entry]) => {
+          if (entry.isIntersecting) {
+            revealItems();
+          }
+        },
+        { threshold: 0 }
+      );
+      observer.observe(el);
+      return () => {
+        clearTimeout(timer);
+        observer.disconnect();
+      };
     }
 
-    if (typeof window === 'undefined' || !('IntersectionObserver' in window)) {
-      revealItems();
-      return;
-    }
-
-    const observer = new IntersectionObserver(
-      ([entry]) => {
-        if (entry.isIntersecting) {
-          revealItems();
-          observer.unobserve(el);
-        }
-      },
-      {
-        root: null,
-        rootMargin: '150px 0px 150px 0px',
-        threshold: 0,
-      }
-    );
-
-    observer.observe(el);
-
-    return () => {
-      observer.disconnect();
-    };
-  }, []);
+    return () => clearTimeout(timer);
+  }, [children]);
 
 
 
