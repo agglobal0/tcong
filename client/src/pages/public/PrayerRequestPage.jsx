@@ -1,8 +1,10 @@
 import React, { useState } from 'react';
+import { Helmet } from 'react-helmet-async';
 import { api } from '../../services/api';
 import { useToast } from '../../context/ToastContext';
 import { ScrollReveal } from '../../components/common/ScrollReveal';
 import { TextSequence } from '../../components/common/TextSequence';
+
 
 export const PrayerRequestPage = () => {
   const { addToast } = useToast();
@@ -43,11 +45,18 @@ export const PrayerRequestPage = () => {
 
   return (
     <div className="prayer-request-page">
+      <Helmet>
+        <title>Submit a Prayer Request 24/7 | Online Prayer Tower | TCONG Melbourne</title>
+        <meta name="description" content="Submit your confidential prayer request online 24/7. TCONG Melbourne's intercessory prayer team, led by Pastor Jaskaran Heer, stands in faith for your healing & breakthrough." />
+        <link rel="canonical" href="https://tcong-murex.vercel.app/prayer-request" />
+        <meta property="og:title" content="24/7 Prayer Request | The Church of New Generation Melbourne" />
+        <meta property="og:url" content="https://tcong-murex.vercel.app/prayer-request" />
+      </Helmet>
       {/* ═══════ HERO BANNER ═══════ */}
       <section className="bg-primary text-white py-5 text-center" style={{ background: 'linear-gradient(135deg, #4C1D95 0%, #6B21A8 100%)' }}>
         <div className="container py-4">
           <TextSequence
-            text="24/7 Prayer Request & Intercession Tower"
+            text="Submit Your Prayer Request — 24/7 Intercession Tower"
             as="h1"
             className="display-4 fw-bold mb-3 text-white"
             delay={100}

@@ -1,16 +1,25 @@
 import React from 'react';
+import { Helmet } from 'react-helmet-async';
 import { ScrollReveal } from '../../components/common/ScrollReveal';
 import { TextSequence } from '../../components/common/TextSequence';
 import { StaggerSequence } from '../../components/common/StaggerSequence';
 
+
 export const AboutPage = () => {
   return (
     <div className="about-page">
+      <Helmet>
+        <title>About TCONG Melbourne | Pastor Jaskaran Heer | Church of New Generation</title>
+        <meta name="description" content="Discover TCONG Melbourne's story — a multi-ethnic Hindi, English & Punjabi Christian church led by Pastor Jaskaran Heer in Coolaroo, VIC. Our faith, vision & core values." />
+        <link rel="canonical" href="https://tcong-murex.vercel.app/about" />
+        <meta property="og:title" content="About The Church of New Generation Melbourne | Pastor Jaskaran Heer" />
+        <meta property="og:url" content="https://tcong-murex.vercel.app/about" />
+      </Helmet>
       {/* ═══════ HERO BANNER ═══════ */}
       <section className="bg-dark text-white py-5 text-center" style={{ background: 'linear-gradient(135deg, #0F172A 0%, #1E1B4B 100%)' }}>
         <div className="container py-4">
           <TextSequence
-            text="About Our Church & Ministry"
+            text="About TCONG — Our Church, Ministry & Story"
             as="h1"
             className="display-4 fw-bold mb-3 text-white"
             delay={100}

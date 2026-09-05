@@ -1,9 +1,11 @@
 import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
+import { Helmet } from 'react-helmet-async';
 import { api } from '../../services/api';
 import { TextSequence } from '../../components/common/TextSequence';
 import { ScrollReveal } from '../../components/common/ScrollReveal';
 import { StaggerSequence } from '../../components/common/StaggerSequence';
+
 
 export const BlogPage = () => {
   const [blogs, setBlogs] = useState([]);
@@ -19,10 +21,17 @@ export const BlogPage = () => {
 
   return (
     <div className="blog-page">
+      <Helmet>
+        <title>Christian Devotionals & Faith Articles | TCONG Melbourne Blog</title>
+        <meta name="description" content="Read inspiring Christian devotionals, faith reflections, and biblical teaching articles from The Church of New Generation Melbourne and Pastor Jaskaran Heer's ministry." />
+        <link rel="canonical" href="https://tcong-murex.vercel.app/blog" />
+        <meta property="og:title" content="TCONG Melbourne Blog | Faith Devotionals & Biblical Articles" />
+        <meta property="og:url" content="https://tcong-murex.vercel.app/blog" />
+      </Helmet>
       <section className="bg-dark text-white py-5 text-center" style={{ background: 'linear-gradient(135deg, #111827 0%, #1F2937 100%)' }}>
         <div className="container py-4">
           <TextSequence
-            text="Articles, Devotionals & Reflections"
+            text="Faith Devotionals, Articles & Biblical Reflections"
             as="h1"
             className="display-4 fw-bold mb-3 text-white"
             delay={100}

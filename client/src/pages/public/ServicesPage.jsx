@@ -1,11 +1,20 @@
 import React from 'react';
+import { Helmet } from 'react-helmet-async';
 import { ScrollReveal } from '../../components/common/ScrollReveal';
 import { TextSequence } from '../../components/common/TextSequence';
 import { StaggerSequence } from '../../components/common/StaggerSequence';
 
+
 export const ServicesPage = () => {
   return (
     <div className="services-page">
+      <Helmet>
+        <title>Sunday Hindi Church Services Melbourne | TCONG Worship Times & Schedule</title>
+        <meta name="description" content="Attend TCONG Melbourne's Sunday worship services in Hindi, English & Punjabi. Weekly prayer nights, youth fellowship & healing services at Coolaroo VIC 3048. All are welcome." />
+        <link rel="canonical" href="https://tcong-murex.vercel.app/services" />
+        <meta property="og:title" content="Sunday Hindi Church Services Melbourne | TCONG" />
+        <meta property="og:url" content="https://tcong-murex.vercel.app/services" />
+      </Helmet>
       {/* ═══════ HERO BANNER ═══════ */}
       <section className="bg-primary text-white py-5 text-center" style={{ background: 'linear-gradient(135deg, #1E1B4B 0%, #4338CA 100%)' }}>
         <div className="container py-4">

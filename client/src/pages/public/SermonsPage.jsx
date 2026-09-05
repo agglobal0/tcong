@@ -1,8 +1,10 @@
 import React, { useEffect, useState } from 'react';
+import { Helmet } from 'react-helmet-async';
 import { api } from '../../services/api';
 import { TextSequence } from '../../components/common/TextSequence';
 import { ScrollReveal } from '../../components/common/ScrollReveal';
 import { StaggerSequence } from '../../components/common/StaggerSequence';
+
 
 export const SermonsPage = () => {
   const [sermons, setSermons] = useState([]);
@@ -18,10 +20,17 @@ export const SermonsPage = () => {
 
   return (
     <div className="sermons-page">
+      <Helmet>
+        <title>Pastor Jaskaran Heer Sermons Online | Hindi Christian Preaching | TCONG Melbourne</title>
+        <meta name="description" content="Watch Pastor Jaskaran Heer's anointed Hindi & English sermons online. Healing, faith, prayer & deliverance messages from TCONG Melbourne's sermon archive." />
+        <link rel="canonical" href="https://tcong-murex.vercel.app/sermons" />
+        <meta property="og:title" content="Pastor Jaskaran Heer Sermons | TCONG Melbourne" />
+        <meta property="og:url" content="https://tcong-murex.vercel.app/sermons" />
+      </Helmet>
       <section className="bg-dark text-white py-5 text-center" style={{ background: 'linear-gradient(135deg, #1E1B4B 0%, #311B92 100%)' }}>
         <div className="container py-4">
           <TextSequence
-            text="Anointed Sermons & Media Center"
+            text="Pastor Jaskaran Heer — Hindi & English Sermon Archive"
             as="h1"
             className="display-4 fw-bold mb-3 text-white"
             delay={100}

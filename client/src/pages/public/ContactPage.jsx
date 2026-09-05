@@ -1,9 +1,11 @@
 import React, { useState } from 'react';
+import { Helmet } from 'react-helmet-async';
 import { api } from '../../services/api';
 import { useToast } from '../../context/ToastContext';
 import { useSettings } from '../../context/SettingsContext';
 import { ScrollReveal } from '../../components/common/ScrollReveal';
 import { TextSequence } from '../../components/common/TextSequence';
+
 
 export const ContactPage = () => {
   const { addToast } = useToast();
@@ -31,11 +33,18 @@ export const ContactPage = () => {
 
   return (
     <div className="contact-page">
+      <Helmet>
+        <title>Contact TCONG Melbourne | Visit The Church of New Generation | Coolaroo VIC 3048</title>
+        <meta name="description" content="Contact The Church of New Generation Melbourne. Visit us at Coolaroo VIC 3048 for Sunday services. Reach Pastor Jaskaran Heer's team for pastoral care & inquiries." />
+        <link rel="canonical" href="https://tcong-murex.vercel.app/contact" />
+        <meta property="og:title" content="Contact TCONG Melbourne | The Church of New Generation" />
+        <meta property="og:url" content="https://tcong-murex.vercel.app/contact" />
+      </Helmet>
       {/* ═══════ HERO BANNER ═══════ */}
       <section className="bg-primary text-white py-5 text-center" style={{ background: 'linear-gradient(135deg, #0F172A 0%, #1E293B 100%)' }}>
         <div className="container py-4">
           <TextSequence
-            text="Get In Touch & Visit Our Church"
+            text="Visit & Contact TCONG — Melbourne, Australia"
             as="h1"
             className="display-4 fw-bold mb-3 text-white"
             delay={100}

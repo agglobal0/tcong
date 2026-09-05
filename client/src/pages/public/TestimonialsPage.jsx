@@ -1,5 +1,7 @@
 import React, { useEffect, useState } from 'react';
+import { Helmet } from 'react-helmet-async';
 import { api } from '../../services/api';
+
 
 export const TestimonialsPage = () => {
   const [testimonials, setTestimonials] = useState([]);
@@ -15,10 +17,17 @@ export const TestimonialsPage = () => {
 
   return (
     <div className="testimonials-page">
+      <Helmet>
+        <title>Miracle Healing Testimonies | TCONG Melbourne | Pastor Jaskaran Heer Prayer Stories</title>
+        <meta name="description" content="Read real miracle testimonies from TCONG Melbourne — healings, family restorations, financial breakthroughs & answered prayers through Pastor Jaskaran Heer's intercession." />
+        <link rel="canonical" href="https://tcong-murex.vercel.app/testimonials" />
+        <meta property="og:title" content="Miracle Testimonies | The Church of New Generation Melbourne" />
+        <meta property="og:url" content="https://tcong-murex.vercel.app/testimonials" />
+      </Helmet>
       <section className="bg-primary text-white py-5 text-center">
         <div className="container py-4">
-          <h1 className="display-4 fw-bold mb-3 text-white">Testimonies & Stories</h1>
-          <p className="lead text-white-50">Hear how God is transforming lives in our community.</p>
+          <h1 className="display-4 fw-bold mb-3 text-white">Miracle Testimonies &amp; Praise Reports</h1>
+          <p className="lead text-white-50">Hear how God is healing, restoring, and transforming lives through TCONG Melbourne's intercession under Pastor Jaskaran Heer.</p>
         </div>
       </section>
 

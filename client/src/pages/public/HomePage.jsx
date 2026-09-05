@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
+import { Helmet } from 'react-helmet-async';
 import { ScrollReveal } from '../../components/common/ScrollReveal';
 import { TextSequence } from '../../components/common/TextSequence';
 import { StaggerSequence } from '../../components/common/StaggerSequence';
@@ -108,6 +109,14 @@ export const HomePage = () => {
 
   return (
     <div className="home-page">
+      <Helmet>
+        <title>The Church of New Generation Melbourne | Pastor Jaskaran Heer | Hindi Christian Church</title>
+        <meta name="description" content="Join Pastor Jaskaran Heer at The Church of New Generation, Melbourne's Hindi, English & Punjabi Christian church in Coolaroo VIC. Sunday services, 24/7 prayer, healing & live sermons." />
+        <link rel="canonical" href="https://tcong-murex.vercel.app/" />
+        <meta property="og:title" content="The Church of New Generation Melbourne | Pastor Jaskaran Heer" />
+        <meta property="og:url" content="https://tcong-murex.vercel.app/" />
+        <meta property="og:description" content="Melbourne's Hindi & English Christian church. Sunday worship, 24/7 prayer tower, healing sermons & miracle testimonies. Coolaroo VIC 3048." />
+      </Helmet>
       {/* ═══════ HERO BANNER WITH NATURAL CHURCH PHOTO ═══════ */}
       <section
         className="hero-section text-center text-white py-4 py-md-5 position-relative overflow-hidden"
@@ -140,7 +149,7 @@ export const HomePage = () => {
                 display: 'inline-block',
               }}
             >
-              WELCOME TO TCONG MINISTRIES — PASTOR JASKARAN HEER
+              WELCOME TO TCONG MINISTRIES — PASTOR JASKARAN HEER | MELBOURNE, AUSTRALIA
             </span>
           </ScrollReveal>
           
@@ -169,7 +178,7 @@ export const HomePage = () => {
                 padding: '0 10px',
               }}
             >
-              Join Pastor Jaskaran Heer & The Church of New Generation. Watch latest sermon broadcasts, request prayer 24/7, and receive God's promise.
+              Join Pastor Jaskaran Heer & The Church of New Generation — Melbourne's Hindi, English & Punjabi Christian community in Coolaroo, VIC. Watch our latest sermon broadcasts, request prayer 24/7, and receive God's daily promise of healing, hope, and restoration.
             </p>
           </ScrollReveal>
 
