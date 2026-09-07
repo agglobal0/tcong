@@ -1,541 +1,721 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { Link } from 'react-router-dom';
 import { Helmet } from 'react-helmet-async';
 import { ScrollReveal } from '../../components/common/ScrollReveal';
-import { TextSequence } from '../../components/common/TextSequence';
-import { StaggerSequence } from '../../components/common/StaggerSequence';
 
 export const HomePage = () => {
-  const [isHovered, setIsHovered] = useState(false);
+  // Hero Slider State
+  const [activeSlide, setActiveSlide] = useState(0);
+  const [isSliderPaused, setIsSliderPaused] = useState(false);
 
-  // Exact real YouTube video IDs provided by user
-  const realVideos = [
+  // Video Modal State
+  const [activeVideoModal, setActiveVideoModal] = useState(null);
+
+  // Hero Slides Data using uploaded church images
+  const slides = [
+    {
+      id: 'slide-1',
+      image: '/assets/slide-pastor.jpg',
+      badge: "GOD'S PROMISE FOR 2026",
+      title: "PROMISE PROMISE PROMISE",
+      pastor: 'DR. / PASTOR JASKARAN HEER',
+      subtitle: "The Lord shall open unto thee His good treasure and bless all the work of thine hand. Step into a year of divine favor, health & breakthroughs.",
+      primaryBtnText: 'CLICK TO WATCH',
+      primaryBtnAction: 'watch',
+      secondaryBtnText: 'REQUEST PRAYER 24/7',
+      secondaryBtnLink: '/prayer-request',
+      accentColor: '#B91C1C',
+    },
+    {
+      id: 'slide-2',
+      image: '/assets/slide-worship.jpg',
+      badge: 'ANOINTED WORSHIP & PRAISE',
+      title: "EXPERIENCE GOD'S TANGIBLE GLORY",
+      pastor: 'TCONG LIVE WORSHIP & CHOIR',
+      subtitle: 'Join us in heartfelt worship, deep spiritual fellowship, and uplifting praise in Hindi, English, and Punjabi every Sunday in Melbourne.',
+      primaryBtnText: 'JOIN SUNDAY SERVICE',
+      primaryBtnLink: '/services',
+      secondaryBtnText: 'EXPLORE MINISTRIES',
+      secondaryBtnLink: '/services',
+      accentColor: '#7E22CE',
+    },
+    {
+      id: 'slide-3',
+      image: '/assets/slide-hall.jpg',
+      badge: 'COMMUNITY & FELLOWSHIP',
+      title: 'A SPIRITUAL HOME FOR EVERY FAMILY',
+      pastor: 'THE CHURCH OF NEW GENERATION',
+      subtitle: 'Gather with believers who love, support, and lift one another in prayer. Experience the life-transforming power of the Living Word.',
+      primaryBtnText: 'CHURCH SERVICES & TIMINGS',
+      primaryBtnLink: '/services',
+      secondaryBtnText: 'VISIT COOLAROO VIC',
+      secondaryBtnLink: '/contact',
+      accentColor: '#059669',
+    },
+    {
+      id: 'slide-4',
+      image: '/assets/slide-prayer.jpg',
+      badge: '24/7 TELEPHONE PRAYER TOWER',
+      title: 'WE ARE PRAYING FOR YOU 24/7',
+      pastor: 'CONFIDENTIAL INTERCESSORY PRAYER',
+      subtitle: 'No storm is too big for God. Our anointed prayer ministers stand with you in faith for physical healing, family peace, and miracles.',
+      primaryBtnText: 'SUBMIT PRAYER REQUEST',
+      primaryBtnLink: '/prayer-request',
+      secondaryBtnText: 'CALL +61 481 839 109',
+      secondaryBtnLink: 'tel:+61481839109',
+      accentColor: '#D97706',
+    },
+  ];
+
+  // Auto-advance hero slides every 5.5 seconds
+  useEffect(() => {
+    if (isSliderPaused) return;
+    const interval = setInterval(() => {
+      setActiveSlide((prev) => (prev + 1) % slides.length);
+    }, 5500);
+    return () => clearInterval(interval);
+  }, [isSliderPaused, slides.length]);
+
+  const handlePrevSlide = () => {
+    setActiveSlide((prev) => (prev === 0 ? slides.length - 1 : prev - 1));
+  };
+
+  const handleNextSlide = () => {
+    setActiveSlide((prev) => (prev + 1) % slides.length);
+  };
+
+  // ═══════ VIDEO DATA (3 Provided Links + 2 Slots for Upcoming User Links) ═══════
+  const videoList = [
     {
       id: 'v1',
       youtubeId: 'oISsfRY4pOY',
-      title: 'Pastor Jaskaran Heer Sermon 1',
-      embedUrl: 'https://www.youtube.com/embed/oISsfRY4pOY',
+      title: 'Sunday Anointed Worship',
     },
     {
       id: 'v2',
       youtubeId: 'FZNPtnP6oj4',
-      title: 'Pastor Jaskaran Heer Sermon 2',
-      embedUrl: 'https://www.youtube.com/embed/FZNPtnP6oj4',
+      title: "Walking in God's Promises",
     },
     {
       id: 'v3',
       youtubeId: 'ShvdcgBemHU',
-      title: 'Pastor Jaskaran Heer Sermon 3',
-      embedUrl: 'https://www.youtube.com/embed/ShvdcgBemHU',
+      title: 'Miracles of Healing & Prayer',
+    },
+    {
+      id: 'v4',
+      youtubeId: 'oISsfRY4pOY', // Slot 4: User Link 4 (Ready to update)
+      title: 'Special Anointing Service',
+      isSlot: true,
+    },
+    {
+      id: 'v5',
+      youtubeId: 'FZNPtnP6oj4', // Slot 5: User Link 5 (Ready to update)
+      title: 'The Promise 2026',
+      isSlot: true,
     },
   ];
 
-  // Duplicated array for seamless continuous right-to-left automatic animation
-  const marqueeRealVideos = [...realVideos, ...realVideos, ...realVideos];
-
-  // Ministries
-  const ministries = [
-    {
-      id: 'worship',
-      name: 'Worship Ministry',
-      icon: 'fas fa-music',
-      desc: 'Leading the congregation into intimate worship, praise, and powerful presence of God through music & choir.',
-      color: '#8B5CF6',
-    },
+  // Ministries / Blessing Plans
+  const blessingPlans = [
     {
       id: 'youth',
-      name: 'Youth Ministry',
-      icon: 'fas fa-users',
-      desc: 'Empowering young people to stand strong in faith, build Christ-centered friendships, and lead with purpose.',
+      title: 'Youth & NextGen Ministry',
+      icon: 'fas fa-users-rays',
       color: '#EC4899',
+      bgColor: '#FDF2F8',
+      desc: 'Igniting the passion of young people to lead with Christ-like integrity and bold faith.',
+      link: '/events',
     },
     {
-      id: 'prayer',
-      name: 'Prayer Ministry',
-      icon: 'fas fa-praying-hands',
-      desc: 'Dedicated intercessors standing in prayer 24/7 for healing, family breakthroughs, and nation revival.',
-      color: '#3B82F6',
+      id: 'prayer-tower',
+      title: '24/7 Telephone Prayer Tower',
+      icon: 'fas fa-hands-praying',
+      color: '#7E22CE',
+      bgColor: '#FAF5FF',
+      desc: 'Continuous intercession standing in the gap for people suffering sickness, debt, or despair.',
+      link: '/prayer-request',
+    },
+    {
+      id: 'worship',
+      title: 'Anointed Worship Ministry',
+      icon: 'fas fa-music',
+      color: '#2563EB',
+      bgColor: '#EFF6FF',
+      desc: 'Ushering believers into the heavenly presence of God with spirit-filled music and songs.',
+      link: '/services',
+    },
+    {
+      id: 'family',
+      title: 'Family & Marriage Blessing',
+      icon: 'fas fa-house-chimney-heart',
+      color: '#059669',
+      bgColor: '#ECFDF5',
+      desc: 'Nurturing godly homes, strengthening marriages, and blessing children according to God’s Word.',
+      link: '/services',
     },
     {
       id: 'children',
-      name: "Children's Ministry",
-      icon: 'fas fa-child',
-      desc: "Nurturing the next generation in God's Word with engaging activities, Bible lessons, and love.",
-      color: '#10B981',
+      title: "Children's Sunday School",
+      icon: 'fas fa-children',
+      color: '#D97706',
+      bgColor: '#FFFBEB',
+      desc: 'Building foundational biblical knowledge through engaging stories, verses, and creative care.',
+      link: '/services',
     },
     {
       id: 'outreach',
-      name: 'Outreach Ministry',
+      title: 'Community Compassion Outreach',
       icon: 'fas fa-hand-holding-heart',
-      desc: 'Serving local communities with food drives, medical relief, clothing distribution, and practical love.',
-      color: '#F59E0B',
-    },
-    {
-      id: 'women',
-      name: "Women's Ministry",
-      icon: 'fas fa-female',
-      desc: 'Building strong, faith-filled women through fellowship, prayer circles, and inspirational Bible study.',
-      color: '#6366F1',
+      color: '#DC2626',
+      bgColor: '#FEF2F2',
+      desc: 'Extending hands of love through food aid, hospital visits, and benevolence to those in need.',
+      link: '/contact',
     },
   ];
 
   // Testimonials
-  const testimonials = [
+  const praiseReports = [
     {
       id: 1,
       name: 'Grace R.',
-      location: 'Chennai',
-      category: 'Miracle Healing',
-      text: 'I called the 24/7 Telephone Prayer Tower when doctors gave up hope. The prayer intercessor prayed with power, and the Lord completely healed me!',
-      avatar: 'https://images.unsplash.com/photo-1544005313-94ddf0286df2?auto=format&fit=crop&w=150&q=80',
+      location: 'Melbourne, Australia',
+      title: 'Supernatural Healing from Chronic Pain',
+      text: 'After months of severe spinal pain, I requested prayer during Sunday service. Pastor Jaskaran prayed with authority, and I was instantly touched by God’s healing power. I am completely pain-free today!',
+      badge: 'Miracle Healing',
     },
     {
       id: 2,
-      name: 'David K.',
-      location: 'New Delhi',
-      category: 'Job Provision',
-      text: 'After 8 months of unemployment, I claimed the Monthly Promise verse. Within 2 weeks, I received an amazing job offer beyond my expectations!',
-      avatar: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=150&q=80',
+      name: 'Amit & Priya S.',
+      location: 'Victoria, Australia',
+      title: 'Family Breakthrough & Financial Provision',
+      text: 'Our family faced enormous financial stress and immigration uncertainty. Through continuous support and intercession from TCONG Prayer Tower, doors miraculously opened beyond what we imagined!',
+      badge: 'Financial Breakthrough',
     },
     {
       id: 3,
-      name: 'Priya & Family',
-      location: 'Mumbai',
-      category: 'Family Restoration',
-      text: 'Our family was torn apart by misunderstanding. Through continuous prayer support from TCONG, God restored love, peace, and unity in our home.',
-      avatar: 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=150&q=80',
+      name: 'David K.',
+      location: 'Sydney, Australia',
+      title: 'Peace Restored in Our Home',
+      text: 'The sermons and prayers taught us how to stand firm on God’s Word. Bitterness was replaced with divine love, joy, and peace in our household. All glory to Jesus!',
+      badge: 'Family Restoration',
     },
   ];
 
+  // Scroll to video section
+  const scrollToVideos = () => {
+    const el = document.getElementById('latestVideosSection');
+    if (el) {
+      el.scrollIntoView({ behavior: 'smooth' });
+    }
+  };
+
   return (
-    <div className="home-page">
+    <div className="home-page-jesuscalls">
       <Helmet>
         <title>The Church of New Generation Melbourne | Pastor Jaskaran Heer | Hindi Christian Church</title>
-        <meta name="description" content="Join Pastor Jaskaran Heer at The Church of New Generation, Melbourne's Hindi, English & Punjabi Christian church in Coolaroo VIC. Sunday services, 24/7 prayer, healing & live sermons." />
+        <meta name="description" content="Welcome to The Church of New Generation Melbourne led by Pastor Jaskaran Heer. Watch latest video sermons, request 24/7 prayer, and join our Sunday worship services in Coolaroo VIC." />
         <link rel="canonical" href="https://tcong-murex.vercel.app/" />
         <meta property="og:title" content="The Church of New Generation Melbourne | Pastor Jaskaran Heer" />
-        <meta property="og:url" content="https://tcong-murex.vercel.app/" />
-        <meta property="og:description" content="Melbourne's Hindi & English Christian church. Sunday worship, 24/7 prayer tower, healing sermons & miracle testimonies. Coolaroo VIC 3048." />
+        <meta property="og:description" content="Praying for the world. Sunday services, 24/7 Telephone Prayer Tower, live video sermons & miracle testimonies. Coolaroo VIC." />
+        <meta property="og:image" content="https://tcong-murex.vercel.app/assets/slide-pastor.jpg" />
       </Helmet>
-      {/* ═══════ HERO BANNER WITH NATURAL CHURCH PHOTO ═══════ */}
+
+      {/* ═════════════════════════════════════════════════════════════════════════════
+          1. HERO BANNER SLIDER (Exact Jesus Calls Aesthetic with Custom Church Slides)
+          ═════════════════════════════════════════════════════════════════════════════ */}
       <section
-        className="hero-section text-center text-white py-4 py-md-5 position-relative overflow-hidden"
-        style={{
-          backgroundImage: 'linear-gradient(180deg, rgba(0, 0, 0, 0.5) 0%, rgba(0, 0, 0, 0.72) 100%), url("/assets/hero-bg.jpg")',
-          backgroundSize: 'cover',
-          backgroundPosition: 'center center',
-          backgroundRepeat: 'no-repeat',
-          minHeight: '75vh',
-          display: 'flex',
-          alignItems: 'center',
-        }}
+        className="jc-hero-slider-section position-relative overflow-hidden"
+        onMouseEnter={() => setIsSliderPaused(true)}
+        onMouseLeave={() => setIsSliderPaused(false)}
+        aria-label="Featured Church Announcements Slider"
       >
-        <div className="container py-3 py-md-5 position-relative px-3 px-sm-4" style={{ zIndex: 2 }}>
-          <ScrollReveal animation="fade-down" delay={0}>
-            <span
-              className="badge rounded-pill mb-3 border shadow-sm hero-welcome-badge"
-              style={{
-                background: 'rgba(0, 0, 0, 0.45)',
-                backdropFilter: 'blur(8px)',
-                color: '#FFFFFF',
-                fontSize: 'clamp(0.72rem, 2.2vw, 0.9rem)',
-                letterSpacing: '0.8px',
-                borderColor: 'rgba(255, 255, 255, 0.35)',
-                textShadow: '0 1px 3px rgba(0,0,0,0.8)',
-                padding: '8px 16px',
-                maxWidth: '96%',
-                whiteSpace: 'normal',
-                lineHeight: '1.35',
-                display: 'inline-block',
-              }}
-            >
-              WELCOME TO TCONG MINISTRIES — PASTOR JASKARAN HEER | MELBOURNE, AUSTRALIA
-            </span>
-          </ScrollReveal>
-          
-          <TextSequence
-            text="Transforming Lives Through Anointed Word & Prayer"
-            as="h1"
-            className="fw-extrabold mb-3 mb-md-4 text-white hero-headline"
-            style={{
-              textShadow: '0 3px 14px rgba(0, 0, 0, 0.9)',
-              letterSpacing: '-0.5px',
-              fontSize: 'clamp(1.85rem, 5vw, 3.4rem)',
-              lineHeight: '1.2',
-            }}
-            delay={0}
-            wordDelay={20}
-          />
-
-          <ScrollReveal animation="fade-up" delay={0}>
-            <p
-              className="lead max-w-2xl mx-auto mb-4 mb-md-5 text-white fw-medium hero-lead-text"
-              style={{
-                maxWidth: '720px',
-                textShadow: '0 2px 10px rgba(0, 0, 0, 0.9)',
-                fontSize: 'clamp(0.95rem, 2.4vw, 1.2rem)',
-                lineHeight: '1.6',
-                padding: '0 10px',
-              }}
-            >
-              Join Pastor Jaskaran Heer & The Church of New Generation — Melbourne's Hindi, English & Punjabi Christian community in Coolaroo, VIC. Watch our latest sermon broadcasts, request prayer 24/7, and receive God's daily promise of healing, hope, and restoration.
-            </p>
-          </ScrollReveal>
-
-          <ScrollReveal animation="zoom-in" delay={0}>
-            <div className="d-flex justify-content-center gap-3 flex-wrap hero-btn-group">
-              <Link
-                to="/prayer-request"
-                className="btn btn-lg px-4 py-3 shadow-lg fw-bold rounded-pill hero-cta-btn"
+        <div className="jc-slider-wrapper">
+          {slides.map((slide, index) => {
+            const isActive = index === activeSlide;
+            return (
+              <div
+                key={slide.id}
+                className={`jc-slide-item ${isActive ? 'active' : ''}`}
                 style={{
-                  backgroundColor: '#A855F7',
-                  color: '#FFFFFF',
-                  border: 'none',
-                  boxShadow: '0 8px 20px rgba(168, 85, 247, 0.5)',
-                  fontSize: 'clamp(0.9rem, 2.2vw, 1.05rem)',
+                  backgroundImage: `linear-gradient(90deg, rgba(8, 12, 28, 0.88) 0%, rgba(15, 23, 42, 0.72) 50%, rgba(15, 23, 42, 0.45) 100%), url("${slide.image}")`,
+                  backgroundSize: 'cover',
+                  backgroundPosition: 'center center',
                 }}
               >
-                Request Prayer 24/7
-              </Link>
-              <a
-                href="https://www.youtube.com/@Pastorjaskaranheer"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="btn btn-outline-light btn-lg px-4 py-3 fw-semibold rounded-pill d-flex align-items-center justify-content-center gap-2 hero-yt-btn"
-                style={{
-                  backdropFilter: 'blur(6px)',
-                  backgroundColor: 'rgba(0,0,0,0.35)',
-                  borderWidth: '2px',
-                  fontSize: 'clamp(0.85rem, 2.2vw, 1rem)',
-                }}
-              >
-                <i className="fab fa-youtube text-danger fs-4"></i> Subscribe @Pastorjaskaranheer
-              </a>
-            </div>
-          </ScrollReveal>
-        </div>
-      </section>
+                <div className="container jc-slide-container h-100">
+                  <div className="row h-100 align-items-center">
+                    <div className="col-lg-8 col-xl-7">
+                      <div className="jc-slide-content">
+                        {/* Top Badge */}
+                        <div className="jc-slide-badge-wrapper mb-2 mb-md-3">
+                          <span className="jc-slide-badge">
+                            <i className="fas fa-sparkles me-2 text-warning"></i>
+                            {slide.badge}
+                          </span>
+                        </div>
 
-      {/* ═══════ VIDEO GALLERY — CONTINUOUS RIGHT-TO-LEFT AUTOMATIC SLIDING ANIMATION ═══════ */}
-      <section className="py-4 py-md-5 bg-white position-relative overflow-hidden">
-        <div className="container-fluid px-2 px-sm-4 py-2">
-          <ScrollReveal animation="fade-up" delay={0}>
-            <h2
-              className="text-center fw-bold mb-3 mb-md-4"
-              style={{
-                color: '#B91C1C',
-                fontStyle: 'italic',
-                fontSize: 'clamp(1.8rem, 4vw, 2.5rem)',
-                fontFamily: 'serif, sans-serif',
-              }}
-            >
-              Video Gallery
-            </h2>
-          </ScrollReveal>
+                        {/* Promise Repeating Shadow Text (Jesus Calls Style) */}
+                        <div className="jc-promise-backdrop-text d-none d-sm-block">
+                          PROMISE PROMISE PROMISE
+                        </div>
 
-          {/* Continuous Automatic Right-to-Left Sliding Track */}
-          <div
-            className="overflow-hidden position-relative py-2 px-1"
-            onMouseEnter={() => setIsHovered(true)}
-            onMouseLeave={() => setIsHovered(false)}
-            style={{ width: '100%' }}
-          >
-            <div
-              className="d-flex gap-3 gap-md-4"
-              style={{
-                width: 'max-content',
-                animation: 'rightToLeftMarquee 26s linear infinite',
-                animationPlayState: isHovered ? 'paused' : 'running',
-                willChange: 'transform',
-              }}
-            >
-              {marqueeRealVideos.map((vid, idx) => (
-                <div
-                  key={`${vid.id}_${idx}`}
-                  style={{
-                    width: 'clamp(280px, 78vw, 360px)',
-                    aspectRatio: '16/10',
-                    flexShrink: 0,
-                  }}
-                >
-                  <div className="card border-0 shadow-lg rounded-4 overflow-hidden h-100 position-relative">
-                    <iframe
-                      src={`${vid.embedUrl}?rel=0&modestbranding=1`}
-                      title={vid.title}
-                      className="w-100 h-100"
-                      style={{ border: 'none' }}
-                      allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-                      allowFullScreen
-                    ></iframe>
-                  </div>
-                </div>
-              ))}
-            </div>
-          </div>
+                        {/* Slide Main Heading */}
+                        <h1 className="jc-slide-title">
+                          {slide.title}
+                        </h1>
 
-          {/* View More Red Outline Button */}
-          <ScrollReveal animation="fade-up" delay={0}>
-            <div className="text-center mt-3 mt-md-4">
-              <a
-                href="https://www.youtube.com/@Pastorjaskaranheer"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="btn px-4 py-2 fw-semibold rounded-3"
-                style={{
-                  borderColor: '#B91C1C',
-                  color: '#B91C1C',
-                  borderWidth: '1px',
-                  borderStyle: 'solid',
-                  backgroundColor: 'transparent',
-                  fontSize: '0.95rem',
-                }}
-              >
-                View More
-              </a>
-            </div>
-          </ScrollReveal>
-        </div>
+                        {/* Speaker / Pastor Banner */}
+                        <div className="jc-pastor-tag mb-3">
+                          <span className="jc-pastor-tag-inner">
+                            <i className="fas fa-cross me-2 text-danger"></i>
+                            {slide.pastor}
+                          </span>
+                        </div>
 
-        {/* Right-to-Left Keyframe Animation */}
-        <style>{`
-          @keyframes rightToLeftMarquee {
-            0% {
-              transform: translate3d(0, 0, 0);
-            }
-            100% {
-              transform: translate3d(-33.3333%, 0, 0);
-            }
-          }
-        `}</style>
-      </section>
+                        {/* Subtitle Description */}
+                        <p className="jc-slide-desc mb-4">
+                          {slide.subtitle}
+                        </p>
 
-      {/* ═══════ OUR MINISTRIES SECTION ═══════ */}
-      <section className="py-4 py-md-5 bg-white">
-        <div className="container py-2 py-md-3">
-          <div className="text-center max-w-2xl mx-auto mb-4 mb-md-5" style={{ maxWidth: '650px' }}>
-            <ScrollReveal animation="fade-down" delay={0}>
-              <span className="badge px-3 py-2 rounded-pill mb-2" style={{ backgroundColor: '#F3E8FF', color: '#6B21A8', fontWeight: 'bold' }}>
-                OUR MINISTRIES
-              </span>
-            </ScrollReveal>
+                        {/* CTA Buttons */}
+                        <div className="jc-slide-buttons d-flex flex-wrap align-items-center gap-3">
+                          {slide.primaryBtnAction === 'watch' ? (
+                            <button
+                              type="button"
+                              onClick={scrollToVideos}
+                              className="jc-btn-watch"
+                            >
+                              <i className="fas fa-play-circle me-2"></i>
+                              {slide.primaryBtnText}
+                            </button>
+                          ) : (
+                            <Link
+                              to={slide.primaryBtnLink}
+                              className="jc-btn-watch"
+                            >
+                              <i className="fas fa-arrow-right me-2"></i>
+                              {slide.primaryBtnText}
+                            </Link>
+                          )}
 
-            <ScrollReveal animation="fade-up" delay={30}>
-              <h2 className="fw-bold mb-2 text-center" style={{ color: '#581C87', fontSize: 'clamp(1.75rem, 4vw, 2.3rem)' }}>
-                Serving God & Building Community
-              </h2>
-            </ScrollReveal>
+                          {slide.secondaryBtnLink?.startsWith('tel:') ? (
+                            <a
+                              href={slide.secondaryBtnLink}
+                              className="jc-btn-secondary"
+                            >
+                              <i className="fas fa-phone-alt me-2 text-success"></i>
+                              {slide.secondaryBtnText}
+                            </a>
+                          ) : (
+                            <Link
+                              to={slide.secondaryBtnLink}
+                              className="jc-btn-secondary"
+                            >
+                              <i className="fas fa-hands-praying me-2 text-warning"></i>
+                              {slide.secondaryBtnText}
+                            </Link>
+                          )}
+                        </div>
+                      </div>
+                    </div>
 
-            <ScrollReveal animation="fade-up" delay={50}>
-              <p className="text-muted text-center mb-0" style={{ fontSize: 'clamp(0.9rem, 2vw, 1rem)' }}>
-                Explore our vibrant ministry arms designed to nurture faith, serve families, and impact lives.
-              </p>
-            </ScrollReveal>
-          </div>
-
-          {/* Featured Worship Ministry Spotlight Photo */}
-          <ScrollReveal animation="zoom-in" delay={50}>
-            <div className="card border-0 shadow-lg rounded-4 overflow-hidden mb-4 mb-md-5" style={{ backgroundColor: '#FAF5FF' }}>
-              <div className="row g-0 align-items-center">
-                <div className="col-lg-6">
-                  <div className="position-relative overflow-hidden img-reveal-wrapper" style={{ minHeight: 'clamp(220px, 40vw, 340px)' }}>
-                    <img
-                      src="/assets/worship-ministry.jpg"
-                      alt="Worship Choir & Band Ministry"
-                      className="w-100 h-100"
-                      style={{ objectFit: 'cover', minHeight: 'clamp(220px, 40vw, 340px)' }}
-                    />
-                    <div
-                      className="position-absolute bottom-0 start-0 end-0 p-3 text-white d-flex align-items-center gap-2"
-                      style={{
-                        background: 'linear-gradient(180deg, rgba(0,0,0,0) 0%, rgba(0,0,0,0.85) 100%)',
-                      }}
-                    >
-                      <i className="fas fa-music text-warning fs-5"></i>
-                      <div>
-                        <small className="fw-bold d-block text-white">Worship & Music Ministry</small>
-                        <small className="text-white-50">Anointed singers, musicians & choir leading praise</small>
+                    {/* Right Side Round Floating Promise Graphic Badge */}
+                    <div className="col-lg-4 col-xl-5 d-none d-lg-flex justify-content-center align-items-center">
+                      <div className="jc-hero-graphic-circle">
+                        <div className="graphic-circle-glow"></div>
+                        <div className="graphic-circle-content">
+                          <span className="graphic-circle-year">YEAR 2026</span>
+                          <span className="graphic-circle-main">GOD'S PROMISE</span>
+                          <span className="graphic-circle-sub">FOR YOU & YOUR FAMILY</span>
+                          <div className="graphic-circle-cross">✝</div>
+                          <span className="graphic-circle-verse">Deut 28:12</span>
+                        </div>
                       </div>
                     </div>
                   </div>
                 </div>
-                <div className="col-lg-6 p-4 p-md-5">
-                  <span className="badge bg-purple text-white px-3 py-2 rounded-pill mb-3" style={{ backgroundColor: '#7E22CE' }}>
-                    FEATURED SPOTLIGHT
-                  </span>
-                  <h3 className="fw-bold mb-3" style={{ color: '#581C87', fontSize: 'clamp(1.4rem, 3vw, 1.85rem)' }}>
-                    Anointed Praise & Music Ministry
-                  </h3>
-                  <p className="text-muted mb-4" style={{ lineHeight: '1.7', fontSize: '0.95rem' }}>
-                    Our worship team brings together passionate vocalists, guitarists, keyboardists, and intercessors dedicated to ushering the congregation into a powerful atmosphere of God's presence and glory every week.
-                  </p>
-                  <div className="d-flex align-items-center gap-2 flex-wrap">
-                    <span className="badge bg-white text-purple shadow-sm px-3 py-2 rounded-pill" style={{ color: '#6B21A8', border: '1px solid #E9D5FF' }}>
-                      <i className="fas fa-microphone me-1"></i> Live Vocal Choir
-                    </span>
-                    <span className="badge bg-white text-purple shadow-sm px-3 py-2 rounded-pill" style={{ color: '#6B21A8', border: '1px solid #E9D5FF' }}>
-                      <i className="fas fa-guitar me-1"></i> Band & Instruments
-                    </span>
-                  </div>
-                </div>
               </div>
-            </div>
-          </ScrollReveal>
+            );
+          })}
+        </div>
 
-          <StaggerSequence as="div" className="row g-3 g-md-4 mb-4" initialDelay={50} staggerDelay={40} animation="fade-up">
-            {ministries.map((m) => (
-              <div className="col-md-6 col-lg-4" key={m.id}>
-                <div
-                  className="card border-0 shadow-sm h-100 rounded-4 p-4 text-start"
-                  style={{
-                    backgroundColor: '#FAF5FF',
-                    transition: 'transform 0.2s, box-shadow 0.2s',
-                  }}
-                  onMouseEnter={(e) => {
-                    e.currentTarget.style.transform = 'translateY(-4px)';
-                    e.currentTarget.style.boxShadow = '0 12px 24px rgba(88, 28, 135, 0.12)';
-                  }}
-                  onMouseLeave={(e) => {
-                    e.currentTarget.style.transform = 'translateY(0)';
-                    e.currentTarget.style.boxShadow = '0 2px 8px rgba(0,0,0,0.04)';
-                  }}
-                >
-                  <div
-                    className="mb-3 d-flex align-items-center justify-content-center rounded-4"
-                    style={{
-                      width: '52px',
-                      height: '52px',
-                      backgroundColor: m.color,
-                      color: '#FFFFFF',
-                      fontSize: '22px',
-                      boxShadow: '0 4px 12px rgba(0,0,0,0.15)',
-                    }}
-                  >
-                    <i className={m.icon}></i>
-                  </div>
-                  <h4 className="fw-bold mb-2" style={{ color: '#1E293B', fontSize: '1.2rem' }}>{m.name}</h4>
-                  <p className="text-secondary small mb-0" style={{ lineHeight: '1.6' }}>{m.desc}</p>
-                </div>
-              </div>
+        {/* ═══════ SLIDER CONTROLS & DASH/PILL INDICATORS (Jesus Calls Style) ═══════ */}
+        <div className="jc-slider-nav-container">
+          <button
+            type="button"
+            className="jc-slider-arrow jc-arrow-prev"
+            onClick={handlePrevSlide}
+            aria-label="Previous Slide"
+          >
+            <i className="fas fa-chevron-left"></i>
+          </button>
+
+          <div className="jc-slider-dots">
+            {slides.map((_, idx) => (
+              <button
+                key={idx}
+                type="button"
+                className={`jc-dash-dot ${idx === activeSlide ? 'active' : ''}`}
+                onClick={() => setActiveSlide(idx)}
+                aria-label={`Go to slide ${idx + 1}`}
+              ></button>
             ))}
-          </StaggerSequence>
+          </div>
+
+          <button
+            type="button"
+            className="jc-slider-arrow jc-arrow-next"
+            onClick={handleNextSlide}
+            aria-label="Next Slide"
+          >
+            <i className="fas fa-chevron-right"></i>
+          </button>
         </div>
       </section>
 
-      {/* ═══════ TESTIMONIALS & PRAISE REPORTS SECTION ═══════ */}
-      <section className="py-4 py-md-5" style={{ backgroundColor: '#F9FAFB' }}>
-        <div className="container py-2 py-md-3">
+      {/* ═════════════════════════════════════════════════════════════════════════════
+          2. OUR LATEST VIDEOS SECTION (Exact Jesus Calls 5-Column Row Layout)
+          ═════════════════════════════════════════════════════════════════════════════ */}
+      <section className="jc-videos-section py-4 py-md-5" id="latestVideosSection">
+        <div className="container-fluid px-3 px-md-5">
+          {/* Section Header (Jesus Calls Purple Title Style) */}
+          <div className="text-center mb-4">
+            <ScrollReveal animation="fade-down" delay={0}>
+              <h2 className="jc-section-title text-center" style={{ color: '#581C87', fontSize: 'clamp(1.8rem, 3.5vw, 2.5rem)', fontWeight: '800' }}>
+                Our Latest Videos
+              </h2>
+            </ScrollReveal>
+          </div>
+
+          {/* Exact Jesus Calls 5-Column Row */}
+          <div className="jc-videos-grid-5">
+            {videoList.map((vid, idx) => (
+              <div
+                key={vid.id}
+                className="jc-jc-video-item"
+                onClick={() => setActiveVideoModal(vid.youtubeId)}
+                role="button"
+                tabIndex={0}
+                aria-label={`Play ${vid.title}`}
+              >
+                {/* Rounded Video Thumbnail Container */}
+                <div className="jc-thumb-container">
+                  <img
+                    src={`https://img.youtube.com/vi/${vid.youtubeId}/hqdefault.jpg`}
+                    alt={vid.title}
+                    className="jc-thumb-img"
+                    loading="lazy"
+                  />
+                  {/* Purple Circular Play Button (Jesus Calls Style) */}
+                  <div className="jc-circle-play-btn">
+                    <i className="fas fa-play ms-1"></i>
+                  </div>
+                </div>
+
+                {/* Video Title Below Thumbnail */}
+                <h3 className="jc-video-item-title">
+                  {vid.title}
+                </h3>
+              </div>
+            ))}
+          </div>
+
+          {/* View More / YouTube Channel Subscribe Banner */}
+          <ScrollReveal animation="fade-up" delay={50}>
+            <div className="text-center mt-4 d-flex flex-wrap align-items-center justify-content-center gap-3">
+              <a
+                href="https://www.youtube.com/@Pastorjaskaranheer"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="btn btn-outline-danger px-4 py-2 rounded-pill fw-bold d-inline-flex align-items-center gap-2 shadow-sm"
+              >
+                <i className="fab fa-youtube text-danger fs-5"></i>
+                Subscribe on YouTube @Pastorjaskaranheer
+              </a>
+              <Link
+                to="/sermons"
+                className="btn btn-purple px-4 py-2 rounded-pill fw-bold text-white shadow-sm"
+                style={{ backgroundColor: '#581C87' }}
+              >
+                <i className="fas fa-list-video me-1"></i> View All Sermons
+              </Link>
+            </div>
+          </ScrollReveal>
+        </div>
+      </section>
+
+      {/* ═════════════════════════════════════════════════════════════════════════════
+          3. BLESSING PLANS & MINISTRIES SECTION (Jesus Calls Style)
+          ═════════════════════════════════════════════════════════════════════════════ */}
+      <section className="jc-blessing-section py-5" style={{ backgroundColor: '#F8FAFC' }}>
+        <div className="container py-2">
           <div className="text-center max-w-2xl mx-auto mb-4 mb-md-5" style={{ maxWidth: '650px' }}>
             <ScrollReveal animation="fade-down" delay={0}>
-              <span className="badge px-3 py-2 rounded-pill mb-2" style={{ backgroundColor: '#F3E8FF', color: '#6B21A8', fontWeight: 'bold' }}>
+              <span className="badge px-3 py-2 rounded-pill mb-2 fw-bold" style={{ backgroundColor: '#F3E8FF', color: '#6B21A8' }}>
+                BLESSING PLANS & MINISTRIES
+              </span>
+            </ScrollReveal>
+            <ScrollReveal animation="fade-up" delay={20}>
+              <h2 className="fw-bold mb-2 text-center" style={{ color: '#4A0E4E', fontSize: 'clamp(1.75rem, 3.8vw, 2.3rem)' }}>
+                Partnering to Bless Every Family
+              </h2>
+            </ScrollReveal>
+            <ScrollReveal animation="fade-up" delay={40}>
+              <p className="text-muted text-center mb-0" style={{ fontSize: '0.95rem' }}>
+                Join hands with The Church of New Generation ministries to touch lives, pray for souls, and spread the Gospel of Jesus Christ.
+              </p>
+            </ScrollReveal>
+          </div>
+
+          <div className="row g-3 g-md-4">
+            {blessingPlans.map((plan, idx) => (
+              <div className="col-12 col-md-6 col-lg-4" key={plan.id}>
+                <ScrollReveal animation="fade-up" delay={idx * 30}>
+                  <Link
+                    to={plan.link}
+                    className="card h-100 border-0 shadow-sm p-4 text-decoration-none jc-ministry-card"
+                    style={{ backgroundColor: '#FFFFFF', borderRadius: '16px' }}
+                  >
+                    <div
+                      className="jc-ministry-icon-box mb-3 d-flex align-items-center justify-content-center"
+                      style={{
+                        width: '54px',
+                        height: '54px',
+                        borderRadius: '14px',
+                        backgroundColor: plan.bgColor,
+                        color: plan.color,
+                        fontSize: '22px',
+                      }}
+                    >
+                      <i className={plan.icon}></i>
+                    </div>
+                    <h3 className="fw-bold fs-5 mb-2 text-dark">
+                      {plan.title}
+                    </h3>
+                    <p className="text-muted small mb-3 flex-grow-1" style={{ lineHeight: '1.6' }}>
+                      {plan.desc}
+                    </p>
+                    <div className="d-flex align-items-center text-primary fw-semibold small gap-1">
+                      <span>Learn More</span>
+                      <i className="fas fa-arrow-right" style={{ fontSize: '12px' }}></i>
+                    </div>
+                  </Link>
+                </ScrollReveal>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* ═════════════════════════════════════════════════════════════════════════════
+          4. 24/7 TELEPHONE PRAYER TOWER BANNER (Jesus Calls Call Today Box)
+          ═════════════════════════════════════════════════════════════════════════════ */}
+      <section className="py-4 py-md-5" style={{ background: 'linear-gradient(135deg, #4A0E4E 0%, #310B35 100%)', color: '#FFFFFF' }}>
+        <div className="container">
+          <div className="row align-items-center g-4">
+            <div className="col-lg-8">
+              <span className="badge bg-warning text-dark px-3 py-2 rounded-pill fw-bold mb-3">
+                <i className="fas fa-phone-volume me-1"></i> 24/7 TELEPHONE PRAYER TOWER
+              </span>
+              <h2 className="fw-bold text-white mb-3" style={{ fontSize: 'clamp(1.6rem, 3.5vw, 2.2rem)' }}>
+                Are You Facing a Difficult Situation? Let Us Pray For You.
+              </h2>
+              <p className="text-white-50 mb-0" style={{ fontSize: '1rem', lineHeight: '1.7', maxWidth: '720px' }}>
+                Our anointed intercessors are available 24 hours a day, 7 days a week to pray over your health, family needs, job situations, and spiritual breakthrough.
+              </p>
+            </div>
+            <div className="col-lg-4 text-lg-end">
+              <div className="d-flex flex-column gap-3">
+                <a
+                  href="tel:+61481839109"
+                  className="btn btn-success btn-lg rounded-pill fw-bold px-4 py-3 shadow-lg d-flex align-items-center justify-content-center gap-2"
+                  style={{ backgroundColor: '#10B981', border: 'none' }}
+                >
+                  <i className="fas fa-phone-alt fs-5"></i>
+                  Call +61 481 839 109
+                </a>
+                <Link
+                  to="/prayer-request"
+                  className="btn btn-outline-light btn-lg rounded-pill fw-semibold px-4 py-2"
+                >
+                  <i className="fas fa-hands-praying me-2"></i> Submit Online Request
+                </Link>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* ═════════════════════════════════════════════════════════════════════════════
+          5. PRAISE REPORTS & TESTIMONIES SECTION
+          ═════════════════════════════════════════════════════════════════════════════ */}
+      <section className="py-5 bg-white">
+        <div className="container py-2">
+          <div className="text-center max-w-2xl mx-auto mb-4 mb-md-5" style={{ maxWidth: '650px' }}>
+            <ScrollReveal animation="fade-down" delay={0}>
+              <span className="badge px-3 py-2 rounded-pill mb-2 fw-bold" style={{ backgroundColor: '#F3E8FF', color: '#6B21A8' }}>
                 PRAISE REPORTS & MIRACLES
               </span>
             </ScrollReveal>
-
-            <ScrollReveal animation="fade-up" delay={30}>
-              <h2 className="fw-bold mb-2 text-center" style={{ color: '#581C87', fontSize: 'clamp(1.75rem, 4vw, 2.3rem)' }}>
-                Testimonies of God's Greatness
+            <ScrollReveal animation="fade-up" delay={20}>
+              <h2 className="fw-bold mb-2 text-center" style={{ color: '#4A0E4E', fontSize: 'clamp(1.75rem, 3.8vw, 2.3rem)' }}>
+                Testimonies of God's Faithfulness
               </h2>
             </ScrollReveal>
-
-            <ScrollReveal animation="fade-up" delay={50}>
-              <p className="text-muted text-center mb-0" style={{ fontSize: 'clamp(0.9rem, 2vw, 1rem)' }}>
-                Read how prayer and faith are transforming lives, bringing physical healing, financial provision, and family breakthroughs.
+            <ScrollReveal animation="fade-up" delay={40}>
+              <p className="text-muted text-center mb-0" style={{ fontSize: '0.95rem' }}>
+                Read how prayer and faith in Jesus Christ are changing lives, healing sicknesses, and restoring families.
               </p>
             </ScrollReveal>
           </div>
 
-          {/* Featured Testimony Family Photo Showcase */}
-          <ScrollReveal animation="zoom-in" delay={50}>
-            <div className="card border-0 shadow-lg rounded-4 overflow-hidden mb-4 mb-md-5" style={{ backgroundColor: '#FFFFFF' }}>
-              <div className="row g-0 align-items-center">
-                <div className="col-lg-6">
-                  <div className="position-relative overflow-hidden img-reveal-wrapper" style={{ minHeight: 'clamp(220px, 40vw, 340px)' }}>
-                    <img
-                      src="/assets/testimony-family.jpg"
-                      alt="Families Experiencing Miracles in Church Service"
-                      className="w-100 h-100"
-                      style={{ objectFit: 'cover', minHeight: 'clamp(220px, 40vw, 340px)' }}
-                    />
-                    <div
-                      className="position-absolute bottom-0 start-0 end-0 p-3 text-white d-flex align-items-center gap-2"
-                      style={{
-                        background: 'linear-gradient(180deg, rgba(0,0,0,0) 0%, rgba(0,0,0,0.85) 100%)',
-                      }}
-                    >
-                      <i className="fas fa-heart text-warning fs-5"></i>
-                      <div>
-                        <small className="fw-bold d-block text-white">Families Listening To Praise Reports</small>
-                        <small className="text-white-50">Experiencing God's healing touch & peace</small>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-                <div className="col-lg-6 p-4 p-md-5">
-                  <span className="badge bg-purple text-white px-3 py-2 rounded-pill mb-3" style={{ backgroundColor: '#7E22CE' }}>
-                    FAITH & MIRACLES
-                  </span>
-                  <h3 className="fw-bold mb-3" style={{ color: '#581C87', fontSize: 'clamp(1.4rem, 3vw, 1.85rem)' }}>
-                    Real Stories of Healing & Hope
-                  </h3>
-                  <p className="text-muted mb-4" style={{ lineHeight: '1.7', fontSize: '0.95rem' }}>
-                    Every week, men, women, and families witness divine intervention — from sicknesses cured to restored relationships and financial breakthroughs through intercessory prayer.
-                  </p>
-                  <div className="d-flex align-items-center gap-2 flex-wrap">
-                    <span className="badge bg-light text-purple shadow-sm px-3 py-2 rounded-pill" style={{ color: '#6B21A8', border: '1px solid #E9D5FF' }}>
-                      <i className="fas fa-pray me-1"></i> Intercessory Prayer
-                    </span>
-                    <span className="badge bg-light text-purple shadow-sm px-3 py-2 rounded-pill" style={{ color: '#6B21A8', border: '1px solid #E9D5FF' }}>
-                      <i className="fas fa-star me-1"></i> Divine Healing
-                    </span>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </ScrollReveal>
-
-          <StaggerSequence as="div" className="row g-3 g-md-4 mb-4" initialDelay={50} staggerDelay={40} animation="zoom-in">
-            {testimonials.map((t) => (
-              <div className="col-md-4" key={t.id}>
-                <div className="card h-100 border-0 shadow-sm rounded-4 p-4 d-flex flex-column justify-content-between" style={{ backgroundColor: '#FFFFFF', borderLeft: '4px solid #7E22CE' }}>
-                  <div>
-                    <div className="d-flex justify-content-between align-items-center mb-3">
-                      <div className="text-warning fs-3">
-                        <i className="fas fa-quote-left" style={{ color: '#A855F7' }}></i>
-                      </div>
-                      <span className="badge bg-white text-purple shadow-sm px-3 py-1 rounded-pill" style={{ color: '#6B21A8', border: '1px solid #E9D5FF' }}>
-                        {t.category}
-                      </span>
-                    </div>
-                    <p className="text-secondary mb-4" style={{ fontStyle: 'italic', fontSize: '0.95rem', lineHeight: '1.6' }}>
-                      "{t.text}"
-                    </p>
-                  </div>
-                  <div className="d-flex align-items-center gap-3 pt-3 border-top" style={{ borderColor: '#E9D5FF' }}>
-                    <img
-                      src={t.avatar}
-                      alt={t.name}
-                      style={{ width: '44px', height: '44px', borderRadius: '50%', objectFit: 'cover' }}
-                    />
+          <div className="row g-3 g-md-4">
+            {praiseReports.map((t) => (
+              <div className="col-12 col-md-4" key={t.id}>
+                <ScrollReveal animation="fade-up" delay={t.id * 40}>
+                  <div
+                    className="card h-100 border-0 shadow-sm p-4 d-flex flex-column justify-content-between"
+                    style={{
+                      borderRadius: '16px',
+                      backgroundColor: '#FAF5FF',
+                      borderLeft: '4px solid #7E22CE',
+                    }}
+                  >
                     <div>
-                      <h6 className="fw-bold mb-0" style={{ color: '#1E293B' }}>{t.name}</h6>
-                      <small className="text-muted">{t.location}</small>
+                      <div className="d-flex justify-content-between align-items-center mb-3">
+                        <span className="badge bg-white text-purple shadow-sm px-3 py-1 rounded-pill" style={{ color: '#6B21A8', border: '1px solid #E9D5FF' }}>
+                          {t.badge}
+                        </span>
+                        <i className="fas fa-quote-right fs-4 text-warning opacity-75"></i>
+                      </div>
+                      <h4 className="fw-bold fs-6 mb-2" style={{ color: '#1E293B' }}>
+                        {t.title}
+                      </h4>
+                      <p className="text-secondary small mb-4" style={{ fontStyle: 'italic', lineHeight: '1.6' }}>
+                        "{t.text}"
+                      </p>
+                    </div>
+                    <div className="pt-3 border-top d-flex align-items-center gap-3" style={{ borderColor: '#E9D5FF' }}>
+                      <div
+                        className="rounded-circle d-flex align-items-center justify-content-center text-white fw-bold"
+                        style={{ width: '42px', height: '42px', backgroundColor: '#7E22CE', fontSize: '15px' }}
+                      >
+                        {t.name.charAt(0)}
+                      </div>
+                      <div>
+                        <h6 className="fw-bold mb-0 text-dark">{t.name}</h6>
+                        <small className="text-muted">{t.location}</small>
+                      </div>
                     </div>
                   </div>
-                </div>
+                </ScrollReveal>
               </div>
             ))}
-          </StaggerSequence>
+          </div>
 
-          <ScrollReveal animation="fade-up" delay={80}>
-            <div className="text-center pt-3">
-              <Link to="/testimonials" className="btn btn-outline-primary btn-lg px-4 rounded-pill fw-bold" style={{ borderColor: '#581C87', color: '#581C87' }}>
-                View All Testimonies &rarr;
-              </Link>
-            </div>
-          </ScrollReveal>
+          <div className="text-center pt-4 mt-2">
+            <Link to="/testimonials" className="btn btn-outline-dark px-4 py-2 rounded-pill fw-bold">
+              View All Praise Reports &rarr;
+            </Link>
+          </div>
         </div>
       </section>
 
+      {/* ═════════════════════════════════════════════════════════════════════════════
+          6. SUNDAY SERVICE & MELBOURNE LOCATION
+          ═════════════════════════════════════════════════════════════════════════════ */}
+      <section className="py-5" style={{ backgroundColor: '#F1F5F9' }}>
+        <div className="container">
+          <div className="card border-0 shadow-lg rounded-4 overflow-hidden" style={{ backgroundColor: '#FFFFFF' }}>
+            <div className="row g-0">
+              <div className="col-lg-6 p-4 p-md-5 d-flex flex-column justify-content-center">
+                <span className="badge bg-purple text-white px-3 py-2 rounded-pill mb-3 align-self-start" style={{ backgroundColor: '#7E22CE' }}>
+                  JOIN OUR CHURCH SERVICES
+                </span>
+                <h3 className="fw-bold mb-3" style={{ color: '#1E293B', fontSize: 'clamp(1.5rem, 3vw, 2rem)' }}>
+                  Worship With Us in Coolaroo, Melbourne
+                </h3>
+                <p className="text-muted mb-4" style={{ lineHeight: '1.7' }}>
+                  Whether you are seeking prayer, fellowship, or a deeper walk with Jesus Christ, we warmly invite you and your family to our Sunday and midweek services.
+                </p>
+
+                <div className="d-flex flex-column gap-3 mb-4">
+                  <div className="d-flex align-items-start gap-3">
+                    <div className="rounded-circle p-2 bg-purple-subtle text-purple d-flex align-items-center justify-content-center" style={{ width: '40px', height: '40px', backgroundColor: '#F3E8FF', color: '#6B21A8' }}>
+                      <i className="fas fa-clock"></i>
+                    </div>
+                    <div>
+                      <strong className="d-block text-dark">Sunday Worship Service</strong>
+                      <span className="text-muted small">Every Sunday @ 10:30 AM (Hindi, English & Punjabi)</span>
+                    </div>
+                  </div>
+
+                  <div className="d-flex align-items-start gap-3">
+                    <div className="rounded-circle p-2 bg-purple-subtle text-purple d-flex align-items-center justify-content-center" style={{ width: '40px', height: '40px', backgroundColor: '#F3E8FF', color: '#6B21A8' }}>
+                      <i className="fas fa-location-dot"></i>
+                    </div>
+                    <div>
+                      <strong className="d-block text-dark">Church Location</strong>
+                      <span className="text-muted small">Unit 27/59 Almurta Ave, Coolaroo VIC 3048, Melbourne, Australia</span>
+                    </div>
+                  </div>
+                </div>
+
+                <div className="d-flex gap-3 flex-wrap">
+                  <Link to="/contact" className="btn btn-primary rounded-pill px-4 py-2 fw-bold">
+                    Get Directions & Details
+                  </Link>
+                  <a href="tel:+61481839109" className="btn btn-outline-dark rounded-pill px-4 py-2 fw-semibold">
+                    <i className="fas fa-phone-alt me-1"></i> Contact Pastor
+                  </a>
+                </div>
+              </div>
+
+              <div className="col-lg-6">
+                <img
+                  src="/assets/slide-hall.jpg"
+                  alt="The Church of New Generation Gathering in Melbourne"
+                  className="w-100 h-100"
+                  style={{ objectFit: 'cover', minHeight: '320px' }}
+                />
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* ═════════════════════════════════════════════════════════════════════════════
+          7. EMBEDDED VIDEO MODAL PLAYER
+          ═════════════════════════════════════════════════════════════════════════════ */}
+      {activeVideoModal && (
+        <div
+          className="jc-video-modal-backdrop"
+          onClick={() => setActiveVideoModal(null)}
+          role="dialog"
+          aria-modal="true"
+        >
+          <div
+            className="jc-video-modal-content"
+            onClick={(e) => e.stopPropagation()}
+          >
+            <button
+              className="jc-modal-close-btn"
+              onClick={() => setActiveVideoModal(null)}
+              aria-label="Close video player"
+            >
+              <i className="fas fa-times"></i>
+            </button>
+            <div className="jc-video-iframe-responsive">
+              <iframe
+                src={`https://www.youtube.com/embed/${activeVideoModal}?autoplay=1&rel=0&modestbranding=1`}
+                title="Sermon Video Player"
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                allowFullScreen
+              ></iframe>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 };
