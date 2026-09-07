@@ -102,11 +102,6 @@ export const Header = () => {
             <NavLink to="/contact" className={({ isActive }) => (isActive ? 'active' : '')}>
               Contact
             </NavLink>
-
-            {/* Language Selector */}
-            <div className="nav-language-badge" title="Language: English / Hindi / Punjabi">
-              <i className="fas fa-globe me-1"></i> English <i className="fas fa-chevron-down ms-1" style={{ fontSize: '10px' }}></i>
-            </div>
           </nav>
 
           {/* Header Action Button */}
