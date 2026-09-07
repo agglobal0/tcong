@@ -3,7 +3,6 @@ import { NavLink, Link, useLocation } from 'react-router-dom';
 
 export const Header = () => {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
-  const [ministriesDropdown, setMinistriesDropdown] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
   const location = useLocation();
 
@@ -18,7 +17,6 @@ export const Header = () => {
   // Close mobile drawer on route change
   useEffect(() => {
     setMobileMenuOpen(false);
-    setMinistriesDropdown(false);
   }, [location.pathname]);
 
   // Lock body scroll when mobile menu is open
@@ -32,26 +30,6 @@ export const Header = () => {
       document.body.style.overflow = '';
     };
   }, [mobileMenuOpen]);
-
-  const navItems = [
-    { label: 'About', path: '/about' },
-    { label: 'Blessing Plans', path: '/services', isDropdown: true },
-    { label: 'Services', path: '/services' },
-    { label: 'Youth Ministry', path: '/events' },
-    { label: 'Sermons', path: '/sermons' },
-    { label: 'Blogs', path: '/blog' },
-    { label: 'Contact', path: '/contact' },
-    { label: 'Prayer Towers', path: '/prayer-request' },
-  ];
-
-  const ministriesList = [
-    { name: 'Worship & Music Ministry', path: '/services#worship', icon: 'fas fa-music' },
-    { name: '24/7 Prayer Tower & Intercession', path: '/prayer-request', icon: 'fas fa-hands-praying' },
-    { name: 'Youth & NextGen Fellowship', path: '/events', icon: 'fas fa-users' },
-    { name: "Children's Sunday School", path: '/services#children', icon: 'fas fa-child' },
-    { name: "Family & Women's Blessing", path: '/services#women', icon: 'fas fa-heart' },
-    { name: 'Community Outreach & Care', path: '/contact', icon: 'fas fa-hand-holding-heart' },
-  ];
 
   return (
     <>
@@ -100,39 +78,6 @@ export const Header = () => {
             <NavLink to="/about" className={({ isActive }) => (isActive ? 'active' : '')}>
               About
             </NavLink>
-
-            {/* Blessing Plans / Ministries Dropdown */}
-            <div
-              className="nav-dropdown-wrapper"
-              onMouseEnter={() => setMinistriesDropdown(true)}
-              onMouseLeave={() => setMinistriesDropdown(false)}
-            >
-              <button
-                type="button"
-                className={`nav-dropdown-btn ${ministriesDropdown ? 'open' : ''}`}
-                onClick={() => setMinistriesDropdown(!ministriesDropdown)}
-              >
-                Blessing Plans <i className="fas fa-chevron-down ms-1 dropdown-chevron"></i>
-              </button>
-
-              <div className={`nav-dropdown-menu ${ministriesDropdown ? 'show' : ''}`}>
-                <div className="dropdown-menu-header">
-                  <span className="dropdown-header-title">Church Ministries & Plans</span>
-                  <small className="text-muted">Partner in God's Work</small>
-                </div>
-                {ministriesList.map((m, idx) => (
-                  <Link
-                    key={idx}
-                    to={m.path}
-                    className="dropdown-menu-item"
-                    onClick={() => setMinistriesDropdown(false)}
-                  >
-                    <i className={`${m.icon} dropdown-item-icon`}></i>
-                    <span className="dropdown-item-text">{m.name}</span>
-                  </Link>
-                ))}
-              </div>
-            </div>
 
             <NavLink to="/services" className={({ isActive }) => (isActive ? 'active' : '')}>
               Services
@@ -209,7 +154,7 @@ export const Header = () => {
             <i className="fas fa-church me-2 text-purple"></i> About
           </Link>
           <Link to="/services" onClick={() => setMobileMenuOpen(false)}>
-            <i className="fas fa-calendar-check me-2 text-purple"></i> Blessing Plans & Services
+            <i className="fas fa-calendar-check me-2 text-purple"></i> Services & Ministries
           </Link>
           <Link to="/events" onClick={() => setMobileMenuOpen(false)}>
             <i className="fas fa-users me-2 text-purple"></i> Youth Ministry & Programs
