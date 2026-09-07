@@ -18,20 +18,7 @@ export const FloatingWidgets = () => {
 
   return (
     <div className="jesuscalls-floating-dock" id="jesuscallsFloatingDock">
-      {/* 1. Donate Floating Button (Green) */}
-      <Link
-        to="/contact#donate"
-        className="dock-item dock-donate"
-        title="Donate Now — Build God's Kingdom"
-        id="floatingDonateBtn"
-      >
-        <div className="dock-icon-circle dock-circle-green">
-          <i className="fas fa-hand-holding-dollar"></i>
-        </div>
-        <span className="dock-label">Donate</span>
-      </Link>
-
-      {/* 2. Call 24/7 Telephone Prayer Tower (Dark/Black) */}
+      {/* 1. Call 24/7 Telephone Prayer Tower (Dark/Black) */}
       <a
         href="tel:+61481839109"
         className="dock-item dock-call"
@@ -44,7 +31,7 @@ export const FloatingWidgets = () => {
         <span className="dock-label">Call</span>
       </a>
 
-      {/* 3. Pray / Prayer Request (White with icon) */}
+      {/* 2. Pray / Prayer Request (White with icon) */}
       <Link
         to="/prayer-request"
         className="dock-item dock-pray"
@@ -57,7 +44,7 @@ export const FloatingWidgets = () => {
         <span className="dock-label">Pray</span>
       </Link>
 
-      {/* 4. Scroll to Top Button (Subtle circular button) */}
+      {/* 3. Scroll to Top Button (Subtle circular button) */}
       {showScrollTop && (
         <button
           onClick={scrollToTop}

@@ -55,7 +55,7 @@ export const Header = () => {
 
   return (
     <>
-      {/* ═══════ TOP ANNOUNCEMENT / DONATION BAR (Jesus Calls Style) ═══════ */}
+      {/* ═══════ TOP ANNOUNCEMENT & PRAYER BAR ═══════ */}
       <div className="site-topbar">
         <div className="topbar-inner">
           <div className="topbar-left">
@@ -71,9 +71,9 @@ export const Header = () => {
             <span className="topbar-motto d-none d-md-inline">
               JOIN HANDS IN BUILDING GOD'S KINGDOM
             </span>
-            <Link to="/contact#donate" className="topbar-donate-btn" id="topbarDonateBtn">
-              <i className="fas fa-hand-holding-dollar me-1"></i>
-              Donate Now
+            <Link to="/prayer-request" className="topbar-prayer-btn" id="topbarPrayerBtn">
+              <i className="fas fa-hands-praying me-1"></i>
+              Prayer 24/7
             </Link>
           </div>
         </div>
@@ -238,11 +238,11 @@ export const Header = () => {
               <i className="fas fa-phone-alt me-2 text-success"></i> Call Prayer Line
             </a>
             <Link
-              to="/contact#donate"
-              className="btn btn-success w-100 rounded-pill py-2 text-center fw-bold shadow-sm"
+              to="/prayer-request"
+              className="btn btn-primary w-100 rounded-pill py-2 text-center fw-bold shadow-sm"
               onClick={() => setMobileMenuOpen(false)}
             >
-              <i className="fas fa-hand-holding-dollar me-2"></i> Donate Now
+              <i className="fas fa-hands-praying me-2"></i> Request Prayer 24/7
             </Link>
           </div>
         </div>

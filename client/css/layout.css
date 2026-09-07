@@ -60,7 +60,7 @@
   color: rgba(255, 255, 255, 0.9);
 }
 
-.topbar-donate-btn {
+.topbar-prayer-btn {
   background: #10B981;
   color: #FFFFFF;
   font-size: 0.78rem;
@@ -76,7 +76,7 @@
   text-transform: uppercase;
 }
 
-.topbar-donate-btn:hover {
+.topbar-prayer-btn:hover {
   background: #059669;
   color: #FFFFFF;
   transform: translateY(-1px);
