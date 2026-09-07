@@ -16,8 +16,8 @@ export const HomePage = () => {
     {
       id: 'slide-1',
       image: '/assets/slide-pastor.jpg',
-      badge: "GOD'S PROMISE FOR 2026",
-      title: "PROMISE PROMISE PROMISE",
+      badge: "YEAR OF DIVINE ACCELERATION",
+      title: "GOD'S PROMISE FOR 2026",
       pastor: 'DR. / PASTOR JASKARAN HEER',
       subtitle: "The Lord shall open unto thee His good treasure and bless all the work of thine hand. Step into a year of divine favor, health & breakthroughs.",
       primaryBtnText: 'CLICK TO WATCH',
@@ -252,11 +252,6 @@ export const HomePage = () => {
                             <i className="fas fa-sparkles me-2 text-warning"></i>
                             {slide.badge}
                           </span>
-                        </div>
-
-                        {/* Promise Repeating Shadow Text (Jesus Calls Style) */}
-                        <div className="jc-promise-backdrop-text d-none d-sm-block">
-                          PROMISE PROMISE PROMISE
                         </div>
 
                         {/* Slide Main Heading */}
