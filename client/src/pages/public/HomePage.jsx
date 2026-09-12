@@ -2,8 +2,11 @@ import React, { useState, useEffect, useRef } from 'react';
 import { Link } from 'react-router-dom';
 import { Helmet } from 'react-helmet-async';
 import { ScrollReveal } from '../../components/common/ScrollReveal';
+import { useSettings } from '../../context/SettingsContext';
 
 export const HomePage = () => {
+  const { settings } = useSettings();
+
   // Hero Slider State
   const [activeSlide, setActiveSlide] = useState(0);
   const [isSliderPaused, setIsSliderPaused] = useState(false);
@@ -29,51 +32,43 @@ export const HomePage = () => {
     {
       id: 'slide-2',
       image: '/assets/slide-worship.jpg',
-      badge: 'ANOINTED WORSHIP & PRAISE',
-      title: "EXPERIENCE GOD'S TANGIBLE GLORY",
-      pastor: 'TCONG LIVE WORSHIP & CHOIR',
-      subtitle: 'Join us in heartfelt worship, deep spiritual fellowship, and uplifting praise in Hindi, English, and Punjabi every Sunday in Melbourne.',
-      primaryBtnText: 'JOIN SUNDAY SERVICE',
+      badge: "JOIN US EVERY SUNDAY IN MELBOURNE",
+      title: "SUNDAY WORSHIP & HEALING SERVICE",
+      pastor: 'THE CHURCH OF NEW GENERATION',
+      subtitle: "Experience uplifting Hindi, English & Punjabi praise, inspiring biblical preaching, and powerful prayers for healing and family blessing.",
+      primaryBtnText: 'VIEW SERVICE TIMES',
       primaryBtnLink: '/services',
-      secondaryBtnText: 'EXPLORE MINISTRIES',
-      secondaryBtnLink: '/services',
-      accentColor: '#7E22CE',
+      secondaryBtnText: 'VISIT COOLAROO VIC',
+      secondaryBtnLink: '/contact',
+      accentColor: '#1E1B4B',
     },
     {
       id: 'slide-3',
       image: '/assets/slide-hall.jpg',
-      badge: 'COMMUNITY & FELLOWSHIP',
-      title: 'A SPIRITUAL HOME FOR EVERY FAMILY',
-      pastor: 'THE CHURCH OF NEW GENERATION',
-      subtitle: 'Gather with believers who love, support, and lift one another in prayer. Experience the life-transforming power of the Living Word.',
-      primaryBtnText: 'CHURCH SERVICES & TIMINGS',
-      primaryBtnLink: '/services',
-      secondaryBtnText: 'VISIT COOLAROO VIC',
-      secondaryBtnLink: '/contact',
-      accentColor: '#059669',
-    },
-    {
-      id: 'slide-4',
-      image: '/assets/slide-prayer.jpg',
       badge: '24/7 TELEPHONE PRAYER TOWER',
-      title: 'WE ARE PRAYING FOR YOU 24/7',
-      pastor: 'CONFIDENTIAL INTERCESSORY PRAYER',
-      subtitle: 'No storm is too big for God. Our anointed prayer ministers stand with you in faith for physical healing, family peace, and miracles.',
+      title: 'PRAYING FOR YOU & YOUR FAMILY',
+      pastor: 'INTERCESSORY PRAYER MINISTRY',
+      subtitle: "Whatever trial or illness you are facing, God hears every prayer. Call our anointed prayer line or submit a prayer request anytime.",
       primaryBtnText: 'SUBMIT PRAYER REQUEST',
       primaryBtnLink: '/prayer-request',
-      secondaryBtnText: 'CALL +61 481 839 109',
-      secondaryBtnLink: 'tel:+61481839109',
-      accentColor: '#D97706',
+      secondaryBtnText: 'CALL TODAY',
+      secondaryBtnLink: `tel:${settings.prayer_phone || settings.phone || '+61481839109'}`,
+      accentColor: '#701A75',
     },
   ];
 
-  // Auto-advance hero slides every 5.5 seconds
+  // Auto slide timer
+  const slideTimerRef = useRef(null);
+
   useEffect(() => {
-    if (isSliderPaused) return;
-    const interval = setInterval(() => {
-      setActiveSlide((prev) => (prev + 1) % slides.length);
-    }, 5500);
-    return () => clearInterval(interval);
+    if (!isSliderPaused) {
+      slideTimerRef.current = setInterval(() => {
+        setActiveSlide((prev) => (prev + 1) % slides.length);
+      }, 5500);
+    }
+    return () => {
+      if (slideTimerRef.current) clearInterval(slideTimerRef.current);
+    };
   }, [isSliderPaused, slides.length]);
 
   const handlePrevSlide = () => {
@@ -84,31 +79,31 @@ export const HomePage = () => {
     setActiveSlide((prev) => (prev + 1) % slides.length);
   };
 
-  // ═══════ VIDEO DATA (3 Provided Links + 2 Slots for Upcoming User Links) ═══════
+  // ═══════ DYNAMIC VIDEO DATA (Configurable from Admin Settings) ═══════
   const videoList = [
     {
       id: 'v1',
-      youtubeId: 'oISsfRY4pOY',
+      youtubeId: settings.featured_video_1 || 'oISsfRY4pOY',
       title: 'Sunday Anointed Worship',
     },
     {
       id: 'v2',
-      youtubeId: 'FZNPtnP6oj4',
+      youtubeId: settings.featured_video_2 || 'FZNPtnP6oj4',
       title: "Walking in God's Promises",
     },
     {
       id: 'v3',
-      youtubeId: 'ShvdcgBemHU',
+      youtubeId: settings.featured_video_3 || 'ShvdcgBemHU',
       title: 'Miracles of Healing & Prayer',
     },
     {
       id: 'v4',
-      youtubeId: 'G8MzgsAzK3s',
+      youtubeId: settings.featured_video_4 || 'G8MzgsAzK3s',
       title: 'Special Anointing Service',
     },
     {
       id: 'v5',
-      youtubeId: 'kyU3dD54vqA',
+      youtubeId: settings.featured_video_5 || 'kyU3dD54vqA',
       title: 'The Promise 2026',
     },
   ];
@@ -649,7 +644,7 @@ export const HomePage = () => {
                     </div>
                     <div>
                       <strong className="d-block text-dark">Church Location</strong>
-                      <span className="text-muted small">Progress Community Hall, Unit 27/59 Almurta Ave, Coolaroo VIC 3048, Melbourne, Australia</span>
+                      <span className="text-muted small">{settings.address || 'Progress Community Hall, Unit 27/59 Almurta Ave, Coolaroo VIC 3048, Melbourne, Australia'}</span>
                     </div>
                   </div>
                 </div>
@@ -658,7 +653,7 @@ export const HomePage = () => {
                   <Link to="/contact" className="btn btn-primary rounded-pill px-4 py-2 fw-bold">
                     Get Directions & Details
                   </Link>
-                  <a href="tel:+61481839109" className="btn btn-outline-dark rounded-pill px-4 py-2 fw-semibold">
+                  <a href={`tel:${settings.phone || '+61481839109'}`} className="btn btn-outline-dark rounded-pill px-4 py-2 fw-semibold">
                     <i className="fas fa-phone-alt me-1"></i> Contact Pastor
                   </a>
                 </div>
