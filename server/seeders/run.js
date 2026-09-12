@@ -156,8 +156,8 @@ async function runSeeders() {
         ('bible_verse', 'For where two or three gather in my name, there am I with them.', 'homepage', 'textarea'),
         ('bible_verse_reference', 'Matthew 18:20', 'homepage', 'text'),
         
-        ('address', '123 Faith Street, New Delhi, India 110001', 'contact', 'text'),
-        ('phone', '+91 98765 43210', 'contact', 'text'),
+        ('address', 'Progress Community Hall, Unit 27/59 Almurta Ave, Coolaroo VIC 3048', 'contact', 'text'),
+        ('phone', '+61 481 839 109', 'contact', 'text'),
         ('email', 'info@tcong.org', 'contact', 'email'),
         ('maps_embed_url', '', 'contact', 'text'),
         

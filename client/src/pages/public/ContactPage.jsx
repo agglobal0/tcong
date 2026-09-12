@@ -103,7 +103,7 @@ export const ContactPage = () => {
                     <i className="fas fa-map-marker-alt text-primary fs-3 mt-1"></i>
                     <div>
                       <h6 className="fw-bold mb-1" style={{ color: '#0F172A' }}>Church Location</h6>
-                      <p className="text-muted mb-0 small">{settings.address || 'The Church of New Generation, Main Sanctuary, India'}</p>
+                      <p className="text-muted mb-0 small">{settings.address || 'Progress Community Hall, Unit 27/59 Almurta Ave, Coolaroo VIC 3048'}</p>
                     </div>
                   </div>
 
@@ -111,7 +111,7 @@ export const ContactPage = () => {
                     <i className="fas fa-phone-alt text-success fs-3 mt-1"></i>
                     <div>
                       <h6 className="fw-bold mb-1" style={{ color: '#0F172A' }}>Phone & 24/7 Prayer Line</h6>
-                      <p className="text-muted mb-0 small">{settings.phone || '+91 98765 43210'}</p>
+                      <p className="text-muted mb-0 small">{settings.phone || '+61 481 839 109'}</p>
                     </div>
                   </div>
 
@@ -159,13 +159,14 @@ export const ContactPage = () => {
                       />
                     </div>
                   </div>
+
                   <div className="row g-3 mb-3">
                     <div className="col-md-6">
                       <label className="form-label fw-semibold">Phone Number</label>
                       <input
                         type="tel"
                         className="form-control"
-                        placeholder="+91 98765 43210"
+                        placeholder="+61 481 839 109"
                         value={formData.phone}
                         onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
                       />

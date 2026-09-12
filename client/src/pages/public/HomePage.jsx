@@ -651,7 +651,7 @@ export const HomePage = () => {
                     </div>
                     <div>
                       <strong className="d-block text-dark">Church Location</strong>
-                      <span className="text-muted small">Unit 27/59 Almurta Ave, Coolaroo VIC 3048, Melbourne, Australia</span>
+                      <span className="text-muted small">Progress Community Hall, Unit 27/59 Almurta Ave, Coolaroo VIC 3048, Melbourne, Australia</span>
                     </div>
                   </div>
                 </div>

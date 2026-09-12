@@ -64,11 +64,11 @@ export const Footer = () => {
           <h4 className="footer-heading">Contact Info</h4>
           <div className="footer-contact-item">
             <i className="fas fa-map-marker-alt"></i>
-            <span>{settings.address || '123 Faith Street, New Delhi, India 110001'}</span>
+            <span>{settings.address || 'Progress Community Hall, Unit 27/59 Almurta Ave, Coolaroo VIC 3048'}</span>
           </div>
           <div className="footer-contact-item">
             <i className="fas fa-phone"></i>
-            <span>{settings.phone || '+91 98765 43210'}</span>
+            <span>{settings.phone || '+61 481 839 109'}</span>
           </div>
           <div className="footer-contact-item">
             <i className="fas fa-envelope"></i>
