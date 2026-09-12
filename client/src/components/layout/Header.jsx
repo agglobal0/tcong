@@ -110,56 +110,63 @@ export const Header = () => {
       >
         <div className="mobile-menu-inner">
           <div className="mobile-menu-top">
-            <span className="fw-bold text-dark fs-5">Menu</span>
+            <div className="d-flex align-items-center gap-2">
+              <div className="header-logo-icon" style={{ width: '32px', height: '32px', fontSize: '0.9rem' }}>✝</div>
+              <span className="fw-bold text-dark fs-6">Menu</span>
+            </div>
             <button
-              className="btn-close"
+              type="button"
+              className="btn btn-sm btn-light rounded-circle d-flex align-items-center justify-content-center border-0 shadow-none"
+              style={{ width: '36px', height: '36px' }}
               onClick={() => setMobileMenuOpen(false)}
               aria-label="Close menu"
-            ></button>
+            >
+              <i className="fas fa-times text-secondary fs-5"></i>
+            </button>
           </div>
 
-          <Link to="/" onClick={() => setMobileMenuOpen(false)}>
-            <i className="fas fa-home me-2 text-purple"></i> Home
-          </Link>
-          <Link to="/about" onClick={() => setMobileMenuOpen(false)}>
-            <i className="fas fa-church me-2 text-purple"></i> About
-          </Link>
-          <Link to="/services" onClick={() => setMobileMenuOpen(false)}>
-            <i className="fas fa-calendar-check me-2 text-purple"></i> Services & Ministries
-          </Link>
-          <Link to="/events" onClick={() => setMobileMenuOpen(false)}>
-            <i className="fas fa-users me-2 text-purple"></i> Youth Ministry & Programs
-          </Link>
-          <Link to="/sermons" onClick={() => setMobileMenuOpen(false)}>
-            <i className="fas fa-video me-2 text-purple"></i> Sermons & Latest Videos
-          </Link>
-          <Link to="/blog" onClick={() => setMobileMenuOpen(false)}>
-            <i className="fas fa-book-open me-2 text-purple"></i> Blogs & Articles
-          </Link>
-          <Link to="/prayer-request" onClick={() => setMobileMenuOpen(false)}>
-            <i className="fas fa-hands-praying me-2 text-purple"></i> 24/7 Prayer Towers
-          </Link>
-          <Link to="/testimonials" onClick={() => setMobileMenuOpen(false)}>
-            <i className="fas fa-heart me-2 text-purple"></i> Praise Reports & Testimonies
-          </Link>
-          <Link to="/contact" onClick={() => setMobileMenuOpen(false)}>
-            <i className="fas fa-envelope me-2 text-purple"></i> Contact Us
-          </Link>
+          <NavLink to="/" className={({ isActive }) => (isActive ? 'active' : '')} onClick={() => setMobileMenuOpen(false)} end>
+            <i className="fas fa-home text-purple"></i> Home
+          </NavLink>
+          <NavLink to="/about" className={({ isActive }) => (isActive ? 'active' : '')} onClick={() => setMobileMenuOpen(false)}>
+            <i className="fas fa-church text-purple"></i> About
+          </NavLink>
+          <NavLink to="/services" className={({ isActive }) => (isActive ? 'active' : '')} onClick={() => setMobileMenuOpen(false)}>
+            <i className="fas fa-calendar-check text-purple"></i> Services & Ministries
+          </NavLink>
+          <NavLink to="/events" className={({ isActive }) => (isActive ? 'active' : '')} onClick={() => setMobileMenuOpen(false)}>
+            <i className="fas fa-users text-purple"></i> Youth Ministry & Programs
+          </NavLink>
+          <NavLink to="/sermons" className={({ isActive }) => (isActive ? 'active' : '')} onClick={() => setMobileMenuOpen(false)}>
+            <i className="fas fa-video text-purple"></i> Sermons & Latest Videos
+          </NavLink>
+          <NavLink to="/blog" className={({ isActive }) => (isActive ? 'active' : '')} onClick={() => setMobileMenuOpen(false)}>
+            <i className="fas fa-book-open text-purple"></i> Blogs & Articles
+          </NavLink>
+          <NavLink to="/prayer-request" className={({ isActive }) => (isActive ? 'active' : '')} onClick={() => setMobileMenuOpen(false)}>
+            <i className="fas fa-hands-praying text-purple"></i> 24/7 Prayer Towers
+          </NavLink>
+          <NavLink to="/testimonials" className={({ isActive }) => (isActive ? 'active' : '')} onClick={() => setMobileMenuOpen(false)}>
+            <i className="fas fa-heart text-purple"></i> Praise Reports & Testimonies
+          </NavLink>
+          <NavLink to="/contact" className={({ isActive }) => (isActive ? 'active' : '')} onClick={() => setMobileMenuOpen(false)}>
+            <i className="fas fa-envelope text-purple"></i> Contact Us
+          </NavLink>
 
-          <div className="pt-3 border-top mt-3 d-flex flex-column gap-2">
+          <div className="pt-3 border-top mt-auto d-flex flex-column gap-2">
             <a
               href="tel:+61481839109"
-              className="btn btn-outline-dark w-100 rounded-pill py-2 text-center"
+              className="btn btn-outline-dark w-100 rounded-pill py-2 text-center fw-semibold"
             >
               <i className="fas fa-phone-alt me-2 text-success"></i> Call Prayer Line
             </a>
-            <Link
+            <NavLink
               to="/prayer-request"
               className="btn btn-primary w-100 rounded-pill py-2 text-center fw-bold shadow-sm"
               onClick={() => setMobileMenuOpen(false)}
             >
               <i className="fas fa-hands-praying me-2"></i> Request Prayer 24/7
-            </Link>
+            </NavLink>
           </div>
         </div>
       </div>
