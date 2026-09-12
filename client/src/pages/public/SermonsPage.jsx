@@ -56,12 +56,9 @@ const DEFAULT_SERMONS = [
   },
 ];
 
-const CATEGORIES = ['All', 'Sunday Worship', 'Healing & Faith', 'Prayer & Deliverance', 'Youth & Family', 'Prophetic'];
-
 export const SermonsPage = () => {
   const [sermons, setSermons] = useState(DEFAULT_SERMONS);
   const [loading, setLoading] = useState(false);
-  const [activeCategory, setActiveCategory] = useState('All');
   const [activeVideoModal, setActiveVideoModal] = useState(null);
 
   useEffect(() => {
@@ -83,7 +80,7 @@ export const SermonsPage = () => {
               id: item.id || index + 1,
               title: item.title,
               speaker: item.speaker || 'Pastor Jaskaran Heer',
-              category: item.category || 'Sunday Worship',
+              category: item.category || 'Sunday Sermons',
               youtubeId: yId || DEFAULT_SERMONS[index % DEFAULT_SERMONS.length].youtubeId,
               description: item.description,
             };
@@ -98,11 +95,6 @@ export const SermonsPage = () => {
       })
       .finally(() => setLoading(false));
   }, []);
-
-  const filteredSermons =
-    activeCategory === 'All'
-      ? sermons
-      : sermons.filter((s) => s.category?.toLowerCase() === activeCategory.toLowerCase());
 
   return (
     <div className="sermons-page">
@@ -141,36 +133,13 @@ export const SermonsPage = () => {
       {/* ═══════ SERMONS CONTENT SECTION ═══════ */}
       <section className="py-5 bg-light" style={{ minHeight: '600px' }}>
         <div className="container py-2">
-          {/* Category Filter Pills */}
-          <div className="d-flex flex-wrap align-items-center justify-content-center gap-2 mb-5">
-            {CATEGORIES.map((cat) => (
-              <button
-                key={cat}
-                type="button"
-                className={`btn rounded-pill px-3 py-2 fw-semibold ${
-                  activeCategory === cat
-                    ? 'btn-purple text-white shadow-sm'
-                    : 'btn-white bg-white text-dark border'
-                }`}
-                style={
-                  activeCategory === cat
-                    ? { backgroundColor: '#581C87', borderColor: '#581C87' }
-                    : { borderColor: '#E2E8F0' }
-                }
-                onClick={() => setActiveCategory(cat)}
-              >
-                {cat}
-              </button>
-            ))}
-          </div>
-
           {loading ? (
             <div className="text-center py-5">
               <div className="spinner-border text-purple" style={{ color: '#7E22CE' }} role="status"></div>
             </div>
           ) : (
             <div className="row g-4">
-              {filteredSermons.map((s, idx) => (
+              {sermons.map((s, idx) => (
                 <div className="col-12 col-sm-6 col-lg-4" key={s.id || idx}>
                   <ScrollReveal animation="fade-up" delay={(idx % 6) * 60}>
                     <div
