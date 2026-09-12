@@ -103,15 +103,13 @@ export const HomePage = () => {
     },
     {
       id: 'v4',
-      youtubeId: 'oISsfRY4pOY', // Slot 4: User Link 4 (Ready to update)
+      youtubeId: 'G8MzgsAzK3s',
       title: 'Special Anointing Service',
-      isSlot: true,
     },
     {
       id: 'v5',
-      youtubeId: 'FZNPtnP6oj4', // Slot 5: User Link 5 (Ready to update)
+      youtubeId: 'kyU3dD54vqA',
       title: 'The Promise 2026',
-      isSlot: true,
     },
   ];
 
