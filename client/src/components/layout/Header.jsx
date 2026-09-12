@@ -60,7 +60,7 @@ export const Header = () => {
             </NavLink>
 
             <NavLink to="/events" className={({ isActive }) => (isActive ? 'active' : '')}>
-              Youth Ministry
+              Events
             </NavLink>
 
             <NavLink to="/sermons" className={({ isActive }) => (isActive ? 'active' : '')}>
@@ -135,7 +135,7 @@ export const Header = () => {
             <i className="fas fa-calendar-check text-purple"></i> Services & Ministries
           </NavLink>
           <NavLink to="/events" className={({ isActive }) => (isActive ? 'active' : '')} onClick={() => setMobileMenuOpen(false)}>
-            <i className="fas fa-users text-purple"></i> Youth Ministry & Programs
+            <i className="fas fa-calendar-alt text-purple"></i> Events
           </NavLink>
           <NavLink to="/sermons" className={({ isActive }) => (isActive ? 'active' : '')} onClick={() => setMobileMenuOpen(false)}>
             <i className="fas fa-video text-purple"></i> Sermons & Latest Videos

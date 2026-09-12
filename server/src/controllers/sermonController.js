@@ -43,7 +43,7 @@ async function getPublicSermons(req, res, next) {
       FROM sermons s
       LEFT JOIN sermon_categories sc ON s.category_id = sc.id
       ${whereClause}
-      ORDER BY s.is_featured DESC, s.sermon_date DESC
+      ORDER BY s.sermon_date DESC, s.created_at DESC
       LIMIT ${Number(limit)} OFFSET ${Number(offset)}
     `;
 

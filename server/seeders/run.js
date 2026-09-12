@@ -299,15 +299,21 @@ async function runSeeders() {
 
     await connection.query(`
       INSERT IGNORE INTO sermons (title, description, speaker, youtube_url, video_id, sermon_date, category_id, status, is_featured) VALUES
-        ('The Foundation of Faith',
-         'In this powerful message, we explore what it means to build our lives on the unshakeable foundation of faith in Jesus Christ. When storms come, only those built on the rock will stand firm.',
-         'Pastor Name', '', '', CURDATE(), ${sundaySermonCatId}, 'published', 1),
-        ('Grace That Transforms',
-         'Discover how God\\'s amazing grace is not just a theological concept but a transformative power that changes hearts, restores relationships, and renews minds.',
-         'Pastor Name', '', '', DATE_SUB(CURDATE(), INTERVAL 7 DAY), ${sundaySermonCatId}, 'published', 1),
-        ('Living with Purpose',
-         'God created each of us with a unique purpose. This message explores how to discover, develop, and deploy your God-given purpose for maximum impact in the Kingdom.',
-         'Pastor Name', '', '', DATE_SUB(CURDATE(), INTERVAL 14 DAY), ${sundaySermonCatId}, 'published', 0)
+        ('Special Anointing Service & Breakthrough',
+         'Entering a new dimension of spiritual authority, purpose, and blessing in Christ.',
+         'Pastor Jaskaran Heer', 'https://www.youtube.com/watch?v=G8MzgsAzK3s', 'G8MzgsAzK3s', CURDATE(), ${sundaySermonCatId}, 'published', 1),
+        ('The Promise 2026 - Prophetic Message',
+         'Prophetic insights and biblical direction for stepping into God’s abundant blessings this year.',
+         'Pastor Jaskaran Heer', 'https://www.youtube.com/watch?v=kyU3dD54vqA', 'kyU3dD54vqA', DATE_SUB(CURDATE(), INTERVAL 7 DAY), ${sundaySermonCatId}, 'published', 1),
+        ('Sunday Anointed Worship Service',
+         'Experience deep anointed worship and powerful life-changing preaching in the presence of God.',
+         'Pastor Jaskaran Heer', 'https://www.youtube.com/watch?v=oISsfRY4pOY', 'oISsfRY4pOY', DATE_SUB(CURDATE(), INTERVAL 14 DAY), ${sundaySermonCatId}, 'published', 1),
+        ('Walking in God\\'s Promises & Faith',
+         'Learn how to stand firm on God’s eternal promises in times of uncertainty and trial.',
+         'Pastor Jaskaran Heer', 'https://www.youtube.com/watch?v=FZNPtnP6oj4', 'FZNPtnP6oj4', DATE_SUB(CURDATE(), INTERVAL 21 DAY), ${sundaySermonCatId}, 'published', 0),
+        ('Miracles of Healing & Deliverance Prayer',
+         'A powerful prayer session releasing divine health, healing, and freedom for your family.',
+         'Pastor Jaskaran Heer', 'https://www.youtube.com/watch?v=ShvdcgBemHU', 'ShvdcgBemHU', DATE_SUB(CURDATE(), INTERVAL 28 DAY), ${sundaySermonCatId}, 'published', 0)
     `);
 
     // =====================

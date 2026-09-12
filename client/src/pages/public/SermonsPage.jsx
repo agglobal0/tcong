@@ -4,57 +4,76 @@ import { api } from '../../services/api';
 import { TextSequence } from '../../components/common/TextSequence';
 import { ScrollReveal } from '../../components/common/ScrollReveal';
 
-// Default curated sermons featuring Pastor Jaskaran Heer
+// Default curated sermons featuring Pastor Jaskaran Heer in serial date-wise order
 const DEFAULT_SERMONS = [
   {
     id: 1,
-    title: 'Sunday Anointed Worship Service',
-    speaker: 'Pastor Jaskaran Heer',
-    category: 'Sunday Worship',
-    youtubeId: 'oISsfRY4pOY',
-    description: 'Experience deep anointed worship and powerful life-changing preaching in the presence of God.',
-  },
-  {
-    id: 2,
-    title: "Walking in God's Promises & Faith",
-    speaker: 'Pastor Jaskaran Heer',
-    category: 'Healing & Faith',
-    youtubeId: 'FZNPtnP6oj4',
-    description: 'Learn how to stand firm on God’s eternal promises in times of uncertainty and trial.',
-  },
-  {
-    id: 3,
-    title: 'Miracles of Healing & Deliverance Prayer',
-    speaker: 'Pastor Jaskaran Heer',
-    category: 'Prayer & Deliverance',
-    youtubeId: 'ShvdcgBemHU',
-    description: 'A powerful prayer session releasing divine health, healing, and freedom for your family.',
-  },
-  {
-    id: 4,
     title: 'Special Anointing Service & Breakthrough',
     speaker: 'Pastor Jaskaran Heer',
     category: 'Sunday Worship',
+    date: '2026-03-08',
     youtubeId: 'G8MzgsAzK3s',
     description: 'Entering a new dimension of spiritual authority, purpose, and blessing in Christ.',
   },
   {
-    id: 5,
+    id: 2,
     title: 'The Promise 2026 - Prophetic Message',
     speaker: 'Pastor Jaskaran Heer',
     category: 'Prophetic',
+    date: '2026-03-01',
     youtubeId: 'kyU3dD54vqA',
     description: 'Prophetic insights and biblical direction for stepping into God’s abundant blessings this year.',
+  },
+  {
+    id: 3,
+    title: 'Sunday Anointed Worship Service',
+    speaker: 'Pastor Jaskaran Heer',
+    category: 'Sunday Worship',
+    date: '2026-02-22',
+    youtubeId: 'oISsfRY4pOY',
+    description: 'Experience deep anointed worship and powerful life-changing preaching in the presence of God.',
+  },
+  {
+    id: 4,
+    title: "Walking in God's Promises & Faith",
+    speaker: 'Pastor Jaskaran Heer',
+    category: 'Healing & Faith',
+    date: '2026-02-15',
+    youtubeId: 'FZNPtnP6oj4',
+    description: 'Learn how to stand firm on God’s eternal promises in times of uncertainty and trial.',
+  },
+  {
+    id: 5,
+    title: 'Miracles of Healing & Deliverance Prayer',
+    speaker: 'Pastor Jaskaran Heer',
+    category: 'Prayer & Deliverance',
+    date: '2026-02-08',
+    youtubeId: 'ShvdcgBemHU',
+    description: 'A powerful prayer session releasing divine health, healing, and freedom for your family.',
   },
   {
     id: 6,
     title: 'Building a Strong Christian Family & Marriage',
     speaker: 'Pastor Jaskaran Heer',
     category: 'Youth & Family',
+    date: '2026-02-01',
     youtubeId: 'oISsfRY4pOY',
     description: 'Biblical wisdom for nurturing godly homes, honoring marriage, and raising blessed children.',
   },
 ];
+
+const CURATED_YOUTUBE_IDS = ['G8MzgsAzK3s', 'kyU3dD54vqA', 'oISsfRY4pOY', 'FZNPtnP6oj4', 'ShvdcgBemHU'];
+
+const formatDate = (dateStr) => {
+  if (!dateStr) return '';
+  const d = new Date(dateStr);
+  if (isNaN(d.getTime())) return dateStr;
+  return d.toLocaleDateString('en-US', {
+    month: 'short',
+    day: 'numeric',
+    year: 'numeric',
+  });
+};
 
 export const SermonsPage = () => {
   const [sermons, setSermons] = useState(DEFAULT_SERMONS);
@@ -68,7 +87,7 @@ export const SermonsPage = () => {
       .then((res) => {
         const list = res.data || [];
         if (list && list.length > 0) {
-          // Normalize API data to include youtubeId
+          // Normalize API data to include youtubeId, speaker, and serial date sorting
           const formatted = list.map((item, index) => {
             let yId = item.video_id || '';
             if (!yId && item.youtube_url) {
@@ -76,15 +95,30 @@ export const SermonsPage = () => {
                 ? item.youtube_url.split('v=')[1].split('&')[0]
                 : item.youtube_url.split('/').pop();
             }
+            if (!yId) {
+              yId = CURATED_YOUTUBE_IDS[index % CURATED_YOUTUBE_IDS.length];
+            }
+
+            const speakerName =
+              !item.speaker || item.speaker.trim().toLowerCase() === 'pastor name' || item.speaker.trim().toLowerCase() === 'pastor'
+                ? 'Pastor Jaskaran Heer'
+                : item.speaker;
+
+            const dateValue = item.sermon_date || item.created_at || DEFAULT_SERMONS[index % DEFAULT_SERMONS.length].date;
+
             return {
               id: item.id || index + 1,
               title: item.title,
-              speaker: item.speaker || 'Pastor Jaskaran Heer',
-              category: item.category || 'Sunday Sermons',
-              youtubeId: yId || DEFAULT_SERMONS[index % DEFAULT_SERMONS.length].youtubeId,
+              speaker: speakerName,
+              category: item.category_name || item.category || 'Sunday Sermons',
+              date: dateValue,
+              youtubeId: yId,
               description: item.description,
             };
           });
+
+          // Sort date-wise in descending (serial/chronological) order
+          formatted.sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime());
           setSermons(formatted);
         } else {
           setSermons(DEFAULT_SERMONS);
@@ -164,18 +198,26 @@ export const SermonsPage = () => {
 
                       {/* Video Title & Meta Below Thumbnail */}
                       <div className="pt-2">
-                        <span
-                          className="badge rounded-pill mb-1 px-2 py-1 small fw-semibold"
-                          style={{ backgroundColor: '#F3E8FF', color: '#6B21A8' }}
-                        >
-                          {s.category || 'Sunday Worship'}
-                        </span>
+                        <div className="d-flex align-items-center justify-content-between mb-1.5 flex-wrap gap-1">
+                          <span
+                            className="badge rounded-pill px-2.5 py-1 small fw-semibold"
+                            style={{ backgroundColor: '#F3E8FF', color: '#6B21A8' }}
+                          >
+                            {s.category || 'Sunday Sermons'}
+                          </span>
+                          {s.date && (
+                            <span className="small text-muted fw-semibold d-inline-flex align-items-center">
+                              <i className="far fa-calendar-alt me-1 text-purple" style={{ color: '#7E22CE' }}></i>
+                              {formatDate(s.date)}
+                            </span>
+                          )}
+                        </div>
                         <h3 className="jc-video-item-title mb-1" style={{ fontSize: '1.02rem', lineHeight: '1.4' }}>
                           {s.title}
                         </h3>
-                        <small className="text-muted d-block">
+                        <small className="text-muted d-block mb-1">
                           <i className="fas fa-user-tie me-1 text-purple" style={{ color: '#7E22CE' }}></i>
-                          {s.speaker}
+                          {s.speaker || 'Pastor Jaskaran Heer'}
                         </small>
                         {s.description && (
                           <p className="text-secondary small mt-1 mb-0" style={{ lineHeight: '1.5', display: '-webkit-box', WebkitLineClamp: 2, WebkitBoxOrient: 'vertical', overflow: 'hidden' }}>
