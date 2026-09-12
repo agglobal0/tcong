@@ -33,30 +33,6 @@ export const Header = () => {
 
   return (
     <>
-      {/* ═══════ TOP ANNOUNCEMENT & PRAYER BAR ═══════ */}
-      <div className="site-topbar">
-        <div className="topbar-inner">
-          <div className="topbar-left">
-            <span className="topbar-tagline">
-              <i className="fas fa-globe-asia me-2 text-warning"></i>
-              <strong>PRAYING FOR THE WORLD</strong>
-              <span className="topbar-divider">|</span>
-              CALL TODAY - <a href="tel:+61481839109" className="topbar-phone"><i className="fas fa-phone-alt me-1 text-success"></i> +61 481 839 109</a>
-            </span>
-          </div>
-
-          <div className="topbar-right">
-            <span className="topbar-motto d-none d-md-inline">
-              JOIN HANDS IN BUILDING GOD'S KINGDOM
-            </span>
-            <Link to="/prayer-request" className="topbar-prayer-btn" id="topbarPrayerBtn">
-              <i className="fas fa-hands-praying me-1"></i>
-              Prayer 24/7
-            </Link>
-          </div>
-        </div>
-      </div>
-
       {/* ═══════ MAIN SITE HEADER ═══════ */}
       <header className={`site-header ${isScrolled ? 'scrolled' : ''}`} id="siteHeader">
         <div className="header-inner">
