@@ -140,7 +140,7 @@ export const HomePage = () => {
     {
       id: 'family',
       title: 'Family & Marriage Blessing',
-      icon: 'fas fa-house-chimney-heart',
+      icon: 'fas fa-people-roof',
       color: '#059669',
       bgColor: '#ECFDF5',
       desc: 'Nurturing godly homes, strengthening marriages, and blessing children according to God’s Word.',
@@ -455,17 +455,17 @@ export const HomePage = () => {
             </ScrollReveal>
           </div>
 
-          <div className="row g-3 g-md-4">
+          <div className="row g-3 g-md-4 align-items-stretch">
             {blessingPlans.map((plan, idx) => (
-              <div className="col-12 col-md-6 col-lg-4" key={plan.id}>
-                <ScrollReveal animation="fade-up" delay={idx * 30}>
+              <div className="col-12 col-md-6 col-lg-4 d-flex" key={plan.id}>
+                <ScrollReveal animation="fade-up" delay={idx * 30} className="w-100 d-flex flex-column">
                   <Link
                     to={plan.link}
-                    className="card h-100 border-0 shadow-sm p-4 text-decoration-none jc-ministry-card"
+                    className="card h-100 w-100 border-0 shadow-sm p-4 text-decoration-none jc-ministry-card d-flex flex-column"
                     style={{ backgroundColor: '#FFFFFF', borderRadius: '16px' }}
                   >
                     <div
-                      className="jc-ministry-icon-box mb-3 d-flex align-items-center justify-content-center"
+                      className="jc-ministry-icon-box mb-3 d-flex align-items-center justify-content-center flex-shrink-0"
                       style={{
                         width: '54px',
                         height: '54px',
@@ -477,7 +477,7 @@ export const HomePage = () => {
                     >
                       <i className={plan.icon}></i>
                     </div>
-                    <h3 className="fw-bold fs-5 mb-2 text-dark">
+                    <h3 className="fw-bold fs-5 mb-2 text-dark" style={{ minHeight: '52px', display: 'flex', alignItems: 'center' }}>
                       {plan.title}
                     </h3>
                     <p className="text-muted small mb-0 flex-grow-1" style={{ lineHeight: '1.6' }}>

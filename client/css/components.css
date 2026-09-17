@@ -1242,6 +1242,9 @@ select.form-control {
 .jc-ministry-card {
   transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
   border: 1px solid #F1F5F9 !important;
+  display: flex !important;
+  flex-direction: column !important;
+  height: 100% !important;
 }
 
 .jc-ministry-card:hover {
