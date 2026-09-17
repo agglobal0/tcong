@@ -480,13 +480,9 @@ export const HomePage = () => {
                     <h3 className="fw-bold fs-5 mb-2 text-dark">
                       {plan.title}
                     </h3>
-                    <p className="text-muted small mb-3 flex-grow-1" style={{ lineHeight: '1.6' }}>
+                    <p className="text-muted small mb-0 flex-grow-1" style={{ lineHeight: '1.6' }}>
                       {plan.desc}
                     </p>
-                    <div className="d-flex align-items-center text-primary fw-semibold small gap-1">
-                      <span>Learn More</span>
-                      <i className="fas fa-arrow-right" style={{ fontSize: '12px' }}></i>
-                    </div>
                   </Link>
                 </ScrollReveal>
               </div>
