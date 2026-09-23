@@ -11,7 +11,7 @@ const defaultSettings = {
   email: 'info@tcong.org',
   address: 'Progress Community Hall, Unit 27/59 Almurta Ave, Coolaroo VIC 3048',
   maps_embed_url: '',
-  facebook_url: 'https://facebook.com',
+  facebook_url: 'https://www.facebook.com/Pastorjaskaranheer',
   instagram_url: 'https://instagram.com/thechurchofnewgeneration',
   youtube_url: 'https://www.youtube.com/@Pastorjaskaranheer',
   twitter_url: 'https://twitter.com',
