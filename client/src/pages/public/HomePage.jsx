@@ -178,19 +178,20 @@ export const HomePage = () => {
     },
     {
       id: 2,
+      name: 'Bro. Himanshu & Family',
+      location: 'Victoria, Australia',
+      title: 'New Car Blessing & Supernatural Provision',
+      text: 'The Church of New Generation की प्रार्थना ग्रहण करने से भाई हिमांशु को मिली नई कार की आशीष। God answered our prayers through Pastor Jaskaran Heer with divine favor and a brand new car. All glory to Jesus Christ!',
+      badge: 'Car Blessing & Provision',
+      photo: '/assets/testimony-car-blessing.jpg',
+    },
+    {
+      id: 3,
       name: 'Amit & Priya S.',
       location: 'Victoria, Australia',
       title: 'Family Breakthrough & Financial Provision',
       text: 'Our family faced enormous financial stress and immigration uncertainty. Through continuous support and intercession from TCONG Prayer Tower, doors miraculously opened beyond what we imagined!',
       badge: 'Financial Breakthrough',
-    },
-    {
-      id: 3,
-      name: 'David K.',
-      location: 'Sydney, Australia',
-      title: 'Peace Restored in Our Home',
-      text: 'The sermons and prayers taught us how to stand firm on God’s Word. Bitterness was replaced with divine love, joy, and peace in our household. All glory to Jesus!',
-      badge: 'Family Restoration',
     },
   ];
 
@@ -580,12 +581,21 @@ export const HomePage = () => {
                       </p>
                     </div>
                     <div className="pt-3 border-top d-flex align-items-center gap-3" style={{ borderColor: '#E9D5FF' }}>
-                      <div
-                        className="rounded-circle d-flex align-items-center justify-content-center text-white fw-bold"
-                        style={{ width: '42px', height: '42px', backgroundColor: '#7E22CE', fontSize: '15px' }}
-                      >
-                        {t.name.charAt(0)}
-                      </div>
+                      {t.photo ? (
+                        <img
+                          src={t.photo}
+                          alt={t.name}
+                          className="rounded-circle object-fit-cover shadow-sm"
+                          style={{ width: '44px', height: '44px', border: '2px solid #7E22CE', flexShrink: 0 }}
+                        />
+                      ) : (
+                        <div
+                          className="rounded-circle d-flex align-items-center justify-content-center text-white fw-bold flex-shrink-0"
+                          style={{ width: '44px', height: '44px', backgroundColor: '#7E22CE', fontSize: '15px' }}
+                        >
+                          {t.name.charAt(0)}
+                        </div>
+                      )}
                       <div>
                         <h6 className="fw-bold mb-0 text-dark">{t.name}</h6>
                         <small className="text-muted">{t.location}</small>
