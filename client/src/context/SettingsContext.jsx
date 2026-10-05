@@ -14,7 +14,7 @@ const defaultSettings = {
   facebook_url: 'https://www.facebook.com/Pastorjaskaranheer',
   instagram_url: 'https://instagram.com/thechurchofnewgeneration',
   youtube_url: 'https://www.youtube.com/@Pastorjaskaranheer',
-  twitter_url: 'https://twitter.com',
+  twitter_url: 'https://x.com/Jaskaranhee5',
   hero_heading: "Experience God's Love in Community",
   hero_subheading: 'Join us every Sunday as we worship, learn, and grow together. Everyone is welcome at The Church of New Generation.',
   bible_verse: 'For where two or three gather in my name, there am I with them.',
