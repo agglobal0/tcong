@@ -207,9 +207,12 @@ export const ServicesPage = () => {
                     borderLeft: '4px solid #7E22CE',
                   }}
                 >
-                  <p className="fst-italic fw-semibold mb-0" style={{ color: '#581C87', fontSize: '0.95rem' }}>
-                    “They shall lay hands on the sick, and they shall recover.” — Mark 16:18
+                  <p className="fst-italic fw-semibold mb-1" style={{ color: '#581C87', fontSize: '1rem', lineHeight: '1.6' }}>
+                    “They shall lay hands on the sick, and they shall recover.”
                   </p>
+                  <span className="d-block fw-bold" style={{ color: '#7E22CE', fontSize: '0.85rem' }}>
+                    — Mark 16:18
+                  </span>
                 </div>
 
                 <p className="text-muted lead mb-3" style={{ lineHeight: '1.7', fontSize: '1.05rem' }}>
