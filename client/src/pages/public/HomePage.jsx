@@ -14,6 +14,17 @@ export const HomePage = () => {
   // Video Modal State
   const [activeVideoModal, setActiveVideoModal] = useState(null);
 
+  // Copy to clipboard state for bank details
+  const [copiedField, setCopiedField] = useState(null);
+
+  const handleCopyText = (text, fieldName) => {
+    if (navigator.clipboard) {
+      navigator.clipboard.writeText(text);
+      setCopiedField(fieldName);
+      setTimeout(() => setCopiedField(null), 2500);
+    }
+  };
+
   // Hero Slides Data using uploaded church images
   const slides = [
     {
@@ -488,6 +499,121 @@ export const HomePage = () => {
                 </ScrollReveal>
               </div>
             ))}
+          </div>
+
+          {/* ═══════ BANK DETAILS / TITHES & OFFERINGS CARD ═══════ */}
+          <div className="mt-5 pt-2">
+            <ScrollReveal animation="zoom-in" delay={100}>
+              <div
+                className="p-4 p-md-5 rounded-4 shadow-sm border border-light mx-auto position-relative overflow-hidden"
+                style={{
+                  maxWidth: '850px',
+                  backgroundColor: '#FFFFFF',
+                }}
+              >
+                <div className="text-center mb-4">
+                  <span
+                    className="badge px-3 py-2 rounded-pill mb-2 fw-bold text-uppercase"
+                    style={{ backgroundColor: '#FEF3C7', color: '#92400E', fontSize: '0.85rem' }}
+                  >
+                    <i className="fas fa-hand-holding-heart me-1"></i> For Tithes and Offerings
+                  </span>
+                  <h3 className="fw-bold mb-2" style={{ color: '#0F172A', fontSize: '1.8rem' }}>
+                    Direct Bank Transfer Details
+                  </h3>
+                  <p className="text-muted small mx-auto mb-0" style={{ maxWidth: '560px', lineHeight: '1.6' }}>
+                    Partner with God's work, bless the church family, and support the ministry through electronic funds transfer (EFT).
+                  </p>
+                </div>
+
+                {/* Styled Banking Display Box */}
+                <div
+                  className="p-4 rounded-4 position-relative text-center shadow-sm mx-auto"
+                  style={{
+                    maxWidth: '620px',
+                    backgroundColor: '#0F172A',
+                    color: '#FFFFFF',
+                    border: '2px solid #334155',
+                  }}
+                >
+                  <div className="d-flex align-items-center justify-content-between mb-3 border-bottom border-secondary border-opacity-50 pb-2">
+                    <div className="d-flex align-items-center gap-2">
+                      <span
+                        className="badge px-2 py-1 fw-bold text-dark"
+                        style={{ backgroundColor: '#FFCC00', borderRadius: '4px' }}
+                      >
+                        CBA
+                      </span>
+                      <span className="fw-bold text-light" style={{ letterSpacing: '0.5px' }}>
+                        Commonwealth Bank
+                      </span>
+                    </div>
+                    <small className="text-white-50 d-none d-sm-inline">Official Church Account</small>
+                  </div>
+
+                  <div className="mb-3">
+                    <small className="text-white-50 text-uppercase d-block mb-1" style={{ letterSpacing: '1px', fontSize: '0.75rem' }}>
+                      Account Name
+                    </small>
+                    <h4 className="fw-bold text-warning mb-0" style={{ letterSpacing: '1px' }}>
+                      CHURCH OF NEW GENERATION
+                    </h4>
+                  </div>
+
+                  <div className="row g-3 my-2 justify-content-center">
+                    <div className="col-12 col-sm-6">
+                      <div
+                        className="p-3 rounded-3 d-flex flex-column align-items-center justify-content-center position-relative"
+                        style={{ backgroundColor: 'rgba(255, 255, 255, 0.07)', border: '1px solid rgba(255, 255, 255, 0.12)' }}
+                      >
+                        <small className="text-white-50 text-uppercase fw-semibold mb-1" style={{ fontSize: '0.75rem' }}>
+                          BSB Number
+                        </small>
+                        <div className="d-flex align-items-center gap-2">
+                          <span className="fw-bold fs-4 text-white font-monospace">063 599</span>
+                          <button
+                            type="button"
+                            onClick={() => handleCopyText('063599', 'bsb')}
+                            className="btn btn-sm btn-outline-warning rounded-pill py-0 px-2"
+                            title="Copy BSB"
+                          >
+                            {copiedField === 'bsb' ? <span className="small">Copied!</span> : <><i className="fas fa-copy me-1"></i>Copy</>}
+                          </button>
+                        </div>
+                      </div>
+                    </div>
+
+                    <div className="col-12 col-sm-6">
+                      <div
+                        className="p-3 rounded-3 d-flex flex-column align-items-center justify-content-center position-relative"
+                        style={{ backgroundColor: 'rgba(255, 255, 255, 0.07)', border: '1px solid rgba(255, 255, 255, 0.12)' }}
+                      >
+                        <small className="text-white-50 text-uppercase fw-semibold mb-1" style={{ fontSize: '0.75rem' }}>
+                          Account Number (A/C)
+                        </small>
+                        <div className="d-flex align-items-center gap-2">
+                          <span className="fw-bold fs-4 text-white font-monospace">1132 1535</span>
+                          <button
+                            type="button"
+                            onClick={() => handleCopyText('11321535', 'ac')}
+                            className="btn btn-sm btn-outline-warning rounded-pill py-0 px-2"
+                            title="Copy Account Number"
+                          >
+                            {copiedField === 'ac' ? <span className="small">Copied!</span> : <><i className="fas fa-copy me-1"></i>Copy</>}
+                          </button>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div className="pt-2">
+                    <small className="text-white-50" style={{ fontSize: '0.8rem' }}>
+                      <i className="fas fa-info-circle text-warning me-1"></i> Reference: <em>Tithe / Offering / [Your Name]</em>
+                    </small>
+                  </div>
+                </div>
+              </div>
+            </ScrollReveal>
           </div>
         </div>
       </section>
