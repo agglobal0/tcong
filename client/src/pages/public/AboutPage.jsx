@@ -12,13 +12,13 @@ export const AboutPage = () => {
         <title>About Us | Church of New Generation | Pastor Jaskaran Heer Melbourne</title>
         <meta
           name="description"
-          content="Church of New Generation is a Christ-centered family built on faith, prayer, and God's Word. Discover our calling, leadership by Pastor Jaskaran Heer, vision, and heart for God's people."
+          content="Church of New Generation is a Christ-centered family built on faith, prayer, and God's Word. Discover our calling, leadership by Pastor Jaskaran Heer, vision, Sunday fellowship food, and heart for God's people."
         />
         <link rel="canonical" href="https://www.churchofnewgeneration.com/about" />
         <meta property="og:title" content="About Church of New Generation | Pastor Jaskaran Heer" />
         <meta
           property="og:description"
-          content="A church born from a calling. Discover our journey of faith, servant leadership, vision, and how lives are transformed through Jesus Christ."
+          content="A church born from a calling. Discover our journey of faith, servant leadership, vision, Sunday fellowship food, and how lives are transformed through Jesus Christ."
         />
         <meta property="og:image" content="/assets/about-us.jpg" />
         <meta property="og:url" content="https://www.churchofnewgeneration.com/about" />
@@ -287,7 +287,7 @@ export const AboutPage = () => {
                   <div
                     className="position-absolute bottom-0 start-0 end-0 p-3 text-white"
                     style={{
-                      background: 'linear-gradient(180deg, rgba(0,0,0,0) 0%, rgba(0,0,0,0.85) 100%)',
+                      background: 'linear-gradient(180deg, rgba(0,0,0,0) 0%, rgba(15,23,42,0.85) 100%)',
                     }}
                   >
                     <small className="fw-bold d-block text-white">Dependent on God</small>
@@ -505,8 +505,97 @@ export const AboutPage = () => {
         </div>
       </section>
 
-      {/* ═══════ SECTION 6: OUR HEART — YOU ARE WELCOME HERE ═══════ */}
+      {/* ═══════ SECTION 6: SUNDAY FELLOWSHIP FOOD / MEAL SERVICE ═══════ */}
       <section className="py-5" style={{ backgroundColor: '#F8FAFC' }}>
+        <div className="container py-3">
+          <div className="row g-5 align-items-center">
+            {/* Food Image */}
+            <div className="col-lg-6">
+              <ScrollReveal animation="zoom-in" delay={150}>
+                <div className="position-relative rounded-4 overflow-hidden shadow-lg border border-light img-reveal-wrapper">
+                  <img
+                    src="/assets/sunday-fellowship-food.jpg"
+                    alt="Sunday Fellowship Food Provided Every Sunday - Church of New Generation"
+                    className="w-100 h-auto rounded-4"
+                    style={{ maxHeight: '460px', objectFit: 'cover', objectPosition: 'center' }}
+                  />
+                  <div
+                    className="position-absolute bottom-0 start-0 end-0 p-3 text-white d-flex align-items-center gap-2"
+                    style={{
+                      background: 'linear-gradient(180deg, rgba(0,0,0,0) 0%, rgba(15,23,42,0.9) 100%)',
+                    }}
+                  >
+                    <i className="fas fa-utensils text-warning fs-5"></i>
+                    <div>
+                      <small className="fw-bold d-block text-white">Sunday Fellowship & Community Meal</small>
+                      <small className="text-white-50">Freshly prepared & served with love after every Sunday service</small>
+                    </div>
+                  </div>
+                </div>
+              </ScrollReveal>
+            </div>
+
+            {/* Food Details Text */}
+            <div className="col-lg-6">
+              <ScrollReveal animation="fade-left" delay={100}>
+                <span
+                  className="badge px-3 py-2 rounded-pill mb-3"
+                  style={{ backgroundColor: '#FEF3C7', color: '#B45309', fontWeight: 'bold' }}
+                >
+                  COMMUNITY & HOSPITALITY
+                </span>
+                <h2 className="fw-bold mb-3" style={{ color: '#0F172A', fontSize: '2.1rem' }}>
+                  Food Provided Every Sunday
+                </h2>
+
+                <p className="text-muted lead mb-3" style={{ lineHeight: '1.7' }}>
+                  At Church of New Generation, fellowship does not end when the service concludes. Every Sunday after our worship gathering, we sit together as one big family to share a <strong>warm, freshly prepared meal</strong>.
+                </p>
+
+                <p className="text-muted mb-4" style={{ lineHeight: '1.7' }}>
+                  Whether you are visiting for the very first time, an international student, or a regular member of our congregation, you are warmly invited to join us at the table. Breaking bread together is our way of living out Christ's hospitality and genuine love.
+                </p>
+
+                {/* 3 Quick Benefit Badges */}
+                <div className="row g-3 mb-3">
+                  <div className="col-12 col-sm-6">
+                    <div className="p-3 rounded-3 bg-white border border-light shadow-sm d-flex align-items-start gap-3 h-100">
+                      <div className="fs-4" style={{ color: '#D97706' }}>
+                        <i className="fas fa-utensils"></i>
+                      </div>
+                      <div>
+                        <h6 className="fw-bold mb-1" style={{ color: '#0F172A' }}>Free Sunday Meal</h6>
+                        <small className="text-muted">Fresh, hot food served every single week</small>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div className="col-12 col-sm-6">
+                    <div className="p-3 rounded-3 bg-white border border-light shadow-sm d-flex align-items-start gap-3 h-100">
+                      <div className="fs-4" style={{ color: '#059669' }}>
+                        <i className="fas fa-heart"></i>
+                      </div>
+                      <div>
+                        <h6 className="fw-bold mb-1" style={{ color: '#0F172A' }}>Open to Everyone</h6>
+                        <small className="text-muted">All visitors, families & guests welcome</small>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <div className="p-3 rounded-3 bg-white border-start border-4 border-warning shadow-sm">
+                  <small className="text-muted fw-semibold">
+                    <i className="fas fa-clock text-warning me-1"></i> <strong>When:</strong> Every Sunday immediately following the 10:30 AM Service. Come for worship, stay for fellowship and lunch!
+                  </small>
+                </div>
+              </ScrollReveal>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* ═══════ SECTION 7: OUR HEART — YOU ARE WELCOME HERE ═══════ */}
+      <section className="py-5 bg-white">
         <div className="container py-3">
           <div className="row g-5 align-items-center">
             <div className="col-lg-6">
@@ -576,7 +665,7 @@ export const AboutPage = () => {
         </div>
       </section>
 
-      {/* ═══════ SECTION 7: FROM ONE CALLING TO A GROWING FAMILY (CLOSING & CTA) ═══════ */}
+      {/* ═══════ SECTION 8: FROM ONE CALLING TO A GROWING FAMILY (CLOSING & CTA) ═══════ */}
       <section
         className="py-5 text-white text-center"
         style={{ background: 'linear-gradient(135deg, #1E1B4B 0%, #312E81 100%)' }}
