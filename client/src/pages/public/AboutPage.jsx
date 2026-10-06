@@ -89,13 +89,13 @@ export const AboutPage = () => {
               <ScrollReveal animation="zoom-in" delay={200}>
                 <div className="position-relative rounded-4 overflow-hidden shadow-lg border border-light img-reveal-wrapper">
                   <img
-                    src="/assets/about-us.jpg"
+                    src="/assets/church-congregation.jpg"
                     alt="Our Church Family Worshipping Together"
                     className="w-100 h-auto rounded-4"
                     style={{ objectFit: 'cover', maxHeight: '430px' }}
                     onError={(e) => {
                       e.target.onerror = null;
-                      e.target.src = '/assets/slide-hall.jpg';
+                      e.target.src = '/assets/about-us.jpg';
                     }}
                   />
                   <div
