@@ -508,21 +508,21 @@ export const HomePage = () => {
                 className="p-4 p-md-5 rounded-4 shadow-sm mx-auto position-relative text-center"
                 style={{
                   maxWidth: '680px',
-                  background: 'linear-gradient(135deg, #F0FDF4 0%, #DCFCE7 60%, #ECFDF5 100%)',
-                  border: '2px solid #86EFAC',
+                  background: 'linear-gradient(135deg, #FAF5FF 0%, #F3E8FF 60%, #FAF5FF 100%)',
+                  border: '2px solid #D8B4FE',
                 }}
               >
                 <div className="mb-4">
                   <span
                     className="badge px-3 py-2 rounded-pill mb-3 fw-bold text-uppercase shadow-sm"
-                    style={{ backgroundColor: '#FFFFFF', color: '#15803D', border: '1px solid #86EFAC', fontSize: '0.85rem' }}
+                    style={{ backgroundColor: '#FFFFFF', color: '#6B21A8', border: '1px solid #D8B4FE', fontSize: '0.85rem' }}
                   >
-                    <i className="fas fa-hand-holding-heart me-1"></i> For Tithes and Offerings
+                    <i className="fas fa-hand-holding-heart me-1 text-warning"></i> For Tithes and Offerings
                   </span>
-                  <h3 className="fw-bold mb-1" style={{ color: '#064E3B', fontSize: '1.75rem', letterSpacing: '0.5px' }}>
+                  <h3 className="fw-bold mb-1" style={{ color: '#4A0E4E', fontSize: '1.75rem', letterSpacing: '0.5px' }}>
                     CHURCH OF NEW GENERATION
                   </h3>
-                  <p className="fw-semibold mb-0" style={{ color: '#047857', fontSize: '1.1rem' }}>
+                  <p className="fw-semibold mb-0" style={{ color: '#6B21A8', fontSize: '1.1rem' }}>
                     Commonwealth Bank
                   </p>
                 </div>
@@ -531,13 +531,13 @@ export const HomePage = () => {
                   <div className="col-12 col-sm-6">
                     <div
                       className="p-3 rounded-4 d-flex flex-column align-items-center justify-content-center bg-white shadow-sm"
-                      style={{ border: '1px solid #A7F3D0' }}
+                      style={{ border: '1px solid #E9D5FF' }}
                     >
-                      <small className="text-uppercase fw-bold mb-1" style={{ color: '#059669', fontSize: '0.75rem' }}>
+                      <small className="text-uppercase fw-bold mb-1" style={{ color: '#7E22CE', fontSize: '0.75rem' }}>
                         BSB
                       </small>
                       <div className="d-flex align-items-center gap-2">
-                        <span className="fw-bold fs-4 font-monospace" style={{ color: '#064E3B' }}>
+                        <span className="fw-bold fs-4 font-monospace" style={{ color: '#4A0E4E' }}>
                           063 599
                         </span>
                         <button
@@ -545,9 +545,9 @@ export const HomePage = () => {
                           onClick={() => handleCopyText('063599', 'bsb')}
                           className="btn btn-sm rounded-pill py-0 px-2 fw-semibold"
                           style={{
-                            backgroundColor: copiedField === 'bsb' ? '#059669' : '#ECFDF5',
-                            color: copiedField === 'bsb' ? '#FFFFFF' : '#047857',
-                            border: '1px solid #10B981',
+                            backgroundColor: copiedField === 'bsb' ? '#7E22CE' : '#F3E8FF',
+                            color: copiedField === 'bsb' ? '#FFFFFF' : '#6B21A8',
+                            border: '1px solid #C084FC',
                           }}
                           title="Copy BSB"
                         >
@@ -560,13 +560,13 @@ export const HomePage = () => {
                   <div className="col-12 col-sm-6">
                     <div
                       className="p-3 rounded-4 d-flex flex-column align-items-center justify-content-center bg-white shadow-sm"
-                      style={{ border: '1px solid #A7F3D0' }}
+                      style={{ border: '1px solid #E9D5FF' }}
                     >
-                      <small className="text-uppercase fw-bold mb-1" style={{ color: '#059669', fontSize: '0.75rem' }}>
+                      <small className="text-uppercase fw-bold mb-1" style={{ color: '#7E22CE', fontSize: '0.75rem' }}>
                         A/C
                       </small>
                       <div className="d-flex align-items-center gap-2">
-                        <span className="fw-bold fs-4 font-monospace" style={{ color: '#064E3B' }}>
+                        <span className="fw-bold fs-4 font-monospace" style={{ color: '#4A0E4E' }}>
                           1132 1535
                         </span>
                         <button
@@ -574,9 +574,9 @@ export const HomePage = () => {
                           onClick={() => handleCopyText('11321535', 'ac')}
                           className="btn btn-sm rounded-pill py-0 px-2 fw-semibold"
                           style={{
-                            backgroundColor: copiedField === 'ac' ? '#059669' : '#ECFDF5',
-                            color: copiedField === 'ac' ? '#FFFFFF' : '#047857',
-                            border: '1px solid #10B981',
+                            backgroundColor: copiedField === 'ac' ? '#7E22CE' : '#F3E8FF',
+                            color: copiedField === 'ac' ? '#FFFFFF' : '#6B21A8',
+                            border: '1px solid #C084FC',
                           }}
                           title="Copy Account Number"
                         >
