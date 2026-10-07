@@ -222,98 +222,10 @@ export const ServicesPage = () => {
       </section>
 
       {/* ══════════════════════════════════════════════════════════════
-          SECTION 3: SUNDAY MEETING SCHEDULE (10:00 AM – 2:00 PM)
-          [Full-Width Centered Timeline & Schedule]
+          SECTION 3: SUNDAY FELLOWSHIP FOOD / MEAL SERVICE
+          [Layout: Photo on LEFT | Text on RIGHT]
           ══════════════════════════════════════════════════════════════ */}
       <section className="py-5 bg-white">
-        <div className="container py-3">
-          <div className="text-center mb-5">
-            <ScrollReveal animation="fade-down" delay={100}>
-              <span
-                className="badge px-3 py-2 rounded-pill mb-2 fw-bold"
-                style={{ backgroundColor: '#FEF3C7', color: '#92400E' }}
-              >
-                <i className="fas fa-calendar-alt me-1"></i> ONLY SUNDAY MEETING • AUSTRALIA TIME ZONE
-              </span>
-              <h2 className="fw-bold mb-2" style={{ color: '#0F172A', fontSize: '2.2rem' }}>
-                Sunday Service: 10:00 AM – 2:00 PM
-              </h2>
-              <p className="text-muted mx-auto mb-0" style={{ maxWidth: '640px' }}>
-                Join us every Sunday for our complete 4-hour gathering in Coolaroo, Melbourne (VIC). Here is what you can expect during the service:
-              </p>
-            </ScrollReveal>
-          </div>
-
-          {/* 4-Part Sunday Timeline Cards */}
-          <StaggerSequence as="div" className="row g-4" initialDelay={150} staggerDelay={120} animation="fade-up">
-            <div className="col-md-6 col-lg-3">
-              <div className="card h-100 border-0 shadow-sm rounded-4 p-4 text-start bg-light position-relative">
-                <div className="badge bg-primary-subtle text-primary p-3 mb-3 rounded-4 w-auto d-inline-block">
-                  <i className="fas fa-music fs-3"></i>
-                </div>
-                <span className="badge bg-primary text-white rounded-pill px-2 py-1 mb-2 d-inline-block fw-semibold" style={{ fontSize: '0.75rem' }}>
-                  10:00 AM – 11:15 AM
-                </span>
-                <h5 className="fw-bold mb-2 text-dark">Praise & Worship</h5>
-                <p className="text-secondary small mb-0" style={{ lineHeight: '1.6' }}>
-                  Uplifting contemporary Hindi, Punjabi & English worship ushering God’s presence.
-                </p>
-              </div>
-            </div>
-
-            <div className="col-md-6 col-lg-3">
-              <div className="card h-100 border-0 shadow-sm rounded-4 p-4 text-start bg-light position-relative">
-                <div className="badge bg-purple-subtle text-purple p-3 mb-3 rounded-4 w-auto d-inline-block" style={{ backgroundColor: '#F3E8FF', color: '#6B21A8' }}>
-                  <i className="fas fa-book-bible fs-3"></i>
-                </div>
-                <span className="badge rounded-pill px-2 py-1 mb-2 d-inline-block fw-semibold text-white" style={{ backgroundColor: '#6B21A8', fontSize: '0.75rem' }}>
-                  11:15 AM – 12:30 PM
-                </span>
-                <h5 className="fw-bold mb-2 text-dark">Word of God</h5>
-                <p className="text-secondary small mb-0" style={{ lineHeight: '1.6' }}>
-                  Life-transforming biblical preaching by Pastor Jaskaran Heer empowering your faith.
-                </p>
-              </div>
-            </div>
-
-            <div className="col-md-6 col-lg-3">
-              <div className="card h-100 border-0 shadow-sm rounded-4 p-4 text-start bg-light position-relative">
-                <div className="badge bg-danger-subtle text-danger p-3 mb-3 rounded-4 w-auto d-inline-block">
-                  <i className="fas fa-hands-praying fs-3"></i>
-                </div>
-                <span className="badge bg-danger text-white rounded-pill px-2 py-1 mb-2 d-inline-block fw-semibold" style={{ fontSize: '0.75rem' }}>
-                  12:30 PM – 1:15 PM
-                </span>
-                <h5 className="fw-bold mb-2 text-dark">Laying on of Hands</h5>
-                <p className="text-secondary small mb-0" style={{ lineHeight: '1.6' }}>
-                  Personal pastoral prayer, healing ministry, and faith declaration for breakthroughs.
-                </p>
-              </div>
-            </div>
-
-            <div className="col-md-6 col-lg-3">
-              <div className="card h-100 border-0 shadow-sm rounded-4 p-4 text-start bg-light position-relative">
-                <div className="badge bg-success-subtle text-success p-3 mb-3 rounded-4 w-auto d-inline-block">
-                  <i className="fas fa-utensils fs-3"></i>
-                </div>
-                <span className="badge bg-success text-white rounded-pill px-2 py-1 mb-2 d-inline-block fw-semibold" style={{ fontSize: '0.75rem' }}>
-                  1:15 PM – 2:00 PM
-                </span>
-                <h5 className="fw-bold mb-2 text-dark">Fellowship Lunch</h5>
-                <p className="text-secondary small mb-0" style={{ lineHeight: '1.6' }}>
-                  Free hot meal and refreshments served for all families, newcomers, and guests.
-                </p>
-              </div>
-            </div>
-          </StaggerSequence>
-        </div>
-      </section>
-
-      {/* ══════════════════════════════════════════════════════════════
-          SECTION 4: SUNDAY FELLOWSHIP FOOD / MEAL SERVICE
-          [Layout: Photo 3 on LEFT | Text on RIGHT]
-          ══════════════════════════════════════════════════════════════ */}
-      <section className="py-5" style={{ backgroundColor: '#F8FAFC', borderTop: '1px solid #E2E8F0', borderBottom: '1px solid #E2E8F0' }}>
         <div className="container py-3">
           <div className="row g-5 align-items-center">
             {/* Left: Photo 3 (Food Photo) */}
@@ -390,10 +302,10 @@ export const ServicesPage = () => {
       </section>
 
       {/* ══════════════════════════════════════════════════════════════
-          SECTION 5: LOCATION & PLAN YOUR VISIT
+          SECTION 4: LOCATION & PLAN YOUR VISIT
           [Layout: Text on LEFT | Photo 4 on RIGHT]
           ══════════════════════════════════════════════════════════════ */}
-      <section className="py-5 bg-white">
+      <section className="py-5" style={{ backgroundColor: '#F8FAFC' }}>
         <div className="container py-3">
           <div className="row g-5 align-items-center">
             {/* Left: Location & Details Text */}
