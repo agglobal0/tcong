@@ -1,5 +1,5 @@
 import React, { useEffect, useState, useRef } from 'react';
-import { api, getMediaUrl } from '../../services/api';
+import { api, getMediaUrl, getBlogImage, FALLBACK_BLOG_IMAGES } from '../../services/api';
 import { useToast } from '../../context/ToastContext';
 
 export const AdminBlogsPage = () => {
@@ -72,7 +72,7 @@ export const AdminBlogsPage = () => {
       featured_image_url: blog.featured_image || '',
     });
     setSelectedFile(null);
-    setImagePreview(getMediaUrl(blog.featured_image) || '');
+    setImagePreview(getBlogImage(blog) || '');
     setShowModal(true);
   };
 
@@ -118,6 +118,8 @@ export const AdminBlogsPage = () => {
         data.append('featured_image', selectedFile);
       } else if (formData.featured_image_url) {
         data.append('featured_image', formData.featured_image_url);
+      } else if (editingBlog?.featured_image) {
+        data.append('featured_image', editingBlog.featured_image);
       }
 
       if (editingBlog) {
@@ -149,7 +151,15 @@ export const AdminBlogsPage = () => {
   const handleToggleStatus = async (blog) => {
     const newStatus = blog.status === 'published' ? 'draft' : 'published';
     try {
-      await api.admin.updateBlog(blog.id, { ...blog, status: newStatus });
+      await api.admin.updateBlog(blog.id, {
+        title: blog.title,
+        content: blog.content,
+        excerpt: blog.excerpt,
+        category: blog.category_name || blog.category,
+        featured_image: blog.featured_image || '',
+        status: newStatus,
+        is_featured: blog.is_featured ? 1 : 0,
+      });
       addToast(`Blog status changed to ${newStatus}`, 'success');
       fetchBlogs();
     } catch (err) {
@@ -161,7 +171,15 @@ export const AdminBlogsPage = () => {
     const isCurrentlyFeatured = Boolean(blog.is_featured === 1 || blog.is_featured === '1' || blog.is_featured === true);
     const newFeatured = !isCurrentlyFeatured;
     try {
-      await api.admin.updateBlog(blog.id, { ...blog, is_featured: newFeatured ? 1 : 0 });
+      await api.admin.updateBlog(blog.id, {
+        title: blog.title,
+        content: blog.content,
+        excerpt: blog.excerpt,
+        category: blog.category_name || blog.category,
+        featured_image: blog.featured_image || '',
+        status: blog.status,
+        is_featured: newFeatured ? 1 : 0,
+      });
       addToast(newFeatured ? 'Article marked as Featured' : 'Featured highlight removed', 'success');
       fetchBlogs();
     } catch (err) {
@@ -250,28 +268,19 @@ export const AdminBlogsPage = () => {
               </thead>
               <tbody>
                 {filteredBlogs.length > 0 ? (
-                  filteredBlogs.map((b) => (
+                  filteredBlogs.map((b, index) => (
                     <tr key={b.id}>
                       <td className="ps-4">
-                        {b.featured_image ? (
-                          <img
-                            src={getMediaUrl(b.featured_image)}
-                            alt={b.title}
-                            className="rounded-3 shadow-sm object-fit-cover"
-                            style={{ width: '60px', height: '45px' }}
-                            onError={(e) => {
-                              e.target.style.display = 'none';
-                            }}
-                          />
-                        ) : (
-                          <div
-                            className="rounded-3 d-flex align-items-center justify-content-center text-muted bg-light"
-                            style={{ width: '60px', height: '45px', border: '1px dashed #cbd5e1' }}
-                            title="No image uploaded"
-                          >
-                            <i className="fas fa-image text-secondary"></i>
-                          </div>
-                        )}
+                        <img
+                          src={getBlogImage(b, index)}
+                          alt={b.title}
+                          className="rounded-3 shadow-sm object-fit-cover"
+                          style={{ width: '60px', height: '45px' }}
+                          onError={(e) => {
+                            e.currentTarget.onerror = null;
+                            e.currentTarget.src = FALLBACK_BLOG_IMAGES[index % FALLBACK_BLOG_IMAGES.length];
+                          }}
+                        />
                       </td>
                       <td>
                         <div className="d-flex flex-column">
@@ -507,6 +516,35 @@ export const AdminBlogsPage = () => {
                           if (!selectedFile) setImagePreview(e.target.value);
                         }}
                       />
+                    </div>
+
+                    {/* Quick Preset Church Photos */}
+                    <div className="mt-2 d-flex flex-wrap align-items-center gap-1.5">
+                      <span className="small text-muted me-1" style={{ fontSize: '0.78rem' }}>
+                        Quick Select Photo:
+                      </span>
+                      {[
+                        { name: 'Sunday Service', url: '/assets/services.jpg' },
+                        { name: 'Worship', url: '/assets/worship-ministry.jpg' },
+                        { name: 'Congregation', url: '/assets/church-congregation.jpg' },
+                        { name: 'Prayer', url: '/assets/slide-prayer.jpg' },
+                        { name: 'About Church', url: '/assets/about-us.jpg' },
+                      ].map((preset) => (
+                        <button
+                          key={preset.url}
+                          type="button"
+                          className="btn btn-sm btn-light border rounded-pill py-0 px-2 text-secondary"
+                          style={{ fontSize: '0.76rem' }}
+                          onClick={() => {
+                            setSelectedFile(null);
+                            setFormData((prev) => ({ ...prev, featured_image_url: preset.url }));
+                            setImagePreview(preset.url);
+                          }}
+                        >
+                          <i className="fas fa-image me-1 text-primary"></i>
+                          {preset.name}
+                        </button>
+                      ))}
                     </div>
                   </div>
 

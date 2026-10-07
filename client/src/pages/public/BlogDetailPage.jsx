@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useParams, Link } from 'react-router-dom';
 import { Helmet } from 'react-helmet-async';
-import { api, getMediaUrl } from '../../services/api';
+import { api, getBlogImage, getMediaUrl } from '../../services/api';
 
 export const BlogDetailPage = () => {
   const { slug } = useParams();
@@ -114,16 +114,18 @@ export const BlogDetailPage = () => {
         <div className="container" style={{ maxWidth: '880px' }}>
           <div className="bg-white rounded-4 shadow-sm p-4 p-md-5">
             {/* Featured Image */}
-            {blog.featured_image && (
-              <div className="mb-5 rounded-4 overflow-hidden shadow-sm">
-                <img
-                  src={getMediaUrl(blog.featured_image)}
-                  alt={blog.title}
-                  className="w-100 object-fit-cover"
-                  style={{ maxHeight: '480px' }}
-                />
-              </div>
-            )}
+            <div className="mb-5 rounded-4 overflow-hidden shadow-sm">
+              <img
+                src={getBlogImage(blog, 0)}
+                alt={blog.title}
+                className="w-100 object-fit-cover"
+                style={{ maxHeight: '480px' }}
+                onError={(e) => {
+                  e.currentTarget.onerror = null;
+                  e.currentTarget.src = '/assets/about-us.jpg';
+                }}
+              />
+            </div>
 
             {/* Excerpt Callout */}
             {blog.excerpt && (

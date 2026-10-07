@@ -36,6 +36,30 @@ export const getMediaUrl = (url) => {
   return trimmed;
 };
 
+export const FALLBACK_BLOG_IMAGES = [
+  '/assets/services.jpg',
+  '/assets/church-congregation.jpg',
+  '/assets/about-us.jpg',
+  '/assets/slide-prayer.jpg',
+  '/assets/worship-ministry.jpg',
+  '/assets/slide-hall.jpg',
+];
+
+export const getBlogImage = (blogOrUrl, index = 0) => {
+  let url = '';
+  if (typeof blogOrUrl === 'string') {
+    url = blogOrUrl;
+  } else if (blogOrUrl && typeof blogOrUrl === 'object') {
+    url = blogOrUrl.featured_image || blogOrUrl.image_url || '';
+  }
+
+  const mediaUrl = getMediaUrl(url);
+  if (mediaUrl) return mediaUrl;
+
+  const idx = typeof index === 'number' && index >= 0 ? index % FALLBACK_BLOG_IMAGES.length : 0;
+  return FALLBACK_BLOG_IMAGES[idx];
+};
+
 export const api = {
   async request(endpoint, options = {}) {
     let cleanEndpoint = endpoint.startsWith('/') ? endpoint : `/${endpoint}`;

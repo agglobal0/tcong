@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { Helmet } from 'react-helmet-async';
-import { api, getMediaUrl } from '../../services/api';
+import { api, getBlogImage, FALLBACK_BLOG_IMAGES } from '../../services/api';
 import { TextSequence } from '../../components/common/TextSequence';
 import { ScrollReveal } from '../../components/common/ScrollReveal';
 import { StaggerSequence } from '../../components/common/StaggerSequence';
@@ -87,36 +87,31 @@ export const BlogPage = () => {
             <div>
               {blogs.length > 0 ? (
                 <StaggerSequence as="div" className="row g-4" initialDelay={100} staggerDelay={100} animation="fade-up">
-                  {blogs.map((b) => (
-                    <div className="col-md-6 col-lg-4 d-flex" key={b.id}>
-                      <div className="card h-100 w-100 border-0 shadow-sm rounded-4 overflow-hidden d-flex flex-column bg-white">
-                        {/* Cover Image */}
-                        <div className="position-relative overflow-hidden" style={{ height: '220px', backgroundColor: '#EEF2FF' }}>
-                          {b.featured_image ? (
+                  {blogs.map((b, index) => {
+                    const fallbackImg = FALLBACK_BLOG_IMAGES[index % FALLBACK_BLOG_IMAGES.length];
+                    const blogImg = getBlogImage(b, index);
+                    return (
+                      <div className="col-md-6 col-lg-4 d-flex" key={b.id}>
+                        <div className="card h-100 w-100 border-0 shadow-sm rounded-4 overflow-hidden d-flex flex-column bg-white">
+                          {/* Cover Image */}
+                          <div className="position-relative overflow-hidden" style={{ height: '220px', backgroundColor: '#EEF2FF' }}>
                             <img
-                              src={getMediaUrl(b.featured_image)}
+                              src={blogImg}
                               alt={b.title}
                               className="w-100 h-100 object-fit-cover transition-all"
                               onError={(e) => {
-                                e.target.style.display = 'none';
+                                e.currentTarget.onerror = null;
+                                e.currentTarget.src = fallbackImg;
                               }}
                             />
-                          ) : (
-                            <div
-                              className="w-100 h-100 d-flex align-items-center justify-content-center text-white"
-                              style={{ background: 'linear-gradient(135deg, #312E81 0%, #4338CA 100%)' }}
-                            >
-                              <i className="fas fa-book-bible fa-3x opacity-50"></i>
-                            </div>
-                          )}
-                          {Boolean(b.is_featured) && (
-                            <span
-                              className="badge position-absolute top-0 start-0 m-3 px-3 py-1 rounded-pill fw-bold shadow-sm bg-warning text-dark"
-                            >
-                              <i className="fas fa-star me-1"></i> Featured
-                            </span>
-                          )}
-                        </div>
+                            {Boolean(b.is_featured) && (
+                              <span
+                                className="badge position-absolute top-0 start-0 m-3 px-3 py-1 rounded-pill fw-bold shadow-sm bg-warning text-dark"
+                              >
+                                <i className="fas fa-star me-1"></i> Featured
+                              </span>
+                            )}
+                          </div>
 
                         {/* Card Body */}
                         <div className="card-body p-4 d-flex flex-column flex-grow-1">
@@ -145,8 +140,9 @@ export const BlogPage = () => {
                         </div>
                       </div>
                     </div>
-                  ))}
-                </StaggerSequence>
+                  );
+                })}
+              </StaggerSequence>
               ) : (
                 <div className="text-center py-5 bg-white rounded-4 shadow-sm p-5 my-4">
                   <i className="fas fa-book-open fa-3x text-muted opacity-50 mb-3 d-block"></i>
