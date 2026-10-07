@@ -20,7 +20,7 @@ export const AboutPage = () => {
           property="og:description"
           content="A church born from a calling. Discover our journey of faith, servant leadership, vision, Sunday fellowship food, and how lives are transformed through Jesus Christ."
         />
-        <meta property="og:image" content="/assets/about-us.jpg" />
+        <meta property="og:image" content="/assets/church-congregation.jpg" />
         <meta property="og:url" content="https://www.churchofnewgeneration.com/about" />
       </Helmet>
 
@@ -45,10 +45,14 @@ export const AboutPage = () => {
         </div>
       </section>
 
-      {/* ═══════ SECTION 1: A CHURCH BORN FROM A CALLING ═══════ */}
+      {/* ══════════════════════════════════════════════════════════════
+          SECTION 1: A CHURCH BORN FROM A CALLING
+          [Layout: Text on LEFT | Photo 1 on RIGHT]
+          ══════════════════════════════════════════════════════════════ */}
       <section className="py-5 bg-white">
         <div className="container py-3">
           <div className="row g-5 align-items-center">
+            {/* Left: Text Content */}
             <div className="col-lg-6">
               <ScrollReveal animation="fade-right" delay={100}>
                 <span
@@ -84,7 +88,7 @@ export const AboutPage = () => {
               </ScrollReveal>
             </div>
 
-            {/* Congregation Photo */}
+            {/* Right: Photo 1 (Congregation Photo) */}
             <div className="col-lg-6">
               <ScrollReveal animation="zoom-in" delay={200}>
                 <div className="position-relative rounded-4 overflow-hidden shadow-lg border border-light img-reveal-wrapper">
@@ -117,19 +121,22 @@ export const AboutPage = () => {
         </div>
       </section>
 
-      {/* ═══════ SECTION 2: THE CALLING OF PASTOR JASKARAN HEER ═══════ */}
+      {/* ══════════════════════════════════════════════════════════════
+          SECTION 2: THE CALLING OF PASTOR JASKARAN HEER
+          [Layout: Photo 2 on LEFT | Text on RIGHT]
+          ══════════════════════════════════════════════════════════════ */}
       <section className="py-5" style={{ backgroundColor: '#F8FAFC' }}>
         <div className="container py-3">
           <div className="row g-5 align-items-center">
-            {/* Pastor Photo */}
-            <div className="col-lg-5 order-lg-2">
+            {/* Left: Photo 2 (Pastor Photo) */}
+            <div className="col-lg-5">
               <ScrollReveal animation="zoom-in" delay={150}>
                 <div className="position-relative rounded-4 overflow-hidden shadow-lg border border-light img-reveal-wrapper">
                   <img
                     src="/assets/slide-pastor.jpg"
                     alt="Pastor Jaskaran Heer"
                     className="w-100 h-auto rounded-4"
-                    style={{ maxHeight: '450px', objectFit: 'cover', objectPosition: 'center top' }}
+                    style={{ maxHeight: '460px', objectFit: 'cover', objectPosition: 'center top' }}
                     onError={(e) => {
                       e.target.onerror = null;
                       e.target.src = '/assets/pastor-prayer.jpg';
@@ -149,9 +156,9 @@ export const AboutPage = () => {
               </ScrollReveal>
             </div>
 
-            {/* Pastor Calling Text */}
-            <div className="col-lg-7 order-lg-1">
-              <ScrollReveal animation="fade-right" delay={100}>
+            {/* Right: Text Content */}
+            <div className="col-lg-7">
+              <ScrollReveal animation="fade-left" delay={100}>
                 <span
                   className="badge px-3 py-2 rounded-pill mb-3"
                   style={{ backgroundColor: '#E0F2FE', color: '#0369A1', fontWeight: 'bold' }}
@@ -203,11 +210,14 @@ export const AboutPage = () => {
         </div>
       </section>
 
-      {/* ═══════ SECTION 3: A JOURNEY THROUGH CHALLENGES ═══════ */}
+      {/* ══════════════════════════════════════════════════════════════
+          SECTION 3: A JOURNEY THROUGH CHALLENGES
+          [Layout: Text on LEFT | Photo 3 on RIGHT]
+          ══════════════════════════════════════════════════════════════ */}
       <section className="py-5 bg-white">
         <div className="container py-3">
           <div className="row g-5 align-items-center">
-            {/* Left Content */}
+            {/* Left: Text Content */}
             <div className="col-lg-6">
               <ScrollReveal animation="fade-right" delay={100}>
                 <span
@@ -270,7 +280,7 @@ export const AboutPage = () => {
               </ScrollReveal>
             </div>
 
-            {/* Right Image */}
+            {/* Right: Photo 3 (Prayer Photo) */}
             <div className="col-lg-6">
               <ScrollReveal animation="zoom-in" delay={150}>
                 <div className="position-relative rounded-4 overflow-hidden shadow-lg border border-light img-reveal-wrapper">
@@ -300,11 +310,14 @@ export const AboutPage = () => {
         </div>
       </section>
 
-      {/* ═══════ SECTION 4: CHOSEN TO SERVE, CALLED TO LEAD ═══════ */}
+      {/* ══════════════════════════════════════════════════════════════
+          SECTION 4: CHOSEN TO SERVE, CALLED TO LEAD
+          [Layout: Photo 4 on LEFT | Text on RIGHT]
+          ══════════════════════════════════════════════════════════════ */}
       <section className="py-5" style={{ backgroundColor: '#F8FAFC' }}>
         <div className="container py-3">
           <div className="row g-5 align-items-center">
-            {/* Worship image */}
+            {/* Left: Photo 4 (Worship Ministry Photo) */}
             <div className="col-lg-6">
               <ScrollReveal animation="zoom-in" delay={150}>
                 <div className="position-relative rounded-4 overflow-hidden shadow-lg border border-light img-reveal-wrapper">
@@ -331,7 +344,7 @@ export const AboutPage = () => {
               </ScrollReveal>
             </div>
 
-            {/* Text */}
+            {/* Right: Text Content */}
             <div className="col-lg-6">
               <ScrollReveal animation="fade-left" delay={100}>
                 <span
@@ -367,7 +380,9 @@ export const AboutPage = () => {
         </div>
       </section>
 
-      {/* ═══════ SECTION 5: OUR VISION (CONCISE & STREAMLINED) ═══════ */}
+      {/* ══════════════════════════════════════════════════════════════
+          SECTION 5: OUR VISION (CONCISE & STREAMLINED GRID)
+          ══════════════════════════════════════════════════════════════ */}
       <section className="py-5 bg-white">
         <div className="container py-3">
           <div className="text-center mb-4">
@@ -505,39 +520,16 @@ export const AboutPage = () => {
         </div>
       </section>
 
-      {/* ═══════ SECTION 6: SUNDAY FELLOWSHIP FOOD / MEAL SERVICE ═══════ */}
+      {/* ══════════════════════════════════════════════════════════════
+          SECTION 6: SUNDAY FELLOWSHIP FOOD / MEAL SERVICE
+          [Layout: Text on LEFT | Photo 5 on RIGHT]
+          ══════════════════════════════════════════════════════════════ */}
       <section className="py-5" style={{ backgroundColor: '#F8FAFC' }}>
         <div className="container py-3">
           <div className="row g-5 align-items-center">
-            {/* Food Image */}
+            {/* Left: Food Details Text */}
             <div className="col-lg-6">
-              <ScrollReveal animation="zoom-in" delay={150}>
-                <div className="position-relative rounded-4 overflow-hidden shadow-lg border border-light img-reveal-wrapper">
-                  <img
-                    src="/assets/sunday-fellowship-food.jpg"
-                    alt="Sunday Fellowship Food Provided Every Sunday - Church of New Generation"
-                    className="w-100 h-auto rounded-4"
-                    style={{ maxHeight: '460px', objectFit: 'cover', objectPosition: 'center' }}
-                  />
-                  <div
-                    className="position-absolute bottom-0 start-0 end-0 p-3 text-white d-flex align-items-center gap-2"
-                    style={{
-                      background: 'linear-gradient(180deg, rgba(0,0,0,0) 0%, rgba(15,23,42,0.9) 100%)',
-                    }}
-                  >
-                    <i className="fas fa-utensils text-warning fs-5"></i>
-                    <div>
-                      <small className="fw-bold d-block text-white">Sunday Fellowship & Community Meal</small>
-                      <small className="text-white-50">Freshly prepared & served with love after every Sunday service</small>
-                    </div>
-                  </div>
-                </div>
-              </ScrollReveal>
-            </div>
-
-            {/* Food Details Text */}
-            <div className="col-lg-6">
-              <ScrollReveal animation="fade-left" delay={100}>
+              <ScrollReveal animation="fade-right" delay={100}>
                 <span
                   className="badge px-3 py-2 rounded-pill mb-3"
                   style={{ backgroundColor: '#FEF3C7', color: '#B45309', fontWeight: 'bold' }}
@@ -556,7 +548,7 @@ export const AboutPage = () => {
                   Whether you are visiting for the very first time, an international student, or a regular member of our congregation, you are warmly invited to join us at the table. Breaking bread together is our way of living out Christ's hospitality and genuine love.
                 </p>
 
-                {/* 3 Quick Benefit Badges */}
+                {/* 2 Quick Benefit Badges */}
                 <div className="row g-3 mb-3">
                   <div className="col-12 col-sm-6">
                     <div className="p-3 rounded-3 bg-white border border-light shadow-sm d-flex align-items-start gap-3 h-100">
@@ -590,14 +582,44 @@ export const AboutPage = () => {
                 </div>
               </ScrollReveal>
             </div>
+
+            {/* Right: Photo 5 (Food Photo) */}
+            <div className="col-lg-6">
+              <ScrollReveal animation="zoom-in" delay={150}>
+                <div className="position-relative rounded-4 overflow-hidden shadow-lg border border-light img-reveal-wrapper">
+                  <img
+                    src="/assets/sunday-fellowship-food.jpg"
+                    alt="Sunday Fellowship Food Provided Every Sunday - Church of New Generation"
+                    className="w-100 h-auto rounded-4"
+                    style={{ maxHeight: '460px', objectFit: 'cover', objectPosition: 'center' }}
+                  />
+                  <div
+                    className="position-absolute bottom-0 start-0 end-0 p-3 text-white d-flex align-items-center gap-2"
+                    style={{
+                      background: 'linear-gradient(180deg, rgba(0,0,0,0) 0%, rgba(15,23,42,0.9) 100%)',
+                    }}
+                  >
+                    <i className="fas fa-utensils text-warning fs-5"></i>
+                    <div>
+                      <small className="fw-bold d-block text-white">Sunday Fellowship & Community Meal</small>
+                      <small className="text-white-50">Freshly prepared & served with love after every Sunday service</small>
+                    </div>
+                  </div>
+                </div>
+              </ScrollReveal>
+            </div>
           </div>
         </div>
       </section>
 
-      {/* ═══════ SECTION 7: OUR HEART — YOU ARE WELCOME HERE ═══════ */}
+      {/* ══════════════════════════════════════════════════════════════
+          SECTION 7: OUR HEART — YOU ARE WELCOME HERE
+          [Layout: Photo 6 on LEFT | Text on RIGHT]
+          ══════════════════════════════════════════════════════════════ */}
       <section className="py-5 bg-white">
         <div className="container py-3">
           <div className="row g-5 align-items-center">
+            {/* Left: Photo 6 (Hall Photo) */}
             <div className="col-lg-6">
               <ScrollReveal animation="zoom-in" delay={150}>
                 <div className="position-relative rounded-4 overflow-hidden shadow-lg border border-light img-reveal-wrapper">
@@ -624,6 +646,7 @@ export const AboutPage = () => {
               </ScrollReveal>
             </div>
 
+            {/* Right: Text Content */}
             <div className="col-lg-6">
               <ScrollReveal animation="fade-left" delay={100}>
                 <span
@@ -665,7 +688,9 @@ export const AboutPage = () => {
         </div>
       </section>
 
-      {/* ═══════ SECTION 8: FROM ONE CALLING TO A GROWING FAMILY (CLOSING & CTA) ═══════ */}
+      {/* ══════════════════════════════════════════════════════════════
+          SECTION 8: FROM ONE CALLING TO A GROWING FAMILY (CLOSING & CTA)
+          ══════════════════════════════════════════════════════════════ */}
       <section
         className="py-5 text-white text-center"
         style={{ background: 'linear-gradient(135deg, #1E1B4B 0%, #312E81 100%)' }}
