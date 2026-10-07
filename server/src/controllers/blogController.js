@@ -221,6 +221,9 @@ async function updateBlog(req, res, next) {
     if (req.file) {
       imageSql = ", featured_image = ?";
       params.push(req.file.url);
+    } else if (req.body.featured_image !== undefined) {
+      imageSql = ", featured_image = ?";
+      params.push(req.body.featured_image || '');
     }
 
     params.push(id);

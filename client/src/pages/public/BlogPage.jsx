@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { Helmet } from 'react-helmet-async';
-import { api } from '../../services/api';
+import { api, getMediaUrl } from '../../services/api';
 import { TextSequence } from '../../components/common/TextSequence';
 import { ScrollReveal } from '../../components/common/ScrollReveal';
 import { StaggerSequence } from '../../components/common/StaggerSequence';
@@ -94,15 +94,11 @@ export const BlogPage = () => {
                         <div className="position-relative overflow-hidden" style={{ height: '220px', backgroundColor: '#EEF2FF' }}>
                           {b.featured_image ? (
                             <img
-                              src={b.featured_image}
+                              src={getMediaUrl(b.featured_image)}
                               alt={b.title}
                               className="w-100 h-100 object-fit-cover transition-all"
                               onError={(e) => {
-                                e.target.parentElement.innerHTML = `
-                                  <div class="w-100 h-100 d-flex align-items-center justify-content-center" style="background: linear-gradient(135deg, #4338CA 0%, #6366F1 100%); color: white;">
-                                    <i class="fas fa-book-bible fa-3x opacity-50"></i>
-                                  </div>
-                                `;
+                                e.target.style.display = 'none';
                               }}
                             />
                           ) : (

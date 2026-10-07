@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useParams, Link } from 'react-router-dom';
 import { Helmet } from 'react-helmet-async';
-import { api } from '../../services/api';
+import { api, getMediaUrl } from '../../services/api';
 
 export const BlogDetailPage = () => {
   const { slug } = useParams();
@@ -117,7 +117,7 @@ export const BlogDetailPage = () => {
             {blog.featured_image && (
               <div className="mb-5 rounded-4 overflow-hidden shadow-sm">
                 <img
-                  src={blog.featured_image}
+                  src={getMediaUrl(blog.featured_image)}
                   alt={blog.title}
                   className="w-100 object-fit-cover"
                   style={{ maxHeight: '480px' }}

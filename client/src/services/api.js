@@ -14,6 +14,28 @@ const getApiBase = () => {
 
 const API_BASE = getApiBase();
 
+export const getMediaUrl = (url) => {
+  if (!url || typeof url !== 'string' || !url.trim()) return '';
+  const trimmed = url.trim();
+  if (
+    trimmed.startsWith('http://') ||
+    trimmed.startsWith('https://') ||
+    trimmed.startsWith('data:') ||
+    trimmed.startsWith('blob:')
+  ) {
+    return trimmed;
+  }
+  if (trimmed.startsWith('/uploads/') || trimmed.startsWith('uploads/')) {
+    const cleanPath = trimmed.startsWith('/') ? trimmed : `/${trimmed}`;
+    if (import.meta.env.VITE_API_URL) {
+      const base = import.meta.env.VITE_API_URL.replace(/\/api\/?$/, '').replace(/\/+$/, '');
+      return `${base}${cleanPath}`;
+    }
+    return `https://tcong.onrender.com${cleanPath}`;
+  }
+  return trimmed;
+};
+
 export const api = {
   async request(endpoint, options = {}) {
     let cleanEndpoint = endpoint.startsWith('/') ? endpoint : `/${endpoint}`;

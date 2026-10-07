@@ -1,5 +1,5 @@
 import React, { useEffect, useState, useRef } from 'react';
-import { api } from '../../services/api';
+import { api, getMediaUrl } from '../../services/api';
 import { useToast } from '../../context/ToastContext';
 
 export const AdminBlogsPage = () => {
@@ -68,11 +68,11 @@ export const AdminBlogsPage = () => {
       excerpt: blog.excerpt || '',
       content: blog.content || '',
       status: blog.status || 'published',
-      is_featured: Boolean(blog.is_featured),
+      is_featured: Boolean(blog.is_featured === 1 || blog.is_featured === '1' || blog.is_featured === true),
       featured_image_url: blog.featured_image || '',
     });
     setSelectedFile(null);
-    setImagePreview(blog.featured_image || '');
+    setImagePreview(getMediaUrl(blog.featured_image) || '');
     setShowModal(true);
   };
 
@@ -255,7 +255,7 @@ export const AdminBlogsPage = () => {
                       <td className="ps-4">
                         {b.featured_image ? (
                           <img
-                            src={b.featured_image}
+                            src={getMediaUrl(b.featured_image)}
                             alt={b.title}
                             className="rounded-3 shadow-sm object-fit-cover"
                             style={{ width: '60px', height: '45px' }}
