@@ -96,11 +96,7 @@ export const BlogDetailPage = () => {
           </h1>
 
           {/* Metadata Row */}
-          <div className="d-flex flex-wrap align-items-center gap-4 text-white-50 small">
-            <span className="d-flex align-items-center gap-2">
-              <i className="fas fa-user-circle text-warning fs-6"></i>
-              <strong className="text-white">{blog.author_name || 'Pastor Jaskaran Heer'}</strong>
-            </span>
+          <div className="d-flex flex-wrap align-items-center gap-3 text-white-50 small">
             <span>
               <i className="fas fa-calendar-alt me-1 text-warning"></i>
               {new Date(blog.published_at || blog.created_at || Date.now()).toLocaleDateString('en-AU', {
@@ -108,10 +104,6 @@ export const BlogDetailPage = () => {
                 month: 'long',
                 day: 'numeric',
               })}
-            </span>
-            <span>
-              <i className="fas fa-clock me-1 text-warning"></i>
-              {calculateReadTime(blog.content)}
             </span>
           </div>
         </div>

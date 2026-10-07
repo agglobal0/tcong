@@ -34,12 +34,6 @@ export const BlogPage = () => {
     loadBlogs();
   }, []);
 
-  const calculateReadTime = (content = '') => {
-    const wordCount = content.replace(/<[^>]*>?/gm, '').split(/\s+/).length;
-    const minutes = Math.ceil(wordCount / 200);
-    return `${minutes || 3} min read`;
-  };
-
   return (
     <div className="blog-page" style={{ backgroundColor: '#F8FAFC' }}>
       <Helmet>
@@ -130,15 +124,9 @@ export const BlogPage = () => {
 
                         {/* Card Body */}
                         <div className="card-body p-4 d-flex flex-column flex-grow-1">
-                          <div className="d-flex align-items-center justify-content-between text-muted small mb-2">
-                            <span>
-                              <i className="fas fa-calendar me-1"></i>
-                              {new Date(b.published_at || b.created_at || Date.now()).toLocaleDateString()}
-                            </span>
-                            <span>
-                              <i className="fas fa-clock me-1"></i>
-                              {calculateReadTime(b.content)}
-                            </span>
+                          <div className="text-muted small mb-2 d-flex align-items-center gap-1">
+                            <i className="fas fa-calendar-alt text-primary me-1"></i>
+                            <span>{new Date(b.published_at || b.created_at || Date.now()).toLocaleDateString()}</span>
                           </div>
 
                           <h4 className="fw-bold mb-2 text-dark" style={{ minHeight: '52px', lineHeight: '1.4' }}>
@@ -149,14 +137,10 @@ export const BlogPage = () => {
                             {b.excerpt || b.content?.replace(/<[^>]*>?/gm, '').substring(0, 120)}...
                           </p>
 
-                          <div className="pt-3 border-top mt-auto d-flex align-items-center justify-content-between">
-                            <span className="small fw-semibold text-secondary">
-                              <i className="fas fa-user-circle me-1 text-primary"></i>
-                              {b.author_name || 'Pastor Jaskaran Heer'}
-                            </span>
+                          <div className="pt-3 border-top mt-auto d-flex justify-content-end">
                             <Link
                               to={`/blog/${b.slug || b.id}`}
-                              className="btn btn-sm btn-outline-primary rounded-pill px-3 fw-bold"
+                              className="btn btn-sm btn-outline-primary rounded-pill px-4 fw-bold"
                               style={{ borderColor: '#4338CA', color: '#4338CA' }}
                             >
                               Read More &rarr;
