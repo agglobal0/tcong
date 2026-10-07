@@ -119,12 +119,13 @@ export const BlogPage = () => {
                               <i className="fas fa-book-bible fa-3x opacity-50"></i>
                             </div>
                           )}
-                          <span
-                            className="badge position-absolute top-0 start-0 m-3 px-3 py-1 rounded-pill fw-bold shadow-sm"
-                            style={{ backgroundColor: 'rgba(255,255,255,0.92)', color: '#4338CA' }}
-                          >
-                            {b.category_name || b.category || 'Devotional'}
-                          </span>
+                          {Boolean(b.is_featured) && (
+                            <span
+                              className="badge position-absolute top-0 start-0 m-3 px-3 py-1 rounded-pill fw-bold shadow-sm bg-warning text-dark"
+                            >
+                              <i className="fas fa-star me-1"></i> Featured
+                            </span>
+                          )}
                         </div>
 
                         {/* Card Body */}

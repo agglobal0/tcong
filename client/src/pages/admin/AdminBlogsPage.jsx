@@ -10,11 +10,10 @@ export const AdminBlogsPage = () => {
   const [showModal, setShowModal] = useState(false);
   const [editingBlog, setEditingBlog] = useState(null);
   const [searchQuery, setSearchQuery] = useState('');
-  const [categoryFilter, setCategoryFilter] = useState('all');
 
   const [formData, setFormData] = useState({
     title: '',
-    category: 'Faith',
+    category: 'Devotional',
     excerpt: '',
     content: '',
     status: 'published',
@@ -49,7 +48,7 @@ export const AdminBlogsPage = () => {
     setEditingBlog(null);
     setFormData({
       title: '',
-      category: 'Faith',
+      category: 'Devotional',
       excerpt: '',
       content: '',
       status: 'published',
@@ -65,7 +64,7 @@ export const AdminBlogsPage = () => {
     setEditingBlog(blog);
     setFormData({
       title: blog.title || '',
-      category: blog.category_name || blog.category || 'Faith',
+      category: blog.category_name || blog.category || 'Devotional',
       excerpt: blog.excerpt || '',
       content: blog.content || '',
       status: blog.status || 'published',
@@ -109,7 +108,7 @@ export const AdminBlogsPage = () => {
     try {
       const data = new FormData();
       data.append('title', formData.title.trim());
-      data.append('category', formData.category.trim());
+      data.append('category', formData.category ? formData.category.trim() : 'Devotional');
       data.append('excerpt', formData.excerpt.trim());
       data.append('content', formData.content.trim());
       data.append('status', formData.status);
@@ -174,15 +173,9 @@ export const AdminBlogsPage = () => {
       !searchQuery ||
       b.title?.toLowerCase().includes(searchQuery.toLowerCase()) ||
       b.content?.toLowerCase().includes(searchQuery.toLowerCase()) ||
-      b.category_name?.toLowerCase().includes(searchQuery.toLowerCase());
-    const matchesCategory =
-      categoryFilter === 'all' ||
-      b.category_name?.toLowerCase() === categoryFilter.toLowerCase() ||
-      b.category?.toLowerCase() === categoryFilter.toLowerCase();
-    return matchesSearch && matchesCategory;
+      b.excerpt?.toLowerCase().includes(searchQuery.toLowerCase());
+    return matchesSearch;
   });
-
-  const categories = ['Faith', 'Prayer', 'Healing', 'Worship', 'Devotional', 'Family', 'Youth', 'General'];
 
   return (
     <div className="admin-blogs">
@@ -190,7 +183,7 @@ export const AdminBlogsPage = () => {
       <div className="d-flex flex-wrap justify-content-between align-items-center gap-3 mb-4">
         <div>
           <h3 className="fw-bold mb-1" style={{ color: '#1E1B4B' }}>Blogs & Devotionals Manager</h3>
-          <p className="text-muted small mb-0">Create, upload cover images, and publish inspiring faith articles</p>
+          <p className="text-muted small mb-0">Create, upload cover images, and publish inspiring faith articles ({blogs.length} posts)</p>
         </div>
         <button
           className="btn btn-primary d-inline-flex align-items-center gap-2 px-4 py-2 rounded-pill fw-semibold shadow-sm"
@@ -202,53 +195,31 @@ export const AdminBlogsPage = () => {
         </button>
       </div>
 
-      {/* Filters Bar */}
+      {/* Search Bar */}
       <div className="card border-0 shadow-sm rounded-4 mb-4 p-3 bg-white">
-        <div className="row g-3 align-items-center">
-          <div className="col-12 col-md-6">
-            <div className="input-group">
-              <span className="input-group-text bg-light border-0 text-muted">
-                <i className="fas fa-search"></i>
-              </span>
-              <input
-                type="text"
-                className="form-control bg-light border-0"
-                placeholder="Search articles by title, content, or topic..."
-                value={searchQuery}
-                onChange={(e) => setSearchQuery(e.target.value)}
-              />
-              {searchQuery && (
-                <button className="btn btn-light border-0 text-muted" onClick={() => setSearchQuery('')}>
-                  <i className="fas fa-times"></i>
-                </button>
-              )}
-            </div>
-          </div>
-          <div className="col-12 col-md-6 d-flex flex-wrap gap-2 justify-content-md-end">
-            <button
-              className={`btn btn-sm rounded-pill px-3 fw-semibold ${categoryFilter === 'all' ? 'btn-dark' : 'btn-outline-secondary'}`}
-              onClick={() => setCategoryFilter('all')}
-            >
-              All Topics ({blogs.length})
+        <div className="input-group">
+          <span className="input-group-text bg-light border-0 text-muted ps-3">
+            <i className="fas fa-search"></i>
+          </span>
+          <input
+            type="text"
+            className="form-control bg-light border-0"
+            placeholder="Search articles by title, excerpt, or content..."
+            value={searchQuery}
+            onChange={(e) => setSearchQuery(e.target.value)}
+          />
+          {searchQuery && (
+            <button className="btn btn-light border-0 text-muted pe-3" onClick={() => setSearchQuery('')}>
+              <i className="fas fa-times"></i>
             </button>
-            {categories.slice(0, 4).map((cat) => (
-              <button
-                key={cat}
-                className={`btn btn-sm rounded-pill px-3 fw-semibold ${categoryFilter.toLowerCase() === cat.toLowerCase() ? 'btn-primary' : 'btn-outline-secondary'}`}
-                style={categoryFilter.toLowerCase() === cat.toLowerCase() ? { backgroundColor: '#4338CA', borderColor: '#4338CA' } : {}}
-                onClick={() => setCategoryFilter(categoryFilter.toLowerCase() === cat.toLowerCase() ? 'all' : cat)}
-              >
-                {cat}
-              </button>
-            ))}
-          </div>
+          )}
         </div>
       </div>
 
       {/* Blog Table */}
       {loading ? (
         <div className="text-center py-5">
-          <div className="spinner-border text-primary" role="status"></div>
+          <div className="spinner-border text-primary" role="status" style={{ color: '#4338CA' }}></div>
           <p className="text-muted small mt-2">Loading articles...</p>
         </div>
       ) : (
@@ -258,8 +229,7 @@ export const AdminBlogsPage = () => {
               <thead className="bg-light">
                 <tr>
                   <th className="ps-4" style={{ width: '80px' }}>Cover</th>
-                  <th>Title & Excerpt</th>
-                  <th>Category</th>
+                  <th>Title & Summary</th>
                   <th>Status</th>
                   <th>Date</th>
                   <th className="text-end pe-4">Actions</th>
@@ -301,16 +271,11 @@ export const AdminBlogsPage = () => {
                             )}
                           </div>
                           {b.excerpt && (
-                            <small className="text-muted text-truncate" style={{ maxWidth: '380px' }}>
+                            <small className="text-muted text-truncate" style={{ maxWidth: '450px' }}>
                               {b.excerpt}
                             </small>
                           )}
                         </div>
-                      </td>
-                      <td>
-                        <span className="badge px-3 py-1 rounded-pill fw-semibold" style={{ backgroundColor: '#EEF2FF', color: '#4338CA' }}>
-                          {b.category_name || b.category || 'Faith'}
-                        </span>
                       </td>
                       <td>
                         <span
@@ -352,9 +317,9 @@ export const AdminBlogsPage = () => {
                   ))
                 ) : (
                   <tr>
-                    <td colSpan="6" className="text-center text-muted py-5">
+                    <td colSpan="5" className="text-center text-muted py-5">
                       <i className="fas fa-newspaper fa-3x text-muted opacity-50 mb-3 d-block"></i>
-                      <p className="mb-0 fw-semibold">No blog posts found matching your filter.</p>
+                      <p className="mb-0 fw-semibold">No blog posts found.</p>
                       <button className="btn btn-sm btn-outline-primary mt-3 rounded-pill" onClick={openCreateModal}>
                         + Create First Article
                       </button>
@@ -431,38 +396,19 @@ export const AdminBlogsPage = () => {
                     />
                   </div>
 
-                  {/* Category & Status */}
-                  <div className="row g-3 mb-3">
-                    <div className="col-md-6">
-                      <label className="form-label fw-bold small text-uppercase text-secondary">
-                        Category / Topic
-                      </label>
-                      <select
-                        className="form-select rounded-3"
-                        value={formData.category}
-                        onChange={(e) => setFormData({ ...formData, category: e.target.value })}
-                      >
-                        {categories.map((c) => (
-                          <option key={c} value={c}>
-                            {c}
-                          </option>
-                        ))}
-                      </select>
-                    </div>
-
-                    <div className="col-md-6">
-                      <label className="form-label fw-bold small text-uppercase text-secondary">
-                        Publish Status
-                      </label>
-                      <select
-                        className="form-select rounded-3"
-                        value={formData.status}
-                        onChange={(e) => setFormData({ ...formData, status: e.target.value })}
-                      >
-                        <option value="published">Published (Visible on website)</option>
-                        <option value="draft">Draft (Saved privately)</option>
-                      </select>
-                    </div>
+                  {/* Publish Status */}
+                  <div className="mb-3">
+                    <label className="form-label fw-bold small text-uppercase text-secondary">
+                      Publish Status
+                    </label>
+                    <select
+                      className="form-select rounded-3"
+                      value={formData.status}
+                      onChange={(e) => setFormData({ ...formData, status: e.target.value })}
+                    >
+                      <option value="published">Published (Visible on website)</option>
+                      <option value="draft">Draft (Saved privately)</option>
+                    </select>
                   </div>
 
                   {/* ═══════ FEATURED IMAGE UPLOAD ═══════ */}
@@ -571,18 +517,48 @@ export const AdminBlogsPage = () => {
                     ></textarea>
                   </div>
 
-                  {/* Featured Switch */}
-                  <div className="form-check form-switch mb-1">
-                    <input
-                      className="form-check-input"
-                      type="checkbox"
-                      id="isFeaturedSwitch"
-                      checked={formData.is_featured}
-                      onChange={(e) => setFormData({ ...formData, is_featured: e.target.checked })}
-                    />
-                    <label className="form-check-label fw-semibold text-dark small" htmlFor="isFeaturedSwitch">
-                      Highlight as Featured Article
-                    </label>
+                  {/* ═══════ ROBUST FEATURED TOGGLE CARD ═══════ */}
+                  <div
+                    className="p-3 rounded-3 d-flex align-items-center justify-content-between mb-2 shadow-sm transition-all"
+                    style={{
+                      backgroundColor: formData.is_featured ? '#EEF2FF' : '#F8FAFC',
+                      border: `2px solid ${formData.is_featured ? '#4338CA' : '#E2E8F0'}`,
+                      cursor: 'pointer',
+                      userSelect: 'none',
+                    }}
+                    onClick={() => setFormData((prev) => ({ ...prev, is_featured: !prev.is_featured }))}
+                    role="button"
+                    tabIndex={0}
+                  >
+                    <div className="d-flex align-items-center gap-3">
+                      <div
+                        className="rounded-circle d-flex align-items-center justify-content-center"
+                        style={{
+                          width: '36px',
+                          height: '36px',
+                          backgroundColor: formData.is_featured ? '#4338CA' : '#CBD5E1',
+                          color: '#FFFFFF',
+                          fontSize: '15px',
+                        }}
+                      >
+                        <i className={`fas ${formData.is_featured ? 'fa-check' : 'fa-star'}`}></i>
+                      </div>
+                      <div>
+                        <span className="fw-bold d-block text-dark small">Highlight as Featured Article</span>
+                        <small className="text-muted">Display a featured star badge on this article</small>
+                      </div>
+                    </div>
+
+                    <div className="d-flex align-items-center">
+                      <span
+                        className={`badge rounded-pill px-3 py-1 fw-bold small ${
+                          formData.is_featured ? 'bg-primary text-white' : 'bg-light text-secondary border'
+                        }`}
+                        style={formData.is_featured ? { backgroundColor: '#4338CA' } : {}}
+                      >
+                        {formData.is_featured ? 'FEATURED' : 'OFF'}
+                      </span>
+                    </div>
                   </div>
                 </div>
 

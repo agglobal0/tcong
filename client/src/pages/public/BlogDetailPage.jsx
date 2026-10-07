@@ -85,13 +85,9 @@ export const BlogDetailPage = () => {
         <div className="container py-3" style={{ maxWidth: '880px' }}>
           {/* Breadcrumb Navigation */}
           <div className="d-flex align-items-center gap-2 mb-3">
-            <Link to="/blog" className="text-white-50 text-decoration-none small hover-white">
-              <i className="fas fa-arrow-left me-1"></i> Back to Blog
+            <Link to="/blog" className="text-white-50 text-decoration-none small hover-white d-inline-flex align-items-center gap-1">
+              <i className="fas fa-arrow-left me-1"></i> Back to All Articles
             </Link>
-            <span className="text-white-50 small">•</span>
-            <span className="badge px-3 py-1 rounded-pill" style={{ backgroundColor: 'rgba(255,255,255,0.2)' }}>
-              {blog.category_name || blog.category || 'Devotional'}
-            </span>
           </div>
 
           {/* Article Title */}
