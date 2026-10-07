@@ -261,7 +261,7 @@ export const ServicesPage = () => {
                   </div>
                 </div>
 
-                <div className="d-flex flex-wrap gap-3 mb-3">
+                <div className="d-flex flex-wrap gap-3">
                   <button
                     type="button"
                     onClick={() => {
@@ -277,35 +277,6 @@ export const ServicesPage = () => {
                   <Link to="/contact" className="btn btn-outline-dark fw-bold px-4 py-2 rounded-pill shadow-sm">
                     <i className="fas fa-map-marker-alt me-2"></i> Plan Your Visit
                   </Link>
-                </div>
-
-                <div
-                  className="p-3 rounded-4 bg-white shadow-sm d-flex align-items-center justify-content-between gap-3 flex-wrap"
-                  style={{ border: '1px solid #E9D5FF' }}
-                >
-                  <div className="d-flex align-items-center gap-3">
-                    <div
-                      className="rounded-circle d-flex align-items-center justify-content-center flex-shrink-0"
-                      style={{ width: '40px', height: '40px', backgroundColor: '#F3E8FF', color: '#7E22CE' }}
-                    >
-                      <i className="fas fa-hand-holding-heart fs-5"></i>
-                    </div>
-                    <div>
-                      <strong className="d-block text-dark small">Need Immediate Healing or Pastoral Prayer?</strong>
-                      <small className="text-muted">Register your prayer request online or receive prayer in person this Sunday.</small>
-                    </div>
-                  </div>
-                  <button
-                    type="button"
-                    onClick={() => {
-                      setSubmitted(false);
-                      setShowLayHandModal(true);
-                    }}
-                    className="btn btn-sm rounded-pill fw-bold px-3 py-1.5"
-                    style={{ backgroundColor: '#F3E8FF', color: '#6B21A8', border: '1px solid #D8B4FE' }}
-                  >
-                    Fill Form <i className="fas fa-arrow-right ms-1"></i>
-                  </button>
                 </div>
               </ScrollReveal>
             </div>
