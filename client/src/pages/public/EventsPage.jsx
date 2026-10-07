@@ -43,17 +43,30 @@ export const EventsPage = () => {
         <meta property="og:title" content="Upcoming Church Events Melbourne | TCONG" />
         <meta property="og:url" content="https://tcong-murex.vercel.app/events" />
       </Helmet>
-      <section className="bg-dark text-white py-5 text-center" style={{ background: 'linear-gradient(135deg, #0F172A 0%, #1E293B 100%)' }}>
+      {/* ═══════ HERO BANNER ═══════ */}
+      <section
+        className="bg-primary text-white py-5 text-center"
+        style={{ background: 'linear-gradient(135deg, #1E1B4B 0%, #4338CA 100%)' }}
+      >
         <div className="container py-4">
           <TextSequence
-            text="Events - What's Coming Up"
+            text="Church Events & Gatherings"
             as="h1"
             className="display-4 fw-bold mb-3 text-white"
             delay={100}
             wordDelay={80}
           />
           <ScrollReveal animation="fade-up" delay={350}>
-            <p className="lead text-light opacity-90">Stay connected with everything happening in our church family.</p>
+            <p className="lead text-white-50 max-w-xl mx-auto mb-3" style={{ maxWidth: '720px' }}>
+              Stay connected with upcoming worship services, healing conferences, prayer nights, and community gatherings in Melbourne.
+            </p>
+            <div
+              className="d-inline-flex align-items-center gap-2 px-3 py-1 rounded-pill"
+              style={{ backgroundColor: 'rgba(255,255,255,0.15)', border: '1px solid rgba(255,255,255,0.25)' }}
+            >
+              <i className="fas fa-calendar-check text-warning"></i>
+              <span className="fw-semibold text-white small">Upcoming Services • Conferences • Melbourne Gatherings</span>
+            </div>
           </ScrollReveal>
         </div>
       </section>

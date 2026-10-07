@@ -57,10 +57,23 @@ export const TestimonialsPage = () => {
         <meta property="og:title" content="Miracle Testimonies | The Church of New Generation Melbourne" />
         <meta property="og:url" content="https://www.churchofnewgeneration.com/testimonials" />
       </Helmet>
-      <section className="bg-primary text-white py-5 text-center">
+      {/* ═══════ HERO BANNER ═══════ */}
+      <section
+        className="bg-primary text-white py-5 text-center"
+        style={{ background: 'linear-gradient(135deg, #1E1B4B 0%, #4338CA 100%)' }}
+      >
         <div className="container py-4">
-          <h1 className="display-4 fw-bold mb-3 text-white">Testimonies - Real Stories of God's Power</h1>
-          <p className="lead text-white-50">Hear how God is healing, blessing, and transforming lives through prayer.</p>
+          <h1 className="display-4 fw-bold mb-3 text-white">Testimonies - God's Power & Miracles</h1>
+          <p className="lead text-white-50 max-w-xl mx-auto mb-3" style={{ maxWidth: '680px' }}>
+            Hear how God is healing, blessing, and transforming lives through prayer and faith in Jesus Christ.
+          </p>
+          <div
+            className="d-inline-flex align-items-center gap-2 px-3 py-1 rounded-pill"
+            style={{ backgroundColor: 'rgba(255,255,255,0.15)', border: '1px solid rgba(255,255,255,0.25)' }}
+          >
+            <i className="fas fa-heart text-warning"></i>
+            <span className="fw-semibold text-white small">Miracle Healings • Family Restoration • Answered Prayers</span>
+          </div>
         </div>
       </section>
 

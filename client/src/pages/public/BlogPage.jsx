@@ -44,17 +44,30 @@ export const BlogPage = () => {
         <meta property="og:title" content="TCONG Melbourne Blog | Faith Devotionals & Biblical Articles" />
         <meta property="og:url" content="https://tcong-murex.vercel.app/blog" />
       </Helmet>
-      <section className="bg-dark text-white py-5 text-center" style={{ background: 'linear-gradient(135deg, #111827 0%, #1F2937 100%)' }}>
+      {/* ═══════ HERO BANNER ═══════ */}
+      <section
+        className="bg-primary text-white py-5 text-center"
+        style={{ background: 'linear-gradient(135deg, #1E1B4B 0%, #4338CA 100%)' }}
+      >
         <div className="container py-4">
           <TextSequence
-            text="Blog - Faith, Devotionals & Reflections"
+            text="Our Blog - Faith & Devotionals"
             as="h1"
             className="display-4 fw-bold mb-3 text-white"
             delay={100}
             wordDelay={80}
           />
           <ScrollReveal animation="fade-up" delay={350}>
-            <p className="lead text-light opacity-90">Inspiration, faith teaching, and leadership reflections.</p>
+            <p className="lead text-white-50 max-w-xl mx-auto mb-3" style={{ maxWidth: '720px' }}>
+              Biblical teaching, daily encouragement, and faith reflections from The Church of New Generation to strengthen your spiritual journey.
+            </p>
+            <div
+              className="d-inline-flex align-items-center gap-2 px-3 py-1 rounded-pill"
+              style={{ backgroundColor: 'rgba(255,255,255,0.15)', border: '1px solid rgba(255,255,255,0.25)' }}
+            >
+              <i className="fas fa-book-bible text-warning"></i>
+              <span className="fw-semibold text-white small">Biblical Wisdom • Faith Articles • Spiritual Growth</span>
+            </div>
           </ScrollReveal>
         </div>
       </section>

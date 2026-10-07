@@ -41,7 +41,10 @@ export const ContactPage = () => {
         <meta property="og:url" content="https://tcong-murex.vercel.app/contact" />
       </Helmet>
       {/* ═══════ HERO BANNER ═══════ */}
-      <section className="bg-primary text-white py-5 text-center" style={{ background: 'linear-gradient(135deg, #0F172A 0%, #1E293B 100%)' }}>
+      <section
+        className="bg-primary text-white py-5 text-center"
+        style={{ background: 'linear-gradient(135deg, #1E1B4B 0%, #4338CA 100%)' }}
+      >
         <div className="container py-4">
           <TextSequence
             text="Contact Us - We'd Love to Hear From You"
@@ -51,9 +54,16 @@ export const ContactPage = () => {
             wordDelay={80}
           />
           <ScrollReveal animation="fade-up" delay={350}>
-            <p className="lead text-white-50 max-w-xl mx-auto" style={{ maxWidth: '600px' }}>
-              We would love to connect with you! Reach out for inquiries, service details, or pastoral care.
+            <p className="lead text-white-50 max-w-xl mx-auto mb-3" style={{ maxWidth: '650px' }}>
+              We would love to connect with you! Reach out for prayer, service inquiries, or pastoral care in Melbourne.
             </p>
+            <div
+              className="d-inline-flex align-items-center gap-2 px-3 py-1 rounded-pill"
+              style={{ backgroundColor: 'rgba(255,255,255,0.15)', border: '1px solid rgba(255,255,255,0.25)' }}
+            >
+              <i className="fas fa-location-dot text-warning"></i>
+              <span className="fw-semibold text-white small">Coolaroo VIC 3048, Melbourne • 24/7 Telephone Prayer Tower</span>
+            </div>
           </ScrollReveal>
         </div>
       </section>

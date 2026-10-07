@@ -33,7 +33,11 @@ export const GalleryPage = () => {
 
   return (
     <div className="gallery-page">
-      <section className="bg-dark text-white py-5 text-center" style={{ background: 'linear-gradient(135deg, #0F172A 0%, #1F2937 100%)' }}>
+      {/* ═══════ HERO BANNER ═══════ */}
+      <section
+        className="bg-primary text-white py-5 text-center"
+        style={{ background: 'linear-gradient(135deg, #1E1B4B 0%, #4338CA 100%)' }}
+      >
         <div className="container py-4">
           <TextSequence
             text="Photo Gallery & Moments of Grace"
@@ -43,7 +47,16 @@ export const GalleryPage = () => {
             wordDelay={90}
           />
           <ScrollReveal animation="fade-up" delay={400}>
-            <p className="lead text-light opacity-90">Moments of worship, fellowship, prayer, and ministry in action.</p>
+            <p className="lead text-white-50 max-w-xl mx-auto mb-3" style={{ maxWidth: '650px' }}>
+              Moments of worship, fellowship, prayer, and ministry in action at The Church of New Generation.
+            </p>
+            <div
+              className="d-inline-flex align-items-center gap-2 px-3 py-1 rounded-pill"
+              style={{ backgroundColor: 'rgba(255,255,255,0.15)', border: '1px solid rgba(255,255,255,0.25)' }}
+            >
+              <i className="fas fa-images text-warning"></i>
+              <span className="fw-semibold text-white small">Church Life • Sunday Gatherings • Fellowship Moments</span>
+            </div>
           </ScrollReveal>
         </div>
       </section>
