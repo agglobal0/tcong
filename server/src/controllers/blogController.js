@@ -162,6 +162,7 @@ async function createBlog(req, res, next) {
 
     const blogStatus = status || 'published';
     const blogExcerpt = excerpt || (content ? content.replace(/<[^>]*>?/gm, '').substring(0, 160) : '');
+    const featuredVal = (is_featured === true || is_featured === 1 || is_featured === '1' || is_featured === 'true') ? 1 : 0;
 
     const result = await query(
       `INSERT INTO blogs (title, slug, content, excerpt, featured_image, author_id, category_id,
@@ -171,7 +172,7 @@ async function createBlog(req, res, next) {
         title, slug, content, blogExcerpt, featured_image,
         req.user?.id || null, targetCategoryId,
         meta_title || title, meta_description || blogExcerpt,
-        blogStatus, is_featured ? 1 : 0, blogStatus
+        blogStatus, featuredVal, blogStatus
       ]
     );
 
@@ -189,7 +190,7 @@ async function updateBlog(req, res, next) {
     const { id } = req.params;
     const { title, content, excerpt, category_id, category, status, is_featured, meta_title, meta_description } = req.body;
 
-    const existing = await query('SELECT id, slug, status FROM blogs WHERE id = ?', [id]);
+    const existing = await query('SELECT id, slug, status, is_featured FROM blogs WHERE id = ?', [id]);
     if (existing.length === 0) {
       return notFound(res, 'Blog post not found');
     }
@@ -214,7 +215,8 @@ async function updateBlog(req, res, next) {
 
     let imageSql = "";
     const blogStatus = status || existing[0].status || 'published';
-    const params = [title, slug, content, excerpt, targetCategoryId, meta_title, meta_description, blogStatus, is_featured ? 1 : 0];
+    const featuredVal = (is_featured === true || is_featured === 1 || is_featured === '1' || is_featured === 'true') ? 1 : 0;
+    const params = [title, slug, content, excerpt, targetCategoryId, meta_title, meta_description, blogStatus, featuredVal];
 
     if (req.file) {
       imageSql = ", featured_image = ?";

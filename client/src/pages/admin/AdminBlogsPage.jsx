@@ -157,6 +157,18 @@ export const AdminBlogsPage = () => {
     }
   };
 
+  const handleToggleFeatured = async (blog) => {
+    const isCurrentlyFeatured = Boolean(blog.is_featured === 1 || blog.is_featured === '1' || blog.is_featured === true);
+    const newFeatured = !isCurrentlyFeatured;
+    try {
+      await api.admin.updateBlog(blog.id, { ...blog, is_featured: newFeatured ? 1 : 0 });
+      addToast(newFeatured ? 'Article marked as Featured' : 'Featured highlight removed', 'success');
+      fetchBlogs();
+    } catch (err) {
+      addToast(err?.message || 'Failed to update featured status', 'error');
+    }
+  };
+
   const handleDelete = async (id) => {
     if (!window.confirm('Are you sure you want to delete this blog post?')) return;
     try {
@@ -230,6 +242,7 @@ export const AdminBlogsPage = () => {
                 <tr>
                   <th className="ps-4" style={{ width: '80px' }}>Cover</th>
                   <th>Title & Summary</th>
+                  <th>Featured</th>
                   <th>Status</th>
                   <th>Date</th>
                   <th className="text-end pe-4">Actions</th>
@@ -262,20 +275,28 @@ export const AdminBlogsPage = () => {
                       </td>
                       <td>
                         <div className="d-flex flex-column">
-                          <div className="d-flex align-items-center gap-2">
-                            <span className="fw-bold text-dark">{b.title}</span>
-                            {Boolean(b.is_featured) && (
-                              <span className="badge bg-warning text-dark px-2 py-0 rounded-pill small">
-                                <i className="fas fa-star me-1"></i>Featured
-                              </span>
-                            )}
-                          </div>
+                          <span className="fw-bold text-dark">{b.title}</span>
                           {b.excerpt && (
-                            <small className="text-muted text-truncate" style={{ maxWidth: '450px' }}>
+                            <small className="text-muted text-truncate" style={{ maxWidth: '400px' }}>
                               {b.excerpt}
                             </small>
                           )}
                         </div>
+                      </td>
+                      <td>
+                        <span
+                          className={`badge ${
+                            Boolean(b.is_featured === 1 || b.is_featured === '1' || b.is_featured === true)
+                              ? 'bg-warning text-dark'
+                              : 'bg-light text-muted border'
+                          } px-3 py-1 rounded-pill small`}
+                          style={{ cursor: 'pointer' }}
+                          onClick={() => handleToggleFeatured(b)}
+                          title="Click to toggle Featured ON / OFF"
+                        >
+                          <i className={`fas fa-star me-1 ${Boolean(b.is_featured === 1 || b.is_featured === '1' || b.is_featured === true) ? 'text-dark' : 'text-secondary'}`}></i>
+                          {Boolean(b.is_featured === 1 || b.is_featured === '1' || b.is_featured === true) ? 'Featured' : 'Not Featured'}
+                        </span>
                       </td>
                       <td>
                         <span
