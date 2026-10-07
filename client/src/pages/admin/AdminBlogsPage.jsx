@@ -428,6 +428,9 @@ export const AdminBlogsPage = () => {
                           alt="Cover Preview"
                           className="w-100 object-fit-cover"
                           style={{ maxHeight: '180px' }}
+                          onError={(e) => {
+                            e.target.style.opacity = '0.5';
+                          }}
                         />
                         <button
                           type="button"
@@ -474,9 +477,9 @@ export const AdminBlogsPage = () => {
                     {/* Direct URL input fallback */}
                     <div className="mt-2">
                       <input
-                        type="url"
+                        type="text"
                         className="form-control form-control-sm rounded-3"
-                        placeholder="Or paste external image URL: https://example.com/photo.jpg"
+                        placeholder="Or paste image path / URL (e.g. /uploads/image.jpg or https://...)"
                         value={formData.featured_image_url}
                         onChange={(e) => {
                           setFormData({ ...formData, featured_image_url: e.target.value });
