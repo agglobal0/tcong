@@ -505,131 +505,84 @@ export const HomePage = () => {
           <div className="mt-5 pt-2">
             <ScrollReveal animation="zoom-in" delay={100}>
               <div
-                className="p-4 p-md-5 rounded-4 shadow-sm border border-light mx-auto position-relative overflow-hidden"
+                className="p-4 p-md-5 rounded-4 shadow-sm mx-auto position-relative text-center"
                 style={{
-                  maxWidth: '850px',
-                  backgroundColor: '#FFFFFF',
+                  maxWidth: '680px',
+                  background: 'linear-gradient(135deg, #F0FDF4 0%, #DCFCE7 60%, #ECFDF5 100%)',
+                  border: '2px solid #86EFAC',
                 }}
               >
-                <div className="text-center mb-4">
+                <div className="mb-4">
                   <span
-                    className="badge px-3 py-2 rounded-pill mb-2 fw-bold text-uppercase"
-                    style={{ backgroundColor: '#DCFCE7', color: '#15803D', fontSize: '0.85rem' }}
+                    className="badge px-3 py-2 rounded-pill mb-3 fw-bold text-uppercase shadow-sm"
+                    style={{ backgroundColor: '#FFFFFF', color: '#15803D', border: '1px solid #86EFAC', fontSize: '0.85rem' }}
                   >
                     <i className="fas fa-hand-holding-heart me-1"></i> For Tithes and Offerings
                   </span>
-                  <h3 className="fw-bold mb-2" style={{ color: '#064E3B', fontSize: '1.8rem' }}>
-                    Direct Bank Transfer Details
+                  <h3 className="fw-bold mb-1" style={{ color: '#064E3B', fontSize: '1.75rem', letterSpacing: '0.5px' }}>
+                    CHURCH OF NEW GENERATION
                   </h3>
-                  <p className="text-muted small mx-auto mb-0" style={{ maxWidth: '560px', lineHeight: '1.6' }}>
-                    Partner with God's work, bless the church family, and support the ministry through electronic funds transfer (EFT).
+                  <p className="fw-semibold mb-0" style={{ color: '#047857', fontSize: '1.1rem' }}>
+                    Commonwealth Bank
                   </p>
                 </div>
 
-                {/* Styled Banking Display Box (Elegant Light Green) */}
-                <div
-                  className="p-4 rounded-4 position-relative text-center shadow-sm mx-auto"
-                  style={{
-                    maxWidth: '620px',
-                    background: 'linear-gradient(135deg, #F0FDF4 0%, #DCFCE7 50%, #ECFDF5 100%)',
-                    border: '2px solid #86EFAC',
-                    boxShadow: '0 10px 25px -5px rgba(16, 185, 129, 0.12)',
-                  }}
-                >
-                  <div className="d-flex align-items-center justify-content-between mb-3 border-bottom border-success border-opacity-25 pb-2">
-                    <div className="d-flex align-items-center gap-2">
-                      <span
-                        className="badge px-2 py-1 fw-bold text-dark shadow-sm"
-                        style={{ backgroundColor: '#FFCC00', borderRadius: '4px' }}
-                      >
-                        CBA
-                      </span>
-                      <span className="fw-bold" style={{ color: '#065F46', letterSpacing: '0.5px' }}>
-                        Commonwealth Bank
-                      </span>
-                    </div>
-                    <small className="fw-semibold d-none d-sm-inline" style={{ color: '#047857' }}>
-                      Official Church Account
-                    </small>
-                  </div>
-
-                  <div className="mb-3">
-                    <small className="text-uppercase d-block mb-1 fw-bold" style={{ color: '#059669', letterSpacing: '1px', fontSize: '0.75rem' }}>
-                      Account Name
-                    </small>
-                    <h4 className="fw-bold mb-0" style={{ color: '#064E3B', letterSpacing: '0.8px' }}>
-                      CHURCH OF NEW GENERATION
-                    </h4>
-                  </div>
-
-                  <div className="row g-3 my-2 justify-content-center">
-                    <div className="col-12 col-sm-6">
-                      <div
-                        className="p-3 rounded-3 d-flex flex-column align-items-center justify-content-center position-relative shadow-sm"
-                        style={{ backgroundColor: '#FFFFFF', border: '1px solid #A7F3D0' }}
-                      >
-                        <small className="text-uppercase fw-bold mb-1" style={{ color: '#059669', fontSize: '0.75rem' }}>
-                          BSB Number
-                        </small>
-                        <div className="d-flex align-items-center gap-2">
-                          <span className="fw-bold fs-4 font-monospace" style={{ color: '#064E3B' }}>
-                            063 599
-                          </span>
-                          <button
-                            type="button"
-                            onClick={() => handleCopyText('063599', 'bsb')}
-                            className="btn btn-sm rounded-pill py-0 px-2 fw-semibold"
-                            style={{
-                              backgroundColor: copiedField === 'bsb' ? '#059669' : '#ECFDF5',
-                              color: copiedField === 'bsb' ? '#FFFFFF' : '#047857',
-                              border: '1px solid #10B981',
-                            }}
-                            title="Copy BSB"
-                          >
-                            {copiedField === 'bsb' ? <span className="small">Copied!</span> : <><i className="fas fa-copy me-1"></i>Copy</>}
-                          </button>
-                        </div>
-                      </div>
-                    </div>
-
-                    <div className="col-12 col-sm-6">
-                      <div
-                        className="p-3 rounded-3 d-flex flex-column align-items-center justify-content-center position-relative shadow-sm"
-                        style={{ backgroundColor: '#FFFFFF', border: '1px solid #A7F3D0' }}
-                      >
-                        <small className="text-uppercase fw-bold mb-1" style={{ color: '#059669', fontSize: '0.75rem' }}>
-                          Account Number (A/C)
-                        </small>
-                        <div className="d-flex align-items-center gap-2">
-                          <span className="fw-bold fs-4 font-monospace" style={{ color: '#064E3B' }}>
-                            1132 1535
-                          </span>
-                          <button
-                            type="button"
-                            onClick={() => handleCopyText('11321535', 'ac')}
-                            className="btn btn-sm rounded-pill py-0 px-2 fw-semibold"
-                            style={{
-                              backgroundColor: copiedField === 'ac' ? '#059669' : '#ECFDF5',
-                              color: copiedField === 'ac' ? '#FFFFFF' : '#047857',
-                              border: '1px solid #10B981',
-                            }}
-                            title="Copy Account Number"
-                          >
-                            {copiedField === 'ac' ? <span className="small">Copied!</span> : <><i className="fas fa-copy me-1"></i>Copy</>}
-                          </button>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-
-                  <div className="pt-2">
+                <div className="row g-3 justify-content-center">
+                  <div className="col-12 col-sm-6">
                     <div
-                      className="p-2 rounded-3 d-inline-block"
-                      style={{ backgroundColor: 'rgba(255, 255, 255, 0.7)', border: '1px solid #A7F3D0', color: '#065F46' }}
+                      className="p-3 rounded-4 d-flex flex-column align-items-center justify-content-center bg-white shadow-sm"
+                      style={{ border: '1px solid #A7F3D0' }}
                     >
-                      <small className="fw-semibold" style={{ fontSize: '0.8rem' }}>
-                        <i className="fas fa-info-circle text-success me-1"></i> Reference: <em>Tithe / Offering / [Your Name]</em>
+                      <small className="text-uppercase fw-bold mb-1" style={{ color: '#059669', fontSize: '0.75rem' }}>
+                        BSB
                       </small>
+                      <div className="d-flex align-items-center gap-2">
+                        <span className="fw-bold fs-4 font-monospace" style={{ color: '#064E3B' }}>
+                          063 599
+                        </span>
+                        <button
+                          type="button"
+                          onClick={() => handleCopyText('063599', 'bsb')}
+                          className="btn btn-sm rounded-pill py-0 px-2 fw-semibold"
+                          style={{
+                            backgroundColor: copiedField === 'bsb' ? '#059669' : '#ECFDF5',
+                            color: copiedField === 'bsb' ? '#FFFFFF' : '#047857',
+                            border: '1px solid #10B981',
+                          }}
+                          title="Copy BSB"
+                        >
+                          {copiedField === 'bsb' ? <span className="small">Copied!</span> : <><i className="fas fa-copy me-1"></i>Copy</>}
+                        </button>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div className="col-12 col-sm-6">
+                    <div
+                      className="p-3 rounded-4 d-flex flex-column align-items-center justify-content-center bg-white shadow-sm"
+                      style={{ border: '1px solid #A7F3D0' }}
+                    >
+                      <small className="text-uppercase fw-bold mb-1" style={{ color: '#059669', fontSize: '0.75rem' }}>
+                        A/C
+                      </small>
+                      <div className="d-flex align-items-center gap-2">
+                        <span className="fw-bold fs-4 font-monospace" style={{ color: '#064E3B' }}>
+                          1132 1535
+                        </span>
+                        <button
+                          type="button"
+                          onClick={() => handleCopyText('11321535', 'ac')}
+                          className="btn btn-sm rounded-pill py-0 px-2 fw-semibold"
+                          style={{
+                            backgroundColor: copiedField === 'ac' ? '#059669' : '#ECFDF5',
+                            color: copiedField === 'ac' ? '#FFFFFF' : '#047857',
+                            border: '1px solid #10B981',
+                          }}
+                          title="Copy Account Number"
+                        >
+                          {copiedField === 'ac' ? <span className="small">Copied!</span> : <><i className="fas fa-copy me-1"></i>Copy</>}
+                        </button>
+                      </div>
                     </div>
                   </div>
                 </div>
