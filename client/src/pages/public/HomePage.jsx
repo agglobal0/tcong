@@ -787,7 +787,7 @@ export const HomePage = () => {
                     </div>
                     <div>
                       <strong className="d-block text-dark">Sunday Worship Service</strong>
-                      <span className="text-muted small">Every Sunday @ 10:30 AM (Hindi, English & Punjabi)</span>
+                      <span className="text-muted small">Every Sunday @ 10:00 AM – 2:00 PM (Hindi, English & Punjabi)</span>
                     </div>
                   </div>
 

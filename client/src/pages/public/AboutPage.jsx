@@ -577,7 +577,7 @@ export const AboutPage = () => {
 
                 <div className="p-3 rounded-3 bg-white border-start border-4 border-warning shadow-sm">
                   <small className="text-muted fw-semibold">
-                    <i className="fas fa-clock text-warning me-1"></i> <strong>When:</strong> Every Sunday immediately following the 10:30 AM Service. Come for worship, stay for fellowship and lunch!
+                    <i className="fas fa-clock text-warning me-1"></i> <strong>When:</strong> Every Sunday immediately following the service (1:15 PM). Come for worship at 10:00 AM, stay for fellowship and lunch!
                   </small>
                 </div>
               </ScrollReveal>
