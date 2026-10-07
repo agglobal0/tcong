@@ -145,8 +145,8 @@ export const SermonsPage = () => {
 
       {/* ═══════ HERO BANNER ═══════ */}
       <section
-        className="bg-dark text-white py-5 text-center"
-        style={{ background: 'linear-gradient(135deg, #1E1B4B 0%, #4A0E4E 100%)' }}
+        className="bg-primary text-white py-5 text-center"
+        style={{ background: 'linear-gradient(135deg, #1E1B4B 0%, #4338CA 100%)' }}
       >
         <div className="container py-4">
           <TextSequence
@@ -157,9 +157,16 @@ export const SermonsPage = () => {
             wordDelay={80}
           />
           <ScrollReveal animation="fade-up" delay={350}>
-            <p className="lead text-light opacity-90 mx-auto" style={{ maxWidth: '650px' }}>
+            <p className="lead text-white-50 max-w-xl mx-auto mb-3" style={{ maxWidth: '720px' }}>
               Watch, listen, and grow in faith with anointed messages and miracle teachings by Pastor Jaskaran Heer.
             </p>
+            <div
+              className="d-inline-flex align-items-center gap-2 px-3 py-1 rounded-pill"
+              style={{ backgroundColor: 'rgba(255,255,255,0.15)', border: '1px solid rgba(255,255,255,0.25)' }}
+            >
+              <i className="fas fa-play-circle text-warning"></i>
+              <span className="fw-semibold text-white small">Anointed Video Sermons • Hindi & English Preaching • Pastor Jaskaran Heer</span>
+            </div>
           </ScrollReveal>
         </div>
       </section>
