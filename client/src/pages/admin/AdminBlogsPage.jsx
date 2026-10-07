@@ -369,21 +369,53 @@ export const AdminBlogsPage = () => {
 
       {/* ═══════ CREATE / EDIT MODAL ═══════ */}
       {showModal && (
-        <div className="modal d-block" tabIndex="-1" style={{ backgroundColor: 'rgba(15, 23, 42, 0.65)', backdropFilter: 'blur(4px)' }}>
-          <div className="modal-dialog modal-lg modal-dialog-centered modal-dialog-scrollable">
-            <div className="modal-content rounded-4 border-0 shadow-lg overflow-hidden">
-              <div className="modal-header border-0 pb-0 pt-4 px-4">
+        <div
+          className="modal d-block"
+          tabIndex="-1"
+          style={{
+            backgroundColor: 'rgba(15, 23, 42, 0.7)',
+            backdropFilter: 'blur(4px)',
+            overflowY: 'auto',
+          }}
+        >
+          <div
+            className="modal-dialog modal-lg modal-dialog-centered"
+            style={{ maxWidth: '760px', margin: '1.5rem auto' }}
+          >
+            <div
+              className="modal-content rounded-4 border-0 shadow-lg"
+              style={{
+                maxHeight: '92vh',
+                display: 'flex',
+                flexDirection: 'column',
+                overflow: 'hidden',
+              }}
+            >
+              {/* Modal Header */}
+              <div className="modal-header border-bottom py-3 px-4 bg-white" style={{ flexShrink: 0 }}>
                 <div>
-                  <h4 className="modal-title fw-bold" style={{ color: '#1E1B4B' }}>
+                  <h4 className="modal-title fw-bold mb-0" style={{ color: '#1E1B4B' }}>
                     {editingBlog ? 'Edit Blog Post' : 'Create New Blog Post'}
                   </h4>
-                  <p className="text-muted small mb-0">Provide article details and upload a featured cover image</p>
+                  <p className="text-muted small mb-0">Fill in article details and upload a featured cover image</p>
                 </div>
-                <button type="button" className="btn-close" onClick={() => !saving && setShowModal(false)}></button>
+                <button
+                  type="button"
+                  className="btn-close"
+                  onClick={() => !saving && setShowModal(false)}
+                ></button>
               </div>
 
-              <form onSubmit={handleSubmit}>
-                <div className="modal-body px-4 py-3">
+              {/* Form with Scrollable Body & Sticky Footer */}
+              <form
+                onSubmit={handleSubmit}
+                className="d-flex flex-column"
+                style={{ overflow: 'hidden', flex: 1, minHeight: 0 }}
+              >
+                <div
+                  className="modal-body px-4 py-3"
+                  style={{ overflowY: 'auto', flex: '1 1 auto' }}
+                >
                   {/* Title */}
                   <div className="mb-3">
                     <label className="form-label fw-bold small text-uppercase text-secondary">
@@ -391,7 +423,7 @@ export const AdminBlogsPage = () => {
                     </label>
                     <input
                       type="text"
-                      className="form-control form-control-lg rounded-3"
+                      className="form-control rounded-3"
                       placeholder="e.g. Walking in Divine Favor and Faith"
                       value={formData.title}
                       onChange={(e) => setFormData({ ...formData, title: e.target.value })}
@@ -427,40 +459,43 @@ export const AdminBlogsPage = () => {
                         value={formData.status}
                         onChange={(e) => setFormData({ ...formData, status: e.target.value })}
                       >
-                        <option value="published">Published (Visible to all website visitors)</option>
+                        <option value="published">Published (Visible on website)</option>
                         <option value="draft">Draft (Saved privately)</option>
                       </select>
                     </div>
                   </div>
 
                   {/* ═══════ FEATURED IMAGE UPLOAD ═══════ */}
-                  <div className="mb-4">
+                  <div className="mb-3">
                     <label className="form-label fw-bold small text-uppercase text-secondary d-flex justify-content-between">
                       <span>Cover / Featured Image</span>
-                      <span className="text-muted font-monospace small">Supports JPG, PNG, WEBP, AVIF</span>
+                      <span className="text-muted small">JPG, PNG, WEBP, AVIF</span>
                     </label>
 
                     {imagePreview ? (
-                      <div className="position-relative rounded-4 overflow-hidden border border-2 shadow-sm mb-2" style={{ maxHeight: '240px' }}>
+                      <div
+                        className="position-relative rounded-3 overflow-hidden border shadow-sm mb-2"
+                        style={{ maxHeight: '180px', backgroundColor: '#F1F5F9' }}
+                      >
                         <img
                           src={imagePreview}
                           alt="Cover Preview"
                           className="w-100 object-fit-cover"
-                          style={{ maxHeight: '240px' }}
+                          style={{ maxHeight: '180px' }}
                         />
                         <button
                           type="button"
                           className="btn btn-sm btn-danger position-absolute top-0 end-0 m-2 rounded-circle shadow"
-                          style={{ width: '36px', height: '36px' }}
+                          style={{ width: '32px', height: '32px', padding: 0 }}
                           onClick={removeSelectedImage}
                           title="Remove cover image"
                         >
-                          <i className="fas fa-trash-alt"></i>
+                          <i className="fas fa-trash-alt small"></i>
                         </button>
                       </div>
                     ) : (
                       <div
-                        className="rounded-4 p-4 text-center border-2 border-dashed d-flex flex-column align-items-center justify-content-center"
+                        className="rounded-3 p-3 text-center border border-2 border-dashed d-flex align-items-center justify-content-center gap-3"
                         style={{
                           backgroundColor: '#F8FAFC',
                           borderColor: '#CBD5E1',
@@ -470,13 +505,15 @@ export const AdminBlogsPage = () => {
                         onClick={() => fileInputRef.current?.click()}
                       >
                         <div
-                          className="rounded-circle d-flex align-items-center justify-content-center mb-2"
-                          style={{ width: '54px', height: '54px', backgroundColor: '#EEF2FF', color: '#4338CA' }}
+                          className="rounded-circle d-flex align-items-center justify-content-center"
+                          style={{ width: '42px', height: '42px', backgroundColor: '#EEF2FF', color: '#4338CA', flexShrink: 0 }}
                         >
-                          <i className="fas fa-cloud-arrow-up fs-4"></i>
+                          <i className="fas fa-cloud-arrow-up fs-5"></i>
                         </div>
-                        <h6 className="fw-bold mb-1 text-dark">Click to upload cover image</h6>
-                        <p className="text-muted small mb-0">Recommended size: 1200 × 630 px</p>
+                        <div className="text-start">
+                          <h6 className="fw-bold mb-0 text-dark small">Click to upload cover image from your device</h6>
+                          <small className="text-muted">Recommended: 1200 × 630 px</small>
+                        </div>
                       </div>
                     )}
 
@@ -488,13 +525,12 @@ export const AdminBlogsPage = () => {
                       onChange={handleFileChange}
                     />
 
-                    {/* Or paste image URL */}
+                    {/* Direct URL input fallback */}
                     <div className="mt-2">
-                      <small className="text-muted d-block mb-1">Or enter external image URL directly:</small>
                       <input
                         type="url"
                         className="form-control form-control-sm rounded-3"
-                        placeholder="https://example.com/image.jpg"
+                        placeholder="Or paste external image URL: https://example.com/photo.jpg"
                         value={formData.featured_image_url}
                         onChange={(e) => {
                           setFormData({ ...formData, featured_image_url: e.target.value });
@@ -512,7 +548,7 @@ export const AdminBlogsPage = () => {
                     <input
                       type="text"
                       className="form-control rounded-3"
-                      placeholder="Brief overview shown on cards and Google search previews..."
+                      placeholder="Brief 1-2 sentence overview shown on preview cards..."
                       value={formData.excerpt}
                       onChange={(e) => setFormData({ ...formData, excerpt: e.target.value })}
                       maxLength={200}
@@ -525,17 +561,18 @@ export const AdminBlogsPage = () => {
                       Article Content <span className="text-danger">*</span>
                     </label>
                     <textarea
-                      className="form-control rounded-3"
-                      rows="8"
+                      className="form-control rounded-3 font-monospace"
+                      rows="6"
                       placeholder="Write your inspiring article or devotional content here..."
                       value={formData.content}
                       onChange={(e) => setFormData({ ...formData, content: e.target.value })}
                       required
+                      style={{ fontSize: '0.95rem' }}
                     ></textarea>
                   </div>
 
-                  {/* Featured Checkbox */}
-                  <div className="form-check form-switch mb-2">
+                  {/* Featured Switch */}
+                  <div className="form-check form-switch mb-1">
                     <input
                       className="form-check-input"
                       type="checkbox"
@@ -543,16 +580,20 @@ export const AdminBlogsPage = () => {
                       checked={formData.is_featured}
                       onChange={(e) => setFormData({ ...formData, is_featured: e.target.checked })}
                     />
-                    <label className="form-check-label fw-semibold text-dark" htmlFor="isFeaturedSwitch">
-                      Highlight as Featured Article on Blog Homepage
+                    <label className="form-check-label fw-semibold text-dark small" htmlFor="isFeaturedSwitch">
+                      Highlight as Featured Article
                     </label>
                   </div>
                 </div>
 
-                <div className="modal-footer border-0 pt-0 pb-4 px-4">
+                {/* ═══════ STICKY FOOTER WITH SAVE BUTTON ═══════ */}
+                <div
+                  className="modal-footer bg-light border-top py-3 px-4 d-flex justify-content-between align-items-center"
+                  style={{ flexShrink: 0 }}
+                >
                   <button
                     type="button"
-                    className="btn btn-light rounded-pill px-4 fw-semibold"
+                    className="btn btn-outline-secondary rounded-pill px-4 fw-semibold"
                     onClick={() => setShowModal(false)}
                     disabled={saving}
                   >
@@ -560,7 +601,7 @@ export const AdminBlogsPage = () => {
                   </button>
                   <button
                     type="submit"
-                    className="btn btn-primary rounded-pill px-5 fw-bold d-inline-flex align-items-center gap-2"
+                    className="btn btn-primary rounded-pill px-5 py-2 fw-bold d-inline-flex align-items-center gap-2 shadow"
                     style={{ backgroundColor: '#4338CA', borderColor: '#4338CA' }}
                     disabled={saving}
                   >
@@ -572,7 +613,7 @@ export const AdminBlogsPage = () => {
                     ) : (
                       <>
                         <i className="fas fa-check"></i>
-                        <span>{editingBlog ? 'Update Article' : 'Publish Article'}</span>
+                        <span>{editingBlog ? 'Save & Update Post' : 'Save & Publish Post'}</span>
                       </>
                     )}
                   </button>
