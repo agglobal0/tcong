@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useParams, Link } from 'react-router-dom';
+import { Helmet } from 'react-helmet-async';
 import { api } from '../../services/api';
 
 export const BlogDetailPage = () => {
@@ -7,49 +8,228 @@ export const BlogDetailPage = () => {
   const [blog, setBlog] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  const [copied, setCopied] = useState(false);
 
   useEffect(() => {
+    window.scrollTo(0, 0);
+    setLoading(true);
     api.public
       .getBlog(slug)
-      .then((res) => setBlog(res.data))
+      .then((res) => {
+        setBlog(res.data || res);
+      })
       .catch((err) => setError(err.message || 'Failed to load article'))
       .finally(() => setLoading(false));
   }, [slug]);
 
+  const handleCopyLink = () => {
+    if (navigator.clipboard) {
+      navigator.clipboard.writeText(window.location.href);
+      setCopied(true);
+      setTimeout(() => setCopied(false), 2500);
+    }
+  };
+
+  const calculateReadTime = (content = '') => {
+    const wordCount = content.replace(/<[^>]*>?/gm, '').split(/\s+/).length;
+    const minutes = Math.ceil(wordCount / 200);
+    return `${minutes || 3} min read`;
+  };
+
   if (loading) {
     return (
-      <div className="text-center py-5">
-        <div className="spinner-border text-primary"></div>
+      <div className="text-center py-5 my-5" style={{ minHeight: '50vh' }}>
+        <div className="spinner-border text-primary" role="status" style={{ color: '#4338CA' }}></div>
+        <p className="text-muted small mt-2">Loading article...</p>
       </div>
     );
   }
 
   if (error || !blog) {
     return (
-      <div className="container py-5 text-center">
-        <h3 className="text-danger mb-3">Article Not Found</h3>
-        <Link to="/blog" className="btn btn-primary">&larr; Back to Articles</Link>
+      <div className="container py-5 my-5 text-center" style={{ minHeight: '50vh' }}>
+        <div className="p-5 bg-white rounded-4 shadow-sm max-w-lg mx-auto" style={{ maxWidth: '600px' }}>
+          <i className="fas fa-file-circle-xmark fa-3x text-danger mb-3"></i>
+          <h3 className="fw-bold mb-2">Article Not Found</h3>
+          <p className="text-muted mb-4">The article you are looking for might have been moved or unpublished.</p>
+          <Link to="/blog" className="btn btn-primary rounded-pill px-4" style={{ backgroundColor: '#4338CA' }}>
+            &larr; Back to All Articles
+          </Link>
+        </div>
       </div>
     );
   }
 
+  const shareUrl = typeof window !== 'undefined' ? window.location.href : '';
+  const shareTitle = blog.title;
+
   return (
-    <div className="blog-detail-page py-5">
-      <div className="container" style={{ maxWidth: '800px' }}>
-        <Link to="/blog" className="btn btn-sm btn-outline-secondary mb-4">&larr; Back to Articles</Link>
-        <span className="badge bg-primary-subtle text-primary mb-2 d-inline-block">{blog.category || 'Article'}</span>
-        <h1 className="display-5 fw-bold mb-3">{blog.title}</h1>
-        <div className="d-flex align-items-center gap-3 text-muted mb-4 pb-3 border-bottom">
-          <span><i className="fas fa-user me-1"></i> {blog.author_name || 'Church Editorial Team'}</span>
-          <span><i className="fas fa-calendar me-1"></i> {new Date(blog.created_at || Date.now()).toLocaleDateString()}</span>
+    <div className="blog-detail-page" style={{ backgroundColor: '#F8FAFC' }}>
+      <Helmet>
+        <title>{blog.meta_title || `${blog.title} | TCONG Melbourne Devotionals`}</title>
+        <meta
+          name="description"
+          content={blog.meta_description || blog.excerpt || blog.title}
+        />
+        <link rel="canonical" href={`https://tcong-murex.vercel.app/blog/${blog.slug || blog.id}`} />
+        <meta property="og:title" content={blog.title} />
+        <meta property="og:description" content={blog.excerpt || blog.title} />
+        {blog.featured_image && <meta property="og:image" content={blog.featured_image} />}
+      </Helmet>
+
+      {/* ═══════ ARTICLE HEADER BANNER ═══════ */}
+      <section
+        className="py-5 text-white position-relative"
+        style={{ background: 'linear-gradient(135deg, #1E1B4B 0%, #4338CA 100%)' }}
+      >
+        <div className="container py-3" style={{ maxWidth: '880px' }}>
+          {/* Breadcrumb Navigation */}
+          <div className="d-flex align-items-center gap-2 mb-3">
+            <Link to="/blog" className="text-white-50 text-decoration-none small hover-white">
+              <i className="fas fa-arrow-left me-1"></i> Back to Blog
+            </Link>
+            <span className="text-white-50 small">•</span>
+            <span className="badge px-3 py-1 rounded-pill" style={{ backgroundColor: 'rgba(255,255,255,0.2)' }}>
+              {blog.category_name || blog.category || 'Devotional'}
+            </span>
+          </div>
+
+          {/* Article Title */}
+          <h1 className="display-5 fw-bold mb-4 text-white" style={{ lineHeight: '1.25' }}>
+            {blog.title}
+          </h1>
+
+          {/* Metadata Row */}
+          <div className="d-flex flex-wrap align-items-center gap-4 text-white-50 small">
+            <span className="d-flex align-items-center gap-2">
+              <i className="fas fa-user-circle text-warning fs-6"></i>
+              <strong className="text-white">{blog.author_name || 'Pastor Jaskaran Heer'}</strong>
+            </span>
+            <span>
+              <i className="fas fa-calendar-alt me-1 text-warning"></i>
+              {new Date(blog.published_at || blog.created_at || Date.now()).toLocaleDateString('en-AU', {
+                year: 'numeric',
+                month: 'long',
+                day: 'numeric',
+              })}
+            </span>
+            <span>
+              <i className="fas fa-clock me-1 text-warning"></i>
+              {calculateReadTime(blog.content)}
+            </span>
+          </div>
         </div>
+      </section>
 
-        {blog.featured_image && (
-          <img src={blog.featured_image} alt={blog.title} className="img-fluid rounded-4 mb-4 w-100" style={{ maxHeight: '400px', objectFit: 'cover' }} />
-        )}
+      {/* ═══════ MAIN CONTENT SECTION ═══════ */}
+      <section className="py-5">
+        <div className="container" style={{ maxWidth: '880px' }}>
+          <div className="bg-white rounded-4 shadow-sm p-4 p-md-5">
+            {/* Featured Image */}
+            {blog.featured_image && (
+              <div className="mb-5 rounded-4 overflow-hidden shadow-sm">
+                <img
+                  src={blog.featured_image}
+                  alt={blog.title}
+                  className="w-100 object-fit-cover"
+                  style={{ maxHeight: '480px' }}
+                />
+              </div>
+            )}
 
-        <div className="blog-content lead text-secondary" style={{ lineHeight: 1.8 }} dangerouslySetInnerHTML={{ __html: blog.content }}></div>
-      </div>
+            {/* Excerpt Callout */}
+            {blog.excerpt && (
+              <div
+                className="p-4 rounded-3 mb-4"
+                style={{
+                  backgroundColor: '#EEF2FF',
+                  borderLeft: '4px solid #4338CA',
+                  fontSize: '1.15rem',
+                  fontStyle: 'italic',
+                  color: '#1E1B4B',
+                  lineHeight: '1.7',
+                }}
+              >
+                "{blog.excerpt}"
+              </div>
+            )}
+
+            {/* Main Article Body */}
+            <div
+              className="blog-content text-dark mb-5"
+              style={{
+                fontSize: '1.1rem',
+                lineHeight: '1.85',
+                whiteSpace: 'pre-line',
+              }}
+              dangerouslySetInnerHTML={{ __html: blog.content }}
+            ></div>
+
+            {/* Social Share Bar */}
+            <div className="d-flex flex-wrap align-items-center justify-content-between gap-3 pt-4 border-top">
+              <span className="fw-bold text-dark small text-uppercase">
+                <i className="fas fa-share-nodes me-2 text-primary"></i> Share this Article:
+              </span>
+              <div className="d-flex align-items-center gap-2">
+                <button
+                  type="button"
+                  onClick={handleCopyLink}
+                  className="btn btn-sm btn-outline-secondary rounded-pill px-3"
+                  title="Copy Link to Clipboard"
+                >
+                  <i className={`fas ${copied ? 'fa-check text-success' : 'fa-link'} me-1`}></i>
+                  {copied ? 'Copied!' : 'Copy Link'}
+                </button>
+                <a
+                  href={`https://wa.me/?text=${encodeURIComponent(shareTitle + ' ' + shareUrl)}`}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="btn btn-sm btn-success rounded-pill px-3 text-white"
+                  title="Share on WhatsApp"
+                >
+                  <i className="fab fa-whatsapp me-1"></i> WhatsApp
+                </a>
+                <a
+                  href={`https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(shareUrl)}`}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="btn btn-sm btn-primary rounded-pill px-3 text-white"
+                  title="Share on Facebook"
+                >
+                  <i className="fab fa-facebook-f me-1"></i> Facebook
+                </a>
+              </div>
+            </div>
+          </div>
+
+          {/* Bottom Navigation & Prayer CTA */}
+          <div className="mt-5 text-center">
+            <div
+              className="p-4 p-md-5 rounded-4 shadow-sm text-white"
+              style={{ background: 'linear-gradient(135deg, #1E1B4B 0%, #312E81 100%)' }}
+            >
+              <h3 className="fw-bold mb-2">Need Prayer or Guidance?</h3>
+              <p className="text-white-50 max-w-xl mx-auto mb-4" style={{ maxWidth: '600px' }}>
+                Our 24/7 Telephone Prayer Tower and pastoral team are standing by to pray with you for breakthrough and healing.
+              </p>
+              <div className="d-flex flex-wrap gap-3 justify-content-center">
+                <Link
+                  to="/prayer-request"
+                  className="btn btn-warning fw-bold rounded-pill px-4 py-2"
+                >
+                  <i className="fas fa-hands-praying me-2"></i> Submit Prayer Request
+                </Link>
+                <Link
+                  to="/blog"
+                  className="btn btn-outline-light rounded-pill px-4 py-2"
+                >
+                  &larr; More Devotionals
+                </Link>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
     </div>
   );
 };
