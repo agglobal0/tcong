@@ -27,6 +27,7 @@ const AdminBlogsPage = lazyPage(() => import('./pages/admin/AdminBlogsPage'), 'A
 const AdminEventsPage = lazyPage(() => import('./pages/admin/AdminEventsPage'), 'AdminEventsPage');
 const AdminSermonsPage = lazyPage(() => import('./pages/admin/AdminSermonsPage'), 'AdminSermonsPage');
 const AdminPrayersPage = lazyPage(() => import('./pages/admin/AdminPrayersPage'), 'AdminPrayersPage');
+const AdminLayHandPrayersPage = lazyPage(() => import('./pages/admin/AdminLayHandPrayersPage'), 'AdminLayHandPrayersPage');
 const AdminMessagesPage = lazyPage(() => import('./pages/admin/AdminMessagesPage'), 'AdminMessagesPage');
 const AdminSettingsPage = lazyPage(() => import('./pages/admin/AdminSettingsPage'), 'AdminSettingsPage');
 
@@ -72,6 +73,7 @@ export function App() {
           <Route path="events" element={<AdminEventsPage />} />
           <Route path="sermons" element={<AdminSermonsPage />} />
           <Route path="prayers" element={<AdminPrayersPage />} />
+          <Route path="lay-hand-prayers" element={<AdminLayHandPrayersPage />} />
           <Route path="messages" element={<AdminMessagesPage />} />
           <Route path="settings" element={<AdminSettingsPage />} />
         </Route>

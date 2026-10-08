@@ -273,6 +273,9 @@ export const api = {
     updatePrayer(id, data) {
       return api.put(`/admin/prayer-requests/${id}`, data);
     },
+    deletePrayer(id) {
+      return api.delete(`/admin/prayer-requests/${id}`);
+    },
     addPrayerNote(id, note) {
       return api.post(`/admin/prayer-requests/${id}/notes`, { note });
     },

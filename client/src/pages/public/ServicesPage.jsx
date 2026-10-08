@@ -56,6 +56,7 @@ export const ServicesPage = () => {
         email: formData.email.trim() || undefined,
         category: formData.category,
         request_text: fullRequestText,
+        type: 'lay_hand',
         is_anonymous: false,
         consent: true,
       };

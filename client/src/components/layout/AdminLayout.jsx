@@ -34,6 +34,7 @@ export const AdminLayout = () => {
       title: 'Ministry & Care',
       items: [
         { label: 'Prayer Requests', path: '/admin/prayers', icon: 'fas fa-praying-hands' },
+        { label: 'Lay Hand Prayers', path: '/admin/lay-hand-prayers', icon: 'fas fa-hand-holding-heart' },
         { label: 'Contact Messages', path: '/admin/messages', icon: 'fas fa-envelope' },
       ],
     },

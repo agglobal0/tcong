@@ -6,41 +6,80 @@ const { query } = require('../config/database');
 const { success, created, paginated, notFound } = require('../utils/responseHandler');
 const { parsePagination, buildPaginationMeta } = require('../utils/pagination');
 
+// Ensure 'type' column exists in prayer_requests table
+(async () => {
+  try {
+    await query(`ALTER TABLE prayer_requests ADD COLUMN type VARCHAR(50) DEFAULT 'prayer_request' AFTER category`);
+  } catch (e) {
+    // Column already exists or table not yet created
+  }
+})();
+
 /**
  * POST /api/prayer-requests (Public)
  * Submits a new prayer request. Never exposes existing requests.
  */
 async function submitPrayerRequest(req, res, next) {
   try {
-    const { name, email, phone, request_text, category, is_anonymous, consent } = req.body;
+    const { name, email, phone, request_text, category, is_anonymous, consent, type, request_type } = req.body;
     
     const allowedCategories = ['family', 'career', 'education', 'spiritual', 'financial', 'relationships', 'health', 'other'];
     const validCategory = (category && allowedCategories.includes(String(category).toLowerCase())) 
       ? String(category).toLowerCase() 
       : 'other';
 
-    const result = await query(
-      `INSERT INTO prayer_requests (name, email, phone, request_text, category, is_anonymous, consent, status, priority)
-       VALUES (?, ?, ?, ?, ?, ?, ?, 'new', 'medium')`,
-      [
-        is_anonymous ? 'Anonymous' : (name || 'Anonymous User'),
-        email || null,
-        phone || null,
-        request_text,
-        validCategory,
-        is_anonymous ? 1 : 0,
-        consent ? 1 : 0
-      ]
-    );
+    const reqType = (type === 'lay_hand' || request_type === 'lay_hand' || (request_text && String(request_text).includes('[LAYING ON OF HANDS REQUEST]')))
+      ? 'lay_hand'
+      : 'prayer_request';
+
+    let result;
+    try {
+      result = await query(
+        `INSERT INTO prayer_requests (name, email, phone, request_text, category, is_anonymous, consent, status, priority, type)
+         VALUES (?, ?, ?, ?, ?, ?, ?, 'new', 'medium', ?)`,
+        [
+          is_anonymous ? 'Anonymous' : (name || 'Anonymous User'),
+          email || null,
+          phone || null,
+          request_text,
+          validCategory,
+          is_anonymous ? 1 : 0,
+          consent ? 1 : 0,
+          reqType
+        ]
+      );
+    } catch (insertErr) {
+      // Fallback if 'type' column does not exist
+      if (insertErr.code === 'ER_BAD_FIELD_ERROR' || (insertErr.message && insertErr.message.includes("Unknown column 'type'"))) {
+        result = await query(
+          `INSERT INTO prayer_requests (name, email, phone, request_text, category, is_anonymous, consent, status, priority)
+           VALUES (?, ?, ?, ?, ?, ?, ?, 'new', 'medium')`,
+          [
+            is_anonymous ? 'Anonymous' : (name || 'Anonymous User'),
+            email || null,
+            phone || null,
+            request_text,
+            validCategory,
+            is_anonymous ? 1 : 0,
+            consent ? 1 : 0
+          ]
+        );
+      } else {
+        throw insertErr;
+      }
+    }
 
     // Create in-app notification for admin
     try {
+      const isLayHand = reqType === 'lay_hand';
       await query(
         `INSERT INTO notifications (type, title, message, data)
-         VALUES ('prayer_request', 'New Prayer Request', ?, ?)`,
+         VALUES (?, ?, ?, ?)`,
         [
-          `New prayer request from ${is_anonymous ? 'Anonymous' : name} (${category})`,
-          JSON.stringify({ prayer_request_id: result.insertId, category })
+          isLayHand ? 'lay_hand_request' : 'prayer_request',
+          isLayHand ? 'New Lay Hand Prayer Request' : 'New Prayer Request',
+          `New ${isLayHand ? 'laying on of hands prayer request' : 'prayer request'} from ${is_anonymous ? 'Anonymous' : name} (${validCategory})`,
+          JSON.stringify({ prayer_request_id: result.insertId, category: validCategory, type: reqType })
         ]
       );
     } catch (e) {
@@ -59,10 +98,17 @@ async function submitPrayerRequest(req, res, next) {
 async function getAdminPrayerRequests(req, res, next) {
   try {
     const { page, limit, offset } = parsePagination(req.query);
-    const { status, category, priority, search } = req.query;
+    const { status, category, priority, search, type } = req.query;
 
     let whereClause = "WHERE 1=1";
     const params = [];
+
+    // Filter by type: lay_hand vs prayer_request
+    if (type === 'lay_hand') {
+      whereClause += " AND (pr.type = 'lay_hand' OR pr.request_text LIKE '%[LAYING ON OF HANDS REQUEST]%')";
+    } else if (type === 'prayer_request' || type === 'general') {
+      whereClause += " AND (pr.type IS NULL OR pr.type != 'lay_hand') AND (pr.request_text NOT LIKE '%[LAYING ON OF HANDS REQUEST]%')";
+    }
 
     if (status) {
       whereClause += " AND pr.status = ?";
@@ -77,9 +123,9 @@ async function getAdminPrayerRequests(req, res, next) {
       params.push(priority);
     }
     if (search) {
-      whereClause += " AND (pr.name LIKE ? OR pr.request_text LIKE ?)";
+      whereClause += " AND (pr.name LIKE ? OR pr.request_text LIKE ? OR pr.email LIKE ? OR pr.phone LIKE ?)";
       const term = `%${search}%`;
-      params.push(term, term);
+      params.push(term, term, term, term);
     }
 
     const countResult = await query(`SELECT COUNT(*) as total FROM prayer_requests pr ${whereClause}`, params);
@@ -183,6 +229,24 @@ async function updateAdminPrayerRequest(req, res, next) {
 }
 
 /**
+ * DELETE /api/admin/prayer-requests/:id (Admin — Authorized Only)
+ */
+async function deleteAdminPrayerRequest(req, res, next) {
+  try {
+    const { id } = req.params;
+    const existing = await query('SELECT id FROM prayer_requests WHERE id = ?', [id]);
+    if (existing.length === 0) {
+      return notFound(res, 'Prayer request not found');
+    }
+
+    await query('DELETE FROM prayer_requests WHERE id = ?', [id]);
+    return success(res, { id }, 'Prayer request deleted successfully');
+  } catch (err) {
+    next(err);
+  }
+}
+
+/**
  * POST /api/admin/prayer-requests/:id/notes (Admin — Authorized Only)
  * Add internal note to a prayer request
  */
@@ -212,5 +276,6 @@ module.exports = {
   getAdminPrayerRequests,
   getAdminPrayerRequestById,
   updateAdminPrayerRequest,
+  deleteAdminPrayerRequest,
   addPrayerRequestNote
 };

@@ -20,9 +20,12 @@ async function getDashboardData(req, res, next) {
       }
     };
 
-    // 1. Total & New Prayer Requests
-    const prayerTotal = await safeQuery('SELECT COUNT(*) as cnt FROM prayer_requests', [], [{ cnt: 0 }]);
-    const prayerNew = await safeQuery("SELECT COUNT(*) as cnt FROM prayer_requests WHERE status = 'new' OR status = 'pending'", [], [{ cnt: 0 }]);
+    // 1. Total & New Prayer Requests (General vs Lay Hand)
+    const layHandTotal = await safeQuery("SELECT COUNT(*) as cnt FROM prayer_requests WHERE type = 'lay_hand' OR request_text LIKE '%[LAYING ON OF HANDS REQUEST]%'", [], [{ cnt: 0 }]);
+    const layHandPending = await safeQuery("SELECT COUNT(*) as cnt FROM prayer_requests WHERE (type = 'lay_hand' OR request_text LIKE '%[LAYING ON OF HANDS REQUEST]%') AND (status = 'new' OR status = 'pending')", [], [{ cnt: 0 }]);
+    
+    const generalPrayerTotal = await safeQuery("SELECT COUNT(*) as cnt FROM prayer_requests WHERE (type IS NULL OR type != 'lay_hand') AND (request_text NOT LIKE '%[LAYING ON OF HANDS REQUEST]%')", [], [{ cnt: 0 }]);
+    const generalPrayerPending = await safeQuery("SELECT COUNT(*) as cnt FROM prayer_requests WHERE (type IS NULL OR type != 'lay_hand') AND (request_text NOT LIKE '%[LAYING ON OF HANDS REQUEST]%') AND (status = 'new' OR status = 'pending')", [], [{ cnt: 0 }]);
 
     // 2. Upcoming Events
     const eventsUpcoming = await safeQuery("SELECT COUNT(*) as cnt FROM events WHERE status = 'published'", [], [{ cnt: 0 }]);
@@ -70,7 +73,8 @@ async function getDashboardData(req, res, next) {
     const unreadNotifications = await safeQuery('SELECT COUNT(*) as cnt FROM notifications WHERE is_read = 0', [], [{ cnt: 0 }]);
 
     const totalDonationsVal = donationTotal[0]?.sum || 0;
-    const pendingPrayersVal = prayerNew[0]?.cnt || 0;
+    const pendingPrayersVal = generalPrayerPending[0]?.cnt || 0;
+    const pendingLayHandVal = layHandPending[0]?.cnt || 0;
     const totalBlogsVal = blogsPublished[0]?.cnt || 0;
     const unreadMessagesVal = messagesUnread[0]?.cnt || 0;
 
@@ -80,7 +84,9 @@ async function getDashboardData(req, res, next) {
         donation_amount: totalDonationsVal,
         pending_prayers: pendingPrayersVal,
         new_prayer_requests: pendingPrayersVal,
-        total_prayer_requests: prayerTotal[0]?.cnt || 0,
+        total_prayer_requests: generalPrayerTotal[0]?.cnt || 0,
+        pending_lay_hand: pendingLayHandVal,
+        total_lay_hand: layHandTotal[0]?.cnt || 0,
         upcoming_events: eventsUpcoming[0]?.cnt || 0,
         total_blogs: totalBlogsVal,
         published_blogs: totalBlogsVal,

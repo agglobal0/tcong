@@ -39,6 +39,7 @@ export const AdminDashboardPage = () => {
   }
 
   const pendingPrayersCount = s.pending_prayers ?? s.new_prayer_requests ?? 0;
+  const pendingLayHandCount = s.pending_lay_hand ?? 0;
   const publishedBlogsCount = s.total_blogs ?? s.published_blogs ?? 0;
   const unreadMessagesCount = s.unread_messages ?? 0;
   const publishedSermonsCount = s.published_sermons ?? 0;
@@ -57,39 +58,68 @@ export const AdminDashboardPage = () => {
 
       {/* KPI Stats Cards */}
       <div className="row g-3 mb-4">
-        <div className="col-md-3">
-          <div className="card border-0 shadow-sm rounded-4 p-4 h-100">
-            <span className="text-muted small fw-semibold">PRAYER REQUESTS</span>
-            <h3 className="fw-bold text-warning mb-0 mt-2">
+        <div className="col-md-4 col-lg">
+          <div className="card border-0 shadow-sm rounded-4 p-4 h-100 bg-white">
+            <div className="d-flex justify-content-between align-items-center mb-2">
+              <span className="text-muted small fw-semibold">PRAYER REQUESTS</span>
+              <i className="fas fa-praying-hands text-warning"></i>
+            </div>
+            <h3 className="fw-bold text-warning mb-1">
               {pendingPrayersCount} Pending
             </h3>
+            <small className="text-muted">{s.total_prayer_requests || 0} Total</small>
           </div>
         </div>
 
-        <div className="col-md-3">
-          <div className="card border-0 shadow-sm rounded-4 p-4 h-100">
-            <span className="text-muted small fw-semibold">PUBLISHED BLOGS</span>
-            <h3 className="fw-bold text-success mb-0 mt-2">
+        <div className="col-md-4 col-lg">
+          <div className="card border-0 shadow-sm rounded-4 p-4 h-100 bg-white">
+            <div className="d-flex justify-content-between align-items-center mb-2">
+              <span className="text-muted small fw-semibold">LAY HAND PRAYERS</span>
+              <i className="fas fa-hand-holding-heart text-danger"></i>
+            </div>
+            <h3 className="fw-bold text-danger mb-1">
+              {pendingLayHandCount} Pending
+            </h3>
+            <small className="text-muted">{s.total_lay_hand || 0} Total Submissions</small>
+          </div>
+        </div>
+
+        <div className="col-md-4 col-lg">
+          <div className="card border-0 shadow-sm rounded-4 p-4 h-100 bg-white">
+            <div className="d-flex justify-content-between align-items-center mb-2">
+              <span className="text-muted small fw-semibold">PUBLISHED BLOGS</span>
+              <i className="fas fa-blog text-success"></i>
+            </div>
+            <h3 className="fw-bold text-success mb-1">
               {publishedBlogsCount}
             </h3>
+            <small className="text-muted">Articles active</small>
           </div>
         </div>
 
-        <div className="col-md-3">
-          <div className="card border-0 shadow-sm rounded-4 p-4 h-100">
-            <span className="text-muted small fw-semibold">CONTACT INQUIRIES</span>
-            <h3 className="fw-bold text-info mb-0 mt-2">
+        <div className="col-md-6 col-lg">
+          <div className="card border-0 shadow-sm rounded-4 p-4 h-100 bg-white">
+            <div className="d-flex justify-content-between align-items-center mb-2">
+              <span className="text-muted small fw-semibold">CONTACT INQUIRIES</span>
+              <i className="fas fa-envelope text-info"></i>
+            </div>
+            <h3 className="fw-bold text-info mb-1">
               {unreadMessagesCount} Unread
             </h3>
+            <small className="text-muted">Visitor inquiries</small>
           </div>
         </div>
 
-        <div className="col-md-3">
-          <div className="card border-0 shadow-sm rounded-4 p-4 h-100">
-            <span className="text-muted small fw-semibold">PUBLISHED SERMONS</span>
-            <h3 className="fw-bold text-primary mb-0 mt-2">
+        <div className="col-md-6 col-lg">
+          <div className="card border-0 shadow-sm rounded-4 p-4 h-100 bg-white">
+            <div className="d-flex justify-content-between align-items-center mb-2">
+              <span className="text-muted small fw-semibold">SERMONS</span>
+              <i className="fas fa-video text-primary"></i>
+            </div>
+            <h3 className="fw-bold text-primary mb-1">
               {publishedSermonsCount}
             </h3>
+            <small className="text-muted">Videos published</small>
           </div>
         </div>
       </div>
