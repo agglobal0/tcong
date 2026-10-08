@@ -291,18 +291,18 @@ export const AdminLayHandPrayersPage = () => {
           </div>
         </div>
       ) : (
-        <div className="card border-0 shadow-sm rounded-4 overflow-hidden bg-white">
-          <div className="table-responsive">
-            <table className="table table-hover align-middle mb-0">
+        <div className="card border-0 shadow-sm rounded-4 bg-white">
+          <div className="table-responsive" style={{ overflowX: 'auto', width: '100%' }}>
+            <table className="table table-hover align-middle mb-0 w-100">
               <thead className="bg-light">
                 <tr>
-                  <th className="ps-4" style={{ minWidth: '180px' }}>Submitted By</th>
-                  <th style={{ minWidth: '150px' }}>Attendance</th>
-                  <th style={{ minWidth: '130px' }}>Healing Focus</th>
-                  <th style={{ minWidth: '220px' }}>Prayer Need</th>
-                  <th style={{ minWidth: '110px' }}>Date</th>
-                  <th style={{ minWidth: '130px' }}>Status</th>
-                  <th className="text-end pe-4" style={{ minWidth: '140px' }}>Actions</th>
+                  <th className="ps-3 ps-md-4" style={{ minWidth: '160px' }}>Submitted By</th>
+                  <th style={{ minWidth: '130px' }}>Attendance</th>
+                  <th style={{ minWidth: '105px' }}>Healing Focus</th>
+                  <th style={{ minWidth: '150px' }}>Prayer Need</th>
+                  <th style={{ minWidth: '95px' }}>Date</th>
+                  <th style={{ minWidth: '120px' }}>Status</th>
+                  <th className="text-end pe-3 pe-md-4" style={{ minWidth: '110px' }}>Actions</th>
                 </tr>
               </thead>
               <tbody>
@@ -314,7 +314,7 @@ export const AdminLayHandPrayersPage = () => {
                     return (
                       <tr key={p.id}>
                         {/* Submitted By */}
-                        <td className="ps-4">
+                        <td className="ps-3 ps-md-4">
                           <div className="fw-semibold text-dark">{p.name || 'Visitor'}</div>
                           {p.phone && (
                             <div className="small text-muted d-flex align-items-center gap-1 mt-1">
@@ -336,7 +336,7 @@ export const AdminLayHandPrayersPage = () => {
                             </div>
                           )}
                           {p.email && (
-                            <div className="small text-muted d-block text-truncate" style={{ maxWidth: '170px' }}>
+                            <div className="small text-muted d-block text-truncate" style={{ maxWidth: '160px' }}>
                               <a href={`mailto:${p.email}`} className="text-decoration-none text-muted">
                                 <i className="fas fa-envelope me-1" style={{ fontSize: '0.75rem' }}></i>
                                 {p.email}
@@ -348,11 +348,11 @@ export const AdminLayHandPrayersPage = () => {
                         {/* Attendance */}
                         <td>
                           {info.isInPerson ? (
-                            <span className="badge bg-success-subtle text-success border border-success-subtle py-1 px-2 rounded-pill">
+                            <span className="badge bg-success-subtle text-success border border-success-subtle py-1 px-2 rounded-pill text-nowrap">
                               <i className="fas fa-church me-1"></i> In-Person (Coolaroo)
                             </span>
                           ) : (
-                            <span className="badge bg-info-subtle text-info border border-info-subtle py-1 px-2 rounded-pill">
+                            <span className="badge bg-info-subtle text-info border border-info-subtle py-1 px-2 rounded-pill text-nowrap">
                               <i className="fas fa-phone me-1"></i> Phone / Distance
                             </span>
                           )}
@@ -369,7 +369,7 @@ export const AdminLayHandPrayersPage = () => {
                         <td>
                           <div
                             className="small text-dark text-truncate"
-                            style={{ maxWidth: '280px', cursor: 'pointer' }}
+                            style={{ maxWidth: '220px', cursor: 'pointer' }}
                             onClick={() => openDetailsModal(p)}
                             title={info.details}
                           >
@@ -378,7 +378,7 @@ export const AdminLayHandPrayersPage = () => {
                         </td>
 
                         {/* Date */}
-                        <td className="small text-muted">
+                        <td className="small text-muted text-nowrap">
                           {p.created_at ? new Date(p.created_at).toLocaleDateString() : 'Recent'}
                         </td>
 
@@ -394,6 +394,7 @@ export const AdminLayHandPrayersPage = () => {
                                 ? 'text-info border-info-subtle bg-info-subtle'
                                 : 'text-warning border-warning-subtle bg-warning-subtle'
                             }`}
+                            style={{ minWidth: '105px' }}
                             value={(p.status || 'new').toLowerCase()}
                             onChange={(e) => handleStatusChange(p.id, e.target.value)}
                           >
@@ -406,23 +407,21 @@ export const AdminLayHandPrayersPage = () => {
                         </td>
 
                         {/* Actions */}
-                        <td className="text-end pe-4">
-                          <div className="btn-group btn-group-sm">
-                            <button
-                              className="btn btn-outline-primary"
-                              onClick={() => openDetailsModal(p)}
-                              title="View full details & care notes"
-                            >
-                              <i className="fas fa-eye me-1"></i> View
-                            </button>
-                            <button
-                              className="btn btn-outline-danger"
-                              onClick={() => handleDelete(p.id)}
-                              title="Delete submission"
-                            >
-                              <i className="fas fa-trash-alt"></i>
-                            </button>
-                          </div>
+                        <td className="text-end pe-3 pe-md-4 text-nowrap">
+                          <button
+                            className="btn btn-sm btn-outline-primary rounded-pill px-2 py-1 me-1"
+                            onClick={() => openDetailsModal(p)}
+                            title="View full details & care notes"
+                          >
+                            <i className="fas fa-eye me-1"></i> View
+                          </button>
+                          <button
+                            className="btn btn-sm btn-outline-danger rounded-pill px-2 py-1"
+                            onClick={() => handleDelete(p.id)}
+                            title="Delete submission"
+                          >
+                            <i className="fas fa-trash-alt"></i>
+                          </button>
                         </td>
                       </tr>
                     );

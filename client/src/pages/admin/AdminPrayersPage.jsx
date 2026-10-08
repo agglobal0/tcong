@@ -243,24 +243,24 @@ export const AdminPrayersPage = () => {
           </div>
         </div>
       ) : (
-        <div className="card border-0 shadow-sm rounded-4 overflow-hidden bg-white">
-          <div className="table-responsive">
-            <table className="table table-hover align-middle mb-0">
+        <div className="card border-0 shadow-sm rounded-4 bg-white">
+          <div className="table-responsive" style={{ overflowX: 'auto', width: '100%' }}>
+            <table className="table table-hover align-middle mb-0 w-100">
               <thead className="bg-light">
                 <tr>
-                  <th className="ps-4" style={{ minWidth: '130px' }}>Category</th>
-                  <th style={{ minWidth: '180px' }}>Submitted By</th>
-                  <th style={{ minWidth: '240px' }}>Request Text</th>
-                  <th style={{ minWidth: '110px' }}>Date</th>
-                  <th style={{ minWidth: '130px' }}>Status</th>
-                  <th className="text-end pe-4" style={{ minWidth: '140px' }}>Actions</th>
+                  <th className="ps-3 ps-md-4" style={{ minWidth: '120px' }}>Category</th>
+                  <th style={{ minWidth: '160px' }}>Submitted By</th>
+                  <th style={{ minWidth: '200px' }}>Request Text</th>
+                  <th style={{ minWidth: '95px' }}>Date</th>
+                  <th style={{ minWidth: '120px' }}>Status</th>
+                  <th className="text-end pe-3 pe-md-4" style={{ minWidth: '110px' }}>Actions</th>
                 </tr>
               </thead>
               <tbody>
                 {filteredPrayers.length > 0 ? (
                   filteredPrayers.map((p) => (
                     <tr key={p.id}>
-                      <td className="ps-4">
+                      <td className="ps-3 ps-md-4">
                         <span className="badge bg-primary-subtle text-primary text-uppercase px-2 py-1 rounded-pill">
                           {p.category || 'General'}
                         </span>
@@ -274,7 +274,7 @@ export const AdminPrayersPage = () => {
                           <div>
                             <div className="fw-semibold text-dark">{p.name || 'Visitor'}</div>
                             {p.email && (
-                              <small className="text-muted d-block text-truncate" style={{ maxWidth: '170px' }}>
+                              <small className="text-muted d-block text-truncate" style={{ maxWidth: '160px' }}>
                                 <a href={`mailto:${p.email}`} className="text-decoration-none text-muted">
                                   {p.email}
                                 </a>
@@ -293,14 +293,14 @@ export const AdminPrayersPage = () => {
                       <td>
                         <div
                           className="small text-dark text-truncate"
-                          style={{ maxWidth: '300px', cursor: 'pointer' }}
+                          style={{ maxWidth: '260px', cursor: 'pointer' }}
                           onClick={() => openDetailsModal(p)}
                           title={p.request_text}
                         >
                           {p.request_text}
                         </div>
                       </td>
-                      <td className="small text-muted">
+                      <td className="small text-muted text-nowrap">
                         {p.created_at ? new Date(p.created_at).toLocaleDateString() : 'Recent'}
                       </td>
                       <td>
@@ -314,6 +314,7 @@ export const AdminPrayersPage = () => {
                               ? 'text-info border-info-subtle bg-info-subtle'
                               : 'text-warning border-warning-subtle bg-warning-subtle'
                           }`}
+                          style={{ minWidth: '105px' }}
                           value={(p.status || 'new').toLowerCase()}
                           onChange={(e) => handleStatusChange(p.id, e.target.value)}
                         >
@@ -324,23 +325,21 @@ export const AdminPrayersPage = () => {
                           <option value="closed">CLOSED</option>
                         </select>
                       </td>
-                      <td className="text-end pe-4">
-                        <div className="btn-group btn-group-sm">
-                          <button
-                            className="btn btn-outline-primary"
-                            onClick={() => openDetailsModal(p)}
-                            title="View full request & care notes"
-                          >
-                            <i className="fas fa-eye me-1"></i> View
-                          </button>
-                          <button
-                            className="btn btn-outline-danger"
-                            onClick={() => handleDelete(p.id)}
-                            title="Delete prayer request"
-                          >
-                            <i className="fas fa-trash-alt"></i>
-                          </button>
-                        </div>
+                      <td className="text-end pe-3 pe-md-4 text-nowrap">
+                        <button
+                          className="btn btn-sm btn-outline-primary rounded-pill px-2 py-1 me-1"
+                          onClick={() => openDetailsModal(p)}
+                          title="View full request & care notes"
+                        >
+                          <i className="fas fa-eye me-1"></i> View
+                        </button>
+                        <button
+                          className="btn btn-sm btn-outline-danger rounded-pill px-2 py-1"
+                          onClick={() => handleDelete(p.id)}
+                          title="Delete prayer request"
+                        >
+                          <i className="fas fa-trash-alt"></i>
+                        </button>
                       </td>
                     </tr>
                   ))
