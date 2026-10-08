@@ -36,9 +36,10 @@ export const ContactPage = () => {
       <Helmet>
         <title>Contact TCONG Melbourne | Visit The Church of New Generation | Coolaroo VIC 3048</title>
         <meta name="description" content="Contact The Church of New Generation Melbourne. Visit us at Coolaroo VIC 3048 for Sunday services. Reach Pastor Jaskaran Heer's team for pastoral care & inquiries." />
-        <link rel="canonical" href="https://tcong-murex.vercel.app/contact" />
+        <link rel="canonical" href="https://www.churchofnewgeneration.com/contact" />
         <meta property="og:title" content="Contact TCONG Melbourne | The Church of New Generation" />
-        <meta property="og:url" content="https://tcong-murex.vercel.app/contact" />
+        <meta property="og:url" content="https://www.churchofnewgeneration.com/contact" />
+        <meta property="og:image" content="https://www.churchofnewgeneration.com/assets/contact-hall.jpg" />
       </Helmet>
       {/* ═══════ HERO BANNER ═══════ */}
       <section

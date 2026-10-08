@@ -48,9 +48,10 @@ export const PrayerRequestPage = () => {
       <Helmet>
         <title>Submit a Prayer Request 24/7 | Online Prayer Tower | TCONG Melbourne</title>
         <meta name="description" content="Submit your confidential prayer request online 24/7. TCONG Melbourne's intercessory prayer team, led by Pastor Jaskaran Heer, stands in faith for your healing & breakthrough." />
-        <link rel="canonical" href="https://tcong-murex.vercel.app/prayer-request" />
+        <link rel="canonical" href="https://www.churchofnewgeneration.com/prayer-request" />
         <meta property="og:title" content="24/7 Prayer Request | The Church of New Generation Melbourne" />
-        <meta property="og:url" content="https://tcong-murex.vercel.app/prayer-request" />
+        <meta property="og:url" content="https://www.churchofnewgeneration.com/prayer-request" />
+        <meta property="og:image" content="https://www.churchofnewgeneration.com/assets/pastor-prayer.jpg" />
       </Helmet>
       {/* ═══════ HERO BANNER ═══════ */}
       <section

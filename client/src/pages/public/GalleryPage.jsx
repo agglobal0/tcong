@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import { Helmet } from 'react-helmet-async';
 import { api } from '../../services/api';
 import { TextSequence } from '../../components/common/TextSequence';
 import { StaggerSequence } from '../../components/common/StaggerSequence';
@@ -33,6 +34,14 @@ export const GalleryPage = () => {
 
   return (
     <div className="gallery-page">
+      <Helmet>
+        <title>Photo Gallery & Church Moments | The Church of New Generation Melbourne</title>
+        <meta name="description" content="View photos of worship, Sunday service, prayer ministry, and community fellowship at The Church of New Generation Melbourne with Pastor Jaskaran Heer." />
+        <link rel="canonical" href="https://www.churchofnewgeneration.com/gallery" />
+        <meta property="og:title" content="Photo Gallery & Church Moments | TCONG Melbourne" />
+        <meta property="og:url" content="https://www.churchofnewgeneration.com/gallery" />
+        <meta property="og:image" content="https://www.churchofnewgeneration.com/assets/worship-ministry.jpg" />
+      </Helmet>
       {/* ═══════ HERO BANNER ═══════ */}
       <section
         className="bg-primary text-white py-5 text-center"

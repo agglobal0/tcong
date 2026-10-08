@@ -39,9 +39,10 @@ export const EventsPage = () => {
       <Helmet>
         <title>Church Events Melbourne 2025 | TCONG Upcoming Gatherings & Conferences</title>
         <meta name="description" content="Stay connected with The Church of New Generation Melbourne's upcoming events, special services, prayer conferences, and community gatherings. Join Pastor Jaskaran Heer's ministry." />
-        <link rel="canonical" href="https://tcong-murex.vercel.app/events" />
+        <link rel="canonical" href="https://www.churchofnewgeneration.com/events" />
         <meta property="og:title" content="Upcoming Church Events Melbourne | TCONG" />
-        <meta property="og:url" content="https://tcong-murex.vercel.app/events" />
+        <meta property="og:url" content="https://www.churchofnewgeneration.com/events" />
+        <meta property="og:image" content="https://www.churchofnewgeneration.com/assets/slide-hall.jpg" />
       </Helmet>
       {/* ═══════ HERO BANNER ═══════ */}
       <section

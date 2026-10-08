@@ -71,10 +71,11 @@ export const BlogDetailPage = () => {
           name="description"
           content={blog.meta_description || blog.excerpt || blog.title}
         />
-        <link rel="canonical" href={`https://tcong-murex.vercel.app/blog/${blog.slug || blog.id}`} />
+        <link rel="canonical" href={`https://www.churchofnewgeneration.com/blog/${blog.slug || blog.id}`} />
         <meta property="og:title" content={blog.title} />
         <meta property="og:description" content={blog.excerpt || blog.title} />
-        {blog.featured_image && <meta property="og:image" content={blog.featured_image} />}
+        <meta property="og:url" content={`https://www.churchofnewgeneration.com/blog/${blog.slug || blog.id}`} />
+        <meta property="og:image" content={getBlogImage(blog, 0)} />
       </Helmet>
 
       {/* ═══════ ARTICLE HEADER BANNER ═══════ */}

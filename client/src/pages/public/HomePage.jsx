@@ -219,10 +219,11 @@ export const HomePage = () => {
       <Helmet>
         <title>The Church of New Generation Melbourne | Pastor Jaskaran Heer | Hindi Christian Church</title>
         <meta name="description" content="Welcome to The Church of New Generation Melbourne led by Pastor Jaskaran Heer. Watch latest video sermons, request 24/7 prayer, and join our Sunday worship services in Coolaroo VIC." />
-        <link rel="canonical" href="https://tcong-murex.vercel.app/" />
+        <link rel="canonical" href="https://www.churchofnewgeneration.com/" />
         <meta property="og:title" content="The Church of New Generation Melbourne | Pastor Jaskaran Heer" />
         <meta property="og:description" content="Praying for the world. Sunday services, 24/7 Telephone Prayer Tower, live video sermons & miracle testimonies. Coolaroo VIC." />
-        <meta property="og:image" content="https://tcong-murex.vercel.app/assets/slide-pastor.jpg" />
+        <meta property="og:url" content="https://www.churchofnewgeneration.com/" />
+        <meta property="og:image" content="https://www.churchofnewgeneration.com/assets/slide-pastor.jpg" />
       </Helmet>
 
       {/* ═════════════════════════════════════════════════════════════════════════════

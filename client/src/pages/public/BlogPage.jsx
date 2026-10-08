@@ -42,9 +42,10 @@ export const BlogPage = () => {
           name="description"
           content="Read inspiring Christian devotionals, faith reflections, and biblical teaching articles from The Church of New Generation Melbourne and Pastor Jaskaran Heer's ministry."
         />
-        <link rel="canonical" href="https://tcong-murex.vercel.app/blog" />
+        <link rel="canonical" href="https://www.churchofnewgeneration.com/blog" />
         <meta property="og:title" content="TCONG Melbourne Blog | Faith Devotionals & Biblical Articles" />
-        <meta property="og:url" content="https://tcong-murex.vercel.app/blog" />
+        <meta property="og:url" content="https://www.churchofnewgeneration.com/blog" />
+        <meta property="og:image" content="https://www.churchofnewgeneration.com/assets/about-us.jpg" />
       </Helmet>
 
       {/* ═══════ HERO BANNER ═══════ */}

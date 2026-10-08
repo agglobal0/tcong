@@ -138,9 +138,10 @@ export const SermonsPage = () => {
           name="description"
           content="Watch Pastor Jaskaran Heer's anointed Hindi & English sermons online. Healing, faith, prayer & deliverance messages from TCONG Melbourne."
         />
-        <link rel="canonical" href="https://tcong-murex.vercel.app/sermons" />
+        <link rel="canonical" href="https://www.churchofnewgeneration.com/sermons" />
         <meta property="og:title" content="Pastor Jaskaran Heer Sermons | TCONG Melbourne" />
-        <meta property="og:url" content="https://tcong-murex.vercel.app/sermons" />
+        <meta property="og:url" content="https://www.churchofnewgeneration.com/sermons" />
+        <meta property="og:image" content="https://www.churchofnewgeneration.com/assets/services.jpg" />
       </Helmet>
 
       {/* ═══════ HERO BANNER ═══════ */}
