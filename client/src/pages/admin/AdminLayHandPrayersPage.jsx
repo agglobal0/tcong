@@ -36,7 +36,8 @@ export const AdminLayHandPrayersPage = () => {
   const handleStatusChange = async (id, status) => {
     try {
       await api.admin.updatePrayer(id, { status });
-      addToast(`Status updated to ${status.toUpperCase()}`, 'success');
+      const label = status === 'done' ? 'Done' : 'Not Done';
+      addToast(`Status updated to ${label}`, 'success');
       setPrayers((prev) =>
         prev.map((p) => (p.id === id ? { ...p, status } : p))
       );
@@ -97,6 +98,13 @@ export const AdminLayHandPrayersPage = () => {
     }
   };
 
+  // Helper to check if status is "Done"
+  const isDone = (status) => {
+    if (!status) return false;
+    const s = String(status).toLowerCase();
+    return s === 'done' || s === 'prayed' || s === 'closed';
+  };
+
   // Helper to parse Attendance from request_text if present
   const parsePrayerInfo = (text) => {
     if (!text) return { attendance: 'Unknown', details: '' };
@@ -141,9 +149,13 @@ export const AdminLayHandPrayersPage = () => {
       (p.category && p.category.toLowerCase().includes(q)) ||
       (p.request_text && p.request_text.toLowerCase().includes(q));
 
-    // Status filter
-    const matchesStatus =
-      statusFilter === 'all' || (p.status || 'new').toLowerCase() === statusFilter.toLowerCase();
+    // Status filter: only "done" vs "not_done"
+    let matchesStatus = true;
+    if (statusFilter === 'done') {
+      matchesStatus = isDone(p.status);
+    } else if (statusFilter === 'not_done') {
+      matchesStatus = !isDone(p.status);
+    }
 
     // Attendance filter
     let matchesAttendance = true;
@@ -163,8 +175,8 @@ export const AdminLayHandPrayersPage = () => {
   // KPI calculations
   const totalCount = layHandPrayers.length;
   const inPersonCount = layHandPrayers.filter((p) => parsePrayerInfo(p.request_text).isInPerson).length;
-  const phoneCount = layHandPrayers.filter((p) => !parsePrayerInfo(p.request_text).isInPerson).length;
-  const pendingCount = layHandPrayers.filter((p) => (p.status || 'new').toLowerCase() === 'new' || (p.status || '').toLowerCase() === 'assigned').length;
+  const notDoneCount = layHandPrayers.filter((p) => !isDone(p.status)).length;
+  const doneCount = layHandPrayers.filter((p) => isDone(p.status)).length;
 
   return (
     <div className="admin-lay-hand-prayers">
@@ -204,16 +216,18 @@ export const AdminLayHandPrayersPage = () => {
         </div>
         <div className="col-6 col-md-3">
           <div className="card border-0 shadow-sm rounded-4 p-3 bg-white h-100">
-            <span className="text-muted small fw-semibold text-uppercase">Phone / Intercession</span>
-            <h3 className="fw-bold text-info mb-0 mt-2">
-              <i className="fas fa-phone-alt me-1 fs-5"></i> {phoneCount}
+            <span className="text-muted small fw-semibold text-uppercase">Not Done (Pending)</span>
+            <h3 className="fw-bold text-danger mb-0 mt-2">
+              <i className="fas fa-clock me-1 fs-5"></i> {notDoneCount}
             </h3>
           </div>
         </div>
         <div className="col-6 col-md-3">
           <div className="card border-0 shadow-sm rounded-4 p-3 bg-white h-100">
-            <span className="text-muted small fw-semibold text-uppercase">Pending Action</span>
-            <h3 className="fw-bold text-warning mb-0 mt-2">{pendingCount}</h3>
+            <span className="text-muted small fw-semibold text-uppercase">Done (Completed)</span>
+            <h3 className="fw-bold text-success mb-0 mt-2">
+              <i className="fas fa-check-circle me-1 fs-5"></i> {doneCount}
+            </h3>
           </div>
         </div>
       </div>
@@ -247,11 +261,8 @@ export const AdminLayHandPrayersPage = () => {
               onChange={(e) => setStatusFilter(e.target.value)}
             >
               <option value="all">All Statuses</option>
-              <option value="new">NEW</option>
-              <option value="assigned">ASSIGNED</option>
-              <option value="in_prayer">IN_PRAYER</option>
-              <option value="prayed">PRAYED</option>
-              <option value="closed">CLOSED</option>
+              <option value="not_done">Not Done</option>
+              <option value="done">Done</option>
             </select>
           </div>
           <div className="col-6 col-md-3">
@@ -301,7 +312,7 @@ export const AdminLayHandPrayersPage = () => {
                   <th style={{ minWidth: '105px' }}>Healing Focus</th>
                   <th style={{ minWidth: '150px' }}>Prayer Need</th>
                   <th style={{ minWidth: '95px' }}>Date</th>
-                  <th style={{ minWidth: '120px' }}>Status</th>
+                  <th style={{ minWidth: '115px' }}>Status</th>
                   <th className="text-end pe-3 pe-md-4" style={{ minWidth: '110px' }}>Actions</th>
                 </tr>
               </thead>
@@ -382,27 +393,20 @@ export const AdminLayHandPrayersPage = () => {
                           {p.created_at ? new Date(p.created_at).toLocaleDateString() : 'Recent'}
                         </td>
 
-                        {/* Status dropdown */}
+                        {/* Status dropdown: ONLY Done or Not Done */}
                         <td>
                           <select
-                            className={`form-select form-select-sm fw-semibold ${
-                              (p.status || '').toUpperCase() === 'CLOSED'
-                                ? 'text-secondary border-secondary-subtle'
-                                : (p.status || '').toUpperCase() === 'PRAYED'
+                            className={`form-select form-select-sm fw-bold ${
+                              isDone(p.status)
                                 ? 'text-success border-success-subtle bg-success-subtle'
-                                : (p.status || '').toUpperCase() === 'IN_PRAYER'
-                                ? 'text-info border-info-subtle bg-info-subtle'
-                                : 'text-warning border-warning-subtle bg-warning-subtle'
+                                : 'text-danger border-danger-subtle bg-danger-subtle'
                             }`}
-                            style={{ minWidth: '105px' }}
-                            value={(p.status || 'new').toLowerCase()}
+                            style={{ minWidth: '110px' }}
+                            value={isDone(p.status) ? 'done' : 'not_done'}
                             onChange={(e) => handleStatusChange(p.id, e.target.value)}
                           >
-                            <option value="new">NEW</option>
-                            <option value="assigned">ASSIGNED</option>
-                            <option value="in_prayer">IN PRAYER</option>
-                            <option value="prayed">PRAYED</option>
-                            <option value="closed">CLOSED</option>
+                            <option value="not_done">Not Done</option>
+                            <option value="done">Done</option>
                           </select>
                         </td>
 
@@ -566,19 +570,20 @@ export const AdminLayHandPrayersPage = () => {
                   </div>
                 </div>
 
-                {/* Status Quick Changer */}
+                {/* Status Quick Changer: ONLY Done or Not Done */}
                 <div className="d-flex align-items-center gap-3 p-3 bg-light rounded-3 mb-4">
-                  <span className="fw-bold text-dark small">Current Workflow Status:</span>
+                  <span className="fw-bold text-dark small">Workflow Status:</span>
                   <select
-                    className="form-select form-select-sm w-auto"
-                    value={(selectedPrayer.status || 'new').toLowerCase()}
+                    className={`form-select form-select-sm w-auto fw-bold ${
+                      isDone(selectedPrayer.status)
+                        ? 'text-success border-success-subtle bg-success-subtle'
+                        : 'text-danger border-danger-subtle bg-danger-subtle'
+                    }`}
+                    value={isDone(selectedPrayer.status) ? 'done' : 'not_done'}
                     onChange={(e) => handleStatusChange(selectedPrayer.id, e.target.value)}
                   >
-                    <option value="new">NEW</option>
-                    <option value="assigned">ASSIGNED</option>
-                    <option value="in_prayer">IN PRAYER</option>
-                    <option value="prayed">PRAYED</option>
-                    <option value="closed">CLOSED</option>
+                    <option value="not_done">Not Done</option>
+                    <option value="done">Done</option>
                   </select>
                 </div>
 

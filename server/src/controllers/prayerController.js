@@ -6,12 +6,17 @@ const { query } = require('../config/database');
 const { success, created, paginated, notFound } = require('../utils/responseHandler');
 const { parsePagination, buildPaginationMeta } = require('../utils/pagination');
 
-// Ensure 'type' column exists in prayer_requests table
+// Ensure 'type' and 'status' columns support varchar values
 (async () => {
   try {
     await query(`ALTER TABLE prayer_requests ADD COLUMN type VARCHAR(50) DEFAULT 'prayer_request' AFTER category`);
   } catch (e) {
     // Column already exists or table not yet created
+  }
+  try {
+    await query(`ALTER TABLE prayer_requests MODIFY COLUMN status VARCHAR(50) DEFAULT 'new'`);
+  } catch (e) {
+    // Column already altered
   }
 })();
 
@@ -238,7 +243,17 @@ async function updateAdminPrayerRequest(req, res, next) {
 
     if (updates.length > 0) {
       params.push(id);
-      await query(`UPDATE prayer_requests SET ${updates.join(', ')} WHERE id = ?`, params);
+      try {
+        await query(`UPDATE prayer_requests SET ${updates.join(', ')} WHERE id = ?`, params);
+      } catch (err) {
+        if (status === 'done' || status === 'not_done') {
+          const fallbackStatus = status === 'done' ? 'prayed' : 'new';
+          const fallbackParams = params.map(p => (p === 'done' || p === 'not_done') ? fallbackStatus : p);
+          await query(`UPDATE prayer_requests SET ${updates.join(', ')} WHERE id = ?`, fallbackParams);
+        } else {
+          throw err;
+        }
+      }
     }
 
     return success(res, { id }, 'Prayer request updated successfully');
