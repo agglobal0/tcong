@@ -473,30 +473,32 @@ export const AdminLayHandPrayersPage = () => {
                 {/* Person Information */}
                 <div className="card bg-light border-0 rounded-3 p-3 mb-3">
                   <div className="row g-3">
-                    <div className="col-md-6">
-                      <div className="small text-muted">Full Name</div>
-                      <div className="fw-bold fs-6">{selectedPrayer.name || 'Anonymous / Visitor'}</div>
+                    <div className="col-sm-6">
+                      <div className="small text-muted mb-1">Full Name</div>
+                      <div className="fw-bold fs-6 text-dark">{selectedPrayer.name || 'Anonymous / Visitor'}</div>
                     </div>
-                    <div className="col-md-6">
-                      <div className="small text-muted">Healing Category</div>
-                      <span className="badge bg-primary-subtle text-primary text-uppercase px-2 py-1 mt-1">
+                    <div className="col-sm-6">
+                      <div className="small text-muted mb-1">Healing Category</div>
+                      <span className="badge bg-primary-subtle text-primary text-uppercase px-2 py-1">
                         {selectedPrayer.category || 'Health'}
                       </span>
                     </div>
-                    <div className="col-md-6">
-                      <div className="small text-muted">Phone / WhatsApp</div>
+
+                    <div className="col-sm-6">
+                      <div className="small text-muted mb-1">Phone / WhatsApp</div>
                       <div className="fw-semibold">
                         {selectedPrayer.phone ? (
-                          <div className="d-flex align-items-center gap-2 mt-1">
-                            <a href={`tel:${selectedPrayer.phone}`} className="text-decoration-none">
-                              <i className="fas fa-phone-alt text-primary me-1"></i> {selectedPrayer.phone}
+                          <div className="d-flex flex-wrap align-items-center gap-2">
+                            <a href={`tel:${selectedPrayer.phone}`} className="text-decoration-none text-primary">
+                              <i className="fas fa-phone-alt me-1"></i> {selectedPrayer.phone}
                             </a>
                             {getWhatsAppLink(selectedPrayer.phone) && (
                               <a
                                 href={getWhatsAppLink(selectedPrayer.phone)}
                                 target="_blank"
                                 rel="noopener noreferrer"
-                                className="btn btn-xs btn-success py-0 px-2 rounded-pill small"
+                                className="btn btn-xs btn-success py-1 px-2 rounded-pill small"
+                                style={{ fontSize: '0.75rem' }}
                               >
                                 <i className="fab fa-whatsapp me-1"></i> WhatsApp
                               </a>
@@ -507,35 +509,45 @@ export const AdminLayHandPrayersPage = () => {
                         )}
                       </div>
                     </div>
-                    <div className="col-md-6">
-                      <div className="small text-muted">Email</div>
-                      <div className="fw-semibold">
+
+                    <div className="col-sm-6">
+                      <div className="small text-muted mb-1">Email</div>
+                      <div className="fw-semibold text-break">
                         {selectedPrayer.email ? (
-                          <a href={`mailto:${selectedPrayer.email}`} className="text-decoration-none">
-                            <i className="fas fa-envelope text-primary me-1"></i> {selectedPrayer.email}
+                          <a href={`mailto:${selectedPrayer.email}`} className="text-decoration-none text-primary">
+                            <i className="fas fa-envelope me-1"></i> {selectedPrayer.email}
                           </a>
                         ) : (
                           <span className="text-muted">Not provided</span>
                         )}
                       </div>
                     </div>
-                    <div className="col-md-6">
-                      <div className="small text-muted">Attendance Mode</div>
-                      <div className="fw-semibold mt-1">
+
+                    <div className="col-12">
+                      <div className="small text-muted mb-1">Attendance Mode</div>
+                      <div>
                         {parsePrayerInfo(selectedPrayer.request_text).isInPerson ? (
-                          <span className="badge bg-success-subtle text-success border border-success-subtle px-2 py-1 rounded-pill">
+                          <span
+                            className="badge bg-success-subtle text-success border border-success-subtle px-3 py-2 rounded-pill text-wrap text-start"
+                            style={{ whiteSpace: 'normal', lineHeight: '1.4' }}
+                          >
                             <i className="fas fa-church me-1"></i> Attending Sunday Service In-Person (Coolaroo VIC)
                           </span>
                         ) : (
-                          <span className="badge bg-info-subtle text-info border border-info-subtle px-2 py-1 rounded-pill">
+                          <span
+                            className="badge bg-info-subtle text-info border border-info-subtle px-3 py-2 rounded-pill text-wrap text-start"
+                            style={{ whiteSpace: 'normal', lineHeight: '1.4' }}
+                          >
                             <i className="fas fa-phone me-1"></i> Requesting Phone / Intercessory Prayer
                           </span>
                         )}
                       </div>
                     </div>
-                    <div className="col-md-6">
-                      <div className="small text-muted">Submitted Date</div>
-                      <div className="fw-semibold mt-1">
+
+                    <div className="col-12">
+                      <div className="small text-muted mb-1">Submitted Date & Time</div>
+                      <div className="fw-semibold text-dark">
+                        <i className="fas fa-calendar-alt text-muted me-1"></i>
                         {selectedPrayer.created_at
                           ? new Date(selectedPrayer.created_at).toLocaleString()
                           : 'Recent'}
@@ -546,12 +558,12 @@ export const AdminLayHandPrayersPage = () => {
 
                 {/* Full Prayer Request Body */}
                 <div className="mb-4">
-                  <label className="form-label fw-bold text-dark">Prayer & Healing Details</label>
+                  <label className="form-label fw-bold text-dark mb-1">Prayer & Healing Need Details</label>
                   <div
                     className="p-3 bg-white border rounded-3 text-secondary"
                     style={{ whiteSpace: 'pre-line', fontSize: '0.95rem', lineHeight: '1.6' }}
                   >
-                    {selectedPrayer.request_text}
+                    {parsePrayerInfo(selectedPrayer.request_text).details || selectedPrayer.request_text}
                   </div>
                 </div>
 
