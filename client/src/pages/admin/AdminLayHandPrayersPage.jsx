@@ -117,8 +117,18 @@ export const AdminLayHandPrayersPage = () => {
     return `https://wa.me/${cleanPhone}`;
   };
 
+  // Strict check if item is a Lay Hand prayer request
+  const isLayHandRequest = (p) => {
+    if (p.type === 'lay_hand') return true;
+    const text = (p.request_text || '').toUpperCase();
+    return text.includes('LAYING ON OF HANDS') || text.includes('ATTENDANCE:');
+  };
+
+  // Only consider lay hand prayers for this page
+  const layHandPrayers = prayers.filter(isLayHandRequest);
+
   // Filtered prayers
-  const filteredPrayers = prayers.filter((p) => {
+  const filteredPrayers = layHandPrayers.filter((p) => {
     const info = parsePrayerInfo(p.request_text);
     
     // Search match
@@ -151,10 +161,10 @@ export const AdminLayHandPrayersPage = () => {
   });
 
   // KPI calculations
-  const totalCount = prayers.length;
-  const inPersonCount = prayers.filter((p) => parsePrayerInfo(p.request_text).isInPerson).length;
-  const phoneCount = prayers.filter((p) => !parsePrayerInfo(p.request_text).isInPerson).length;
-  const pendingCount = prayers.filter((p) => (p.status || 'new').toLowerCase() === 'new' || (p.status || '').toLowerCase() === 'assigned').length;
+  const totalCount = layHandPrayers.length;
+  const inPersonCount = layHandPrayers.filter((p) => parsePrayerInfo(p.request_text).isInPerson).length;
+  const phoneCount = layHandPrayers.filter((p) => !parsePrayerInfo(p.request_text).isInPerson).length;
+  const pendingCount = layHandPrayers.filter((p) => (p.status || 'new').toLowerCase() === 'new' || (p.status || '').toLowerCase() === 'assigned').length;
 
   return (
     <div className="admin-lay-hand-prayers">

@@ -103,11 +103,30 @@ async function getAdminPrayerRequests(req, res, next) {
     let whereClause = "WHERE 1=1";
     const params = [];
 
+    // Check if 'type' column exists in prayer_requests table
+    let hasTypeCol = false;
+    try {
+      const colCheck = await query(
+        "SELECT COUNT(*) as cnt FROM information_schema.columns WHERE table_schema = DATABASE() AND table_name = 'prayer_requests' AND column_name = 'type'"
+      );
+      hasTypeCol = colCheck[0]?.cnt > 0;
+    } catch (e) {
+      hasTypeCol = false;
+    }
+
     // Filter by type: lay_hand vs prayer_request
     if (type === 'lay_hand') {
-      whereClause += " AND (pr.type = 'lay_hand' OR pr.request_text LIKE '%[LAYING ON OF HANDS REQUEST]%')";
+      if (hasTypeCol) {
+        whereClause += " AND (pr.type = 'lay_hand' OR pr.request_text LIKE '%LAYING ON OF HANDS%' OR pr.request_text LIKE '%Attendance:%')";
+      } else {
+        whereClause += " AND (pr.request_text LIKE '%LAYING ON OF HANDS%' OR pr.request_text LIKE '%Attendance:%')";
+      }
     } else if (type === 'prayer_request' || type === 'general') {
-      whereClause += " AND (pr.type IS NULL OR pr.type != 'lay_hand') AND (pr.request_text NOT LIKE '%[LAYING ON OF HANDS REQUEST]%')";
+      if (hasTypeCol) {
+        whereClause += " AND (pr.type IS NULL OR pr.type != 'lay_hand') AND (pr.request_text NOT LIKE '%LAYING ON OF HANDS%' AND pr.request_text NOT LIKE '%Attendance:%')";
+      } else {
+        whereClause += " AND (pr.request_text NOT LIKE '%LAYING ON OF HANDS%' AND pr.request_text NOT LIKE '%Attendance:%')";
+      }
     }
 
     if (status) {

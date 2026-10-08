@@ -94,8 +94,19 @@ export const AdminPrayersPage = () => {
     }
   };
 
+  // Strict check to only include general prayer requests (exclude Lay Hand requests)
+  const isGeneralPrayerRequest = (p) => {
+    if (p.type === 'lay_hand') return false;
+    const text = (p.request_text || '').toUpperCase();
+    if (text.includes('LAYING ON OF HANDS') || text.includes('ATTENDANCE:')) return false;
+    return true;
+  };
+
+  // Only consider general prayer requests for this page
+  const generalPrayers = prayers.filter(isGeneralPrayerRequest);
+
   // Filtered prayers
-  const filteredPrayers = prayers.filter((p) => {
+  const filteredPrayers = generalPrayers.filter((p) => {
     const q = search.toLowerCase();
     const matchesSearch =
       !q ||
@@ -114,12 +125,12 @@ export const AdminPrayersPage = () => {
     return matchesSearch && matchesStatus && matchesCategory;
   });
 
-  const totalCount = prayers.length;
-  const pendingCount = prayers.filter(
+  const totalCount = generalPrayers.length;
+  const pendingCount = generalPrayers.filter(
     (p) => (p.status || 'new').toLowerCase() === 'new' || (p.status || '').toLowerCase() === 'assigned'
   ).length;
-  const inPrayerCount = prayers.filter((p) => (p.status || '').toLowerCase() === 'in_prayer').length;
-  const prayedCount = prayers.filter((p) => (p.status || '').toLowerCase() === 'prayed').length;
+  const inPrayerCount = generalPrayers.filter((p) => (p.status || '').toLowerCase() === 'in_prayer').length;
+  const prayedCount = generalPrayers.filter((p) => (p.status || '').toLowerCase() === 'prayed').length;
 
   return (
     <div className="admin-prayers">
