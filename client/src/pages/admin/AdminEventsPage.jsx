@@ -67,13 +67,13 @@ export const AdminEventsPage = () => {
 
   return (
     <div className="admin-events">
-      <div className="d-flex justify-content-between align-items-center mb-4">
+      <div className="d-flex flex-wrap justify-content-between align-items-center gap-3 mb-4">
         <div>
           <h3 className="fw-bold mb-1">Events Manager</h3>
           <p className="text-muted small mb-0">Organize and schedule upcoming church events</p>
         </div>
-        <button className="btn btn-primary" onClick={() => setShowModal(true)}>
-          + Add New Event
+        <button className="btn btn-primary rounded-pill px-4" onClick={() => setShowModal(true)}>
+          <i className="fas fa-plus me-1"></i> Add New Event
         </button>
       </div>
 
@@ -82,60 +82,63 @@ export const AdminEventsPage = () => {
           <div className="spinner-border text-primary"></div>
         </div>
       ) : (
-        <div className="card border-0 shadow-sm rounded-4 overflow-hidden">
-          <table className="table table-hover align-middle mb-0">
-            <thead className="bg-light">
-              <tr>
-                <th className="ps-4">Title</th>
-                <th>Date</th>
-                <th>Status</th>
-                <th>Location</th>
-                <th className="text-end pe-4">Actions</th>
-              </tr>
-            </thead>
-            <tbody>
-              {events.length > 0 ? (
-                events.map((e) => (
-                  <tr key={e.id}>
-                    <td className="ps-4 fw-semibold">{e.title}</td>
-                    <td>{e.event_date ? new Date(e.event_date).toLocaleDateString() : 'N/A'}</td>
-                    <td>
-                      <span
-                        className={`badge ${
-                          e.status === 'published'
-                            ? 'bg-success-subtle text-success'
-                            : 'bg-warning-subtle text-warning'
-                        } text-capitalize`}
-                        style={{ cursor: 'pointer' }}
-                        onClick={() => handleToggleStatus(e)}
-                        title="Click to toggle Published / Draft"
-                      >
-                        {e.status || 'published'}
-                      </span>
-                    </td>
-                    <td>{e.location || 'Sanctuary'}</td>
-                    <td className="text-end pe-4">
-                      <button
-                        className="btn btn-sm btn-outline-secondary me-2"
-                        onClick={() => handleToggleStatus(e)}
-                      >
-                        {e.status === 'published' ? 'Unpublish' : 'Publish'}
-                      </button>
-                      <button className="btn btn-sm btn-outline-danger" onClick={() => handleDelete(e.id)}>
-                        Delete
-                      </button>
+        <div className="card border-0 shadow-sm rounded-4 bg-white">
+          <div className="table-responsive" style={{ overflowX: 'auto', width: '100%' }}>
+            <table className="table table-hover align-middle mb-0 w-100">
+              <thead className="bg-light">
+                <tr>
+                  <th className="ps-3 ps-md-4" style={{ minWidth: '160px' }}>Title</th>
+                  <th style={{ minWidth: '120px' }}>Date</th>
+                  <th style={{ minWidth: '110px' }}>Status</th>
+                  <th style={{ minWidth: '130px' }}>Location</th>
+                  <th className="text-end pe-3 pe-md-4" style={{ minWidth: '160px' }}>Actions</th>
+                </tr>
+              </thead>
+              <tbody>
+                {events.length > 0 ? (
+                  events.map((e) => (
+                    <tr key={e.id}>
+                      <td className="ps-3 ps-md-4 fw-semibold text-dark">{e.title}</td>
+                      <td className="text-nowrap">{e.event_date ? new Date(e.event_date).toLocaleDateString() : 'N/A'}</td>
+                      <td>
+                        <span
+                          className={`badge ${
+                            e.status === 'published'
+                              ? 'bg-success-subtle text-success'
+                              : 'bg-warning-subtle text-warning'
+                          } text-capitalize px-3 py-1 rounded-pill text-nowrap`}
+                          style={{ cursor: 'pointer' }}
+                          onClick={() => handleToggleStatus(e)}
+                          title="Click to toggle Published / Draft"
+                        >
+                          <i className={`fas fa-circle me-1 small ${e.status === 'published' ? 'text-success' : 'text-warning'}`} style={{ fontSize: '8px' }}></i>
+                          {e.status || 'published'}
+                        </span>
+                      </td>
+                      <td className="text-muted">{e.location || 'Sanctuary'}</td>
+                      <td className="text-end pe-3 pe-md-4 text-nowrap">
+                        <button
+                          className="btn btn-sm btn-outline-secondary rounded-pill px-2 py-1 me-1"
+                          onClick={() => handleToggleStatus(e)}
+                        >
+                          {e.status === 'published' ? 'Unpublish' : 'Publish'}
+                        </button>
+                        <button className="btn btn-sm btn-outline-danger rounded-pill px-2 py-1" onClick={() => handleDelete(e.id)}>
+                          <i className="fas fa-trash-alt me-1"></i> Delete
+                        </button>
+                      </td>
+                    </tr>
+                  ))
+                ) : (
+                  <tr>
+                    <td colSpan="5" className="text-center text-muted py-4">
+                      No events scheduled.
                     </td>
                   </tr>
-                ))
-              ) : (
-                <tr>
-                  <td colSpan="5" className="text-center text-muted py-4">
-                    No events scheduled.
-                  </td>
-                </tr>
-              )}
-            </tbody>
-          </table>
+                )}
+              </tbody>
+            </table>
+          </div>
         </div>
       )}
 
