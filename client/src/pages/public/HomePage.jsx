@@ -428,10 +428,11 @@ export const HomePage = () => {
                 href="https://www.youtube.com/@Pastorjaskaranheer"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="btn btn-outline-danger px-4 py-2 rounded-pill fw-bold d-inline-flex align-items-center gap-2 shadow-sm"
+                className="btn btn-outline-danger px-3 px-sm-4 py-2 rounded-pill fw-bold d-inline-flex align-items-center justify-content-center gap-2 shadow-sm text-center"
+                style={{ maxWidth: '100%', fontSize: '0.92rem' }}
               >
-                <i className="fab fa-youtube text-danger fs-5"></i>
-                Subscribe on YouTube @Pastorjaskaranheer
+                <i className="fab fa-youtube text-danger fs-5 flex-shrink-0"></i>
+                <span className="text-truncate">Subscribe on YouTube @Pastorjaskaranheer</span>
               </a>
               <Link
                 to="/sermons"

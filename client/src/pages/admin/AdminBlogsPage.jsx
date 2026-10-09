@@ -253,29 +253,29 @@ export const AdminBlogsPage = () => {
           <p className="text-muted small mt-2">Loading articles...</p>
         </div>
       ) : (
-        <div className="card border-0 shadow-sm rounded-4 overflow-hidden">
-          <div className="table-responsive">
-            <table className="table table-hover align-middle mb-0">
+        <div className="card border-0 shadow-sm rounded-4 bg-white">
+          <div className="table-responsive" style={{ overflowX: 'auto', width: '100%' }}>
+            <table className="table table-hover align-middle mb-0 w-100">
               <thead className="bg-light">
                 <tr>
-                  <th className="ps-4" style={{ width: '80px' }}>Cover</th>
-                  <th>Title & Summary</th>
-                  <th>Featured</th>
-                  <th>Status</th>
-                  <th>Date</th>
-                  <th className="text-end pe-4">Actions</th>
+                  <th className="ps-3 ps-md-4" style={{ minWidth: '70px', width: '70px' }}>Cover</th>
+                  <th style={{ minWidth: '200px' }}>Title & Summary</th>
+                  <th style={{ minWidth: '120px' }}>Featured</th>
+                  <th style={{ minWidth: '110px' }}>Status</th>
+                  <th style={{ minWidth: '95px' }}>Date</th>
+                  <th className="text-end pe-3 pe-md-4" style={{ minWidth: '145px' }}>Actions</th>
                 </tr>
               </thead>
               <tbody>
                 {filteredBlogs.length > 0 ? (
                   filteredBlogs.map((b, index) => (
                     <tr key={b.id}>
-                      <td className="ps-4">
+                      <td className="ps-3 ps-md-4">
                         <img
                           src={getBlogImage(b, index)}
                           alt={b.title}
                           className="rounded-3 shadow-sm object-fit-cover"
-                          style={{ width: '60px', height: '45px' }}
+                          style={{ width: '55px', height: '42px' }}
                           onError={(e) => {
                             e.currentTarget.onerror = null;
                             e.currentTarget.src = FALLBACK_BLOG_IMAGES[index % FALLBACK_BLOG_IMAGES.length];
@@ -286,7 +286,7 @@ export const AdminBlogsPage = () => {
                         <div className="d-flex flex-column">
                           <span className="fw-bold text-dark">{b.title}</span>
                           {b.excerpt && (
-                            <small className="text-muted text-truncate" style={{ maxWidth: '400px' }}>
+                            <small className="text-muted text-truncate" style={{ maxWidth: '320px' }}>
                               {b.excerpt}
                             </small>
                           )}
@@ -298,7 +298,7 @@ export const AdminBlogsPage = () => {
                             Boolean(b.is_featured === 1 || b.is_featured === '1' || b.is_featured === true)
                               ? 'bg-warning text-dark'
                               : 'bg-light text-muted border'
-                          } px-3 py-1 rounded-pill small`}
+                          } px-3 py-1 rounded-pill small text-nowrap`}
                           style={{ cursor: 'pointer' }}
                           onClick={() => handleToggleFeatured(b)}
                           title="Click to toggle Featured ON / OFF"
@@ -313,7 +313,7 @@ export const AdminBlogsPage = () => {
                             b.status === 'published'
                               ? 'bg-success-subtle text-success'
                               : 'bg-warning-subtle text-warning'
-                          } text-capitalize px-3 py-1 rounded-pill`}
+                          } text-capitalize px-3 py-1 rounded-pill text-nowrap`}
                           style={{ cursor: 'pointer' }}
                           onClick={() => handleToggleStatus(b)}
                           title="Click to toggle Published / Draft"
@@ -322,26 +322,24 @@ export const AdminBlogsPage = () => {
                           {b.status || 'published'}
                         </span>
                       </td>
-                      <td>
+                      <td className="text-nowrap">
                         <small className="text-muted">{new Date(b.created_at || Date.now()).toLocaleDateString()}</small>
                       </td>
-                      <td className="text-end pe-4">
-                        <div className="btn-group">
-                          <button
-                            className="btn btn-sm btn-outline-primary rounded-pill px-3 me-2"
-                            onClick={() => openEditModal(b)}
-                            title="Edit Blog"
-                          >
-                            <i className="fas fa-edit me-1"></i> Edit
-                          </button>
-                          <button
-                            className="btn btn-sm btn-outline-danger rounded-pill px-3"
-                            onClick={() => handleDelete(b.id)}
-                            title="Delete Blog"
-                          >
-                            <i className="fas fa-trash-alt me-1"></i> Delete
-                          </button>
-                        </div>
+                      <td className="text-end pe-3 pe-md-4 text-nowrap">
+                        <button
+                          className="btn btn-sm btn-outline-primary rounded-pill px-2 py-1 me-1"
+                          onClick={() => openEditModal(b)}
+                          title="Edit Blog"
+                        >
+                          <i className="fas fa-edit me-1"></i> Edit
+                        </button>
+                        <button
+                          className="btn btn-sm btn-outline-danger rounded-pill px-2 py-1"
+                          onClick={() => handleDelete(b.id)}
+                          title="Delete Blog"
+                        >
+                          <i className="fas fa-trash-alt me-1"></i> Delete
+                        </button>
                       </td>
                     </tr>
                   ))

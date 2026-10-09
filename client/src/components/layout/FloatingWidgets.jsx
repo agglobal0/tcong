@@ -3,7 +3,12 @@ import { Link } from 'react-router-dom';
 
 export const FloatingWidgets = () => {
   const [showScrollTop, setShowScrollTop] = useState(false);
-  const [isOpen, setIsOpen] = useState(true);
+  const [isOpen, setIsOpen] = useState(() => {
+    if (typeof window !== 'undefined') {
+      return window.innerWidth >= 768;
+    }
+    return true;
+  });
 
   useEffect(() => {
     const handleScroll = () => {

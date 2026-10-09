@@ -46,23 +46,23 @@ export const AdminDashboardPage = () => {
 
   return (
     <div className="admin-dashboard">
-      <div className="d-flex justify-content-between align-items-center mb-4">
+      <div className="d-flex flex-wrap justify-content-between align-items-center gap-3 mb-4">
         <div>
           <h3 className="fw-bold mb-1">Dashboard Overview</h3>
           <p className="text-muted small mb-0">Real-time church activity counters and administration</p>
         </div>
-        <button className="btn btn-sm btn-outline-primary rounded-pill px-3" onClick={fetchDashboard}>
+        <button className="btn btn-sm btn-outline-primary rounded-pill px-3 text-nowrap" onClick={fetchDashboard}>
           <i className="fas fa-sync-alt me-1"></i> Refresh Data
         </button>
       </div>
 
       {/* KPI Stats Cards */}
       <div className="row g-3 mb-4">
-        <div className="col-md-4 col-lg">
-          <div className="card border-0 shadow-sm rounded-4 p-4 h-100 bg-white">
-            <div className="d-flex justify-content-between align-items-center mb-2">
-              <span className="text-muted small fw-semibold">PRAYER REQUESTS</span>
-              <i className="fas fa-praying-hands text-warning"></i>
+        <div className="col-6 col-md-4 col-lg">
+          <div className="card border-0 shadow-sm rounded-4 p-3 p-sm-4 h-100 bg-white">
+            <div className="d-flex justify-content-between align-items-center mb-2 gap-2">
+              <span className="text-muted small fw-semibold text-truncate pe-1">PRAYER REQUESTS</span>
+              <i className="fas fa-praying-hands text-warning flex-shrink-0" style={{ fontSize: '1.25rem' }}></i>
             </div>
             <h3 className="fw-bold text-warning mb-1">
               {pendingPrayersCount} Pending
@@ -71,11 +71,11 @@ export const AdminDashboardPage = () => {
           </div>
         </div>
 
-        <div className="col-md-4 col-lg">
-          <div className="card border-0 shadow-sm rounded-4 p-4 h-100 bg-white">
-            <div className="d-flex justify-content-between align-items-center mb-2">
-              <span className="text-muted small fw-semibold">LAY HAND PRAYERS</span>
-              <i className="fas fa-hand-holding-heart text-danger"></i>
+        <div className="col-6 col-md-4 col-lg">
+          <div className="card border-0 shadow-sm rounded-4 p-3 p-sm-4 h-100 bg-white">
+            <div className="d-flex justify-content-between align-items-center mb-2 gap-2">
+              <span className="text-muted small fw-semibold text-truncate pe-1">LAY HAND PRAYERS</span>
+              <i className="fas fa-hand-holding-heart text-danger flex-shrink-0" style={{ fontSize: '1.25rem' }}></i>
             </div>
             <h3 className="fw-bold text-danger mb-1">
               {pendingLayHandCount} Pending
@@ -84,11 +84,11 @@ export const AdminDashboardPage = () => {
           </div>
         </div>
 
-        <div className="col-md-4 col-lg">
-          <div className="card border-0 shadow-sm rounded-4 p-4 h-100 bg-white">
-            <div className="d-flex justify-content-between align-items-center mb-2">
-              <span className="text-muted small fw-semibold">PUBLISHED BLOGS</span>
-              <i className="fas fa-blog text-success"></i>
+        <div className="col-6 col-md-4 col-lg">
+          <div className="card border-0 shadow-sm rounded-4 p-3 p-sm-4 h-100 bg-white">
+            <div className="d-flex justify-content-between align-items-center mb-2 gap-2">
+              <span className="text-muted small fw-semibold text-truncate pe-1">PUBLISHED BLOGS</span>
+              <i className="fas fa-blog text-success flex-shrink-0" style={{ fontSize: '1.25rem' }}></i>
             </div>
             <h3 className="fw-bold text-success mb-1">
               {publishedBlogsCount}
@@ -97,11 +97,11 @@ export const AdminDashboardPage = () => {
           </div>
         </div>
 
-        <div className="col-md-6 col-lg">
-          <div className="card border-0 shadow-sm rounded-4 p-4 h-100 bg-white">
-            <div className="d-flex justify-content-between align-items-center mb-2">
-              <span className="text-muted small fw-semibold">CONTACT INQUIRIES</span>
-              <i className="fas fa-envelope text-info"></i>
+        <div className="col-6 col-md-6 col-lg">
+          <div className="card border-0 shadow-sm rounded-4 p-3 p-sm-4 h-100 bg-white">
+            <div className="d-flex justify-content-between align-items-center mb-2 gap-2">
+              <span className="text-muted small fw-semibold text-truncate pe-1">CONTACT INQUIRIES</span>
+              <i className="fas fa-envelope text-info flex-shrink-0" style={{ fontSize: '1.25rem' }}></i>
             </div>
             <h3 className="fw-bold text-info mb-1">
               {unreadMessagesCount} Unread
@@ -110,11 +110,11 @@ export const AdminDashboardPage = () => {
           </div>
         </div>
 
-        <div className="col-md-6 col-lg">
-          <div className="card border-0 shadow-sm rounded-4 p-4 h-100 bg-white">
-            <div className="d-flex justify-content-between align-items-center mb-2">
-              <span className="text-muted small fw-semibold">SERMONS</span>
-              <i className="fas fa-video text-primary"></i>
+        <div className="col-12 col-md-6 col-lg">
+          <div className="card border-0 shadow-sm rounded-4 p-3 p-sm-4 h-100 bg-white">
+            <div className="d-flex justify-content-between align-items-center mb-2 gap-2">
+              <span className="text-muted small fw-semibold text-truncate pe-1">SERMONS</span>
+              <i className="fas fa-video text-primary flex-shrink-0" style={{ fontSize: '1.25rem' }}></i>
             </div>
             <h3 className="fw-bold text-primary mb-1">
               {publishedSermonsCount}

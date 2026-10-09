@@ -268,7 +268,17 @@
 /* ─── Admin Content Area ─── */
 .admin-content {
   flex: 1;
-  padding: var(--space-6);
+  padding: 1.5rem;
+  width: 100%;
+  max-width: 100%;
+  box-sizing: border-box;
+  overflow-x: hidden;
+}
+
+@media (max-width: 768px) {
+  .admin-content {
+    padding: 1rem 0.85rem;
+  }
 }
 
 /* ─── Dashboard Stats ─── */

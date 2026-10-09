@@ -114,7 +114,7 @@ export const AdminLayout = () => {
           </div>
         </div>
 
-        <div className="admin-content" style={{ padding: '2rem' }}>
+        <div className="admin-content">
           <Outlet />
         </div>
       </div>

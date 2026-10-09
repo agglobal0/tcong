@@ -161,11 +161,11 @@ export const BlogDetailPage = () => {
               <span className="fw-bold text-dark small text-uppercase">
                 <i className="fas fa-share-nodes me-2 text-primary"></i> Share this Article:
               </span>
-              <div className="d-flex align-items-center gap-2">
+              <div className="d-flex flex-wrap align-items-center gap-2">
                 <button
                   type="button"
                   onClick={handleCopyLink}
-                  className="btn btn-sm btn-outline-secondary rounded-pill px-3"
+                  className="btn btn-sm btn-outline-secondary rounded-pill px-3 text-nowrap"
                   title="Copy Link to Clipboard"
                 >
                   <i className={`fas ${copied ? 'fa-check text-success' : 'fa-link'} me-1`}></i>
@@ -175,7 +175,7 @@ export const BlogDetailPage = () => {
                   href={`https://wa.me/?text=${encodeURIComponent(shareTitle + ' ' + shareUrl)}`}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="btn btn-sm btn-success rounded-pill px-3 text-white"
+                  className="btn btn-sm btn-success rounded-pill px-3 text-white text-nowrap"
                   title="Share on WhatsApp"
                 >
                   <i className="fab fa-whatsapp me-1"></i> WhatsApp
@@ -184,7 +184,7 @@ export const BlogDetailPage = () => {
                   href={`https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(shareUrl)}`}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="btn btn-sm btn-primary rounded-pill px-3 text-white"
+                  className="btn btn-sm btn-primary rounded-pill px-3 text-white text-nowrap"
                   title="Share on Facebook"
                 >
                   <i className="fab fa-facebook-f me-1"></i> Facebook
@@ -194,7 +194,7 @@ export const BlogDetailPage = () => {
           </div>
 
           {/* Bottom Navigation & Prayer CTA */}
-          <div className="mt-5 text-center">
+          <div className="mt-5 mb-5 pb-4 text-center">
             <div
               className="p-4 p-md-5 rounded-4 shadow-sm text-white"
               style={{ background: 'linear-gradient(135deg, #1E1B4B 0%, #312E81 100%)' }}
@@ -206,13 +206,13 @@ export const BlogDetailPage = () => {
               <div className="d-flex flex-wrap gap-3 justify-content-center">
                 <Link
                   to="/prayer-request"
-                  className="btn btn-warning fw-bold rounded-pill px-4 py-2"
+                  className="btn btn-warning fw-bold rounded-pill px-4 py-2 text-nowrap shadow-sm"
                 >
                   <i className="fas fa-hands-praying me-2"></i> Submit Prayer Request
                 </Link>
                 <Link
                   to="/blog"
-                  className="btn btn-outline-light rounded-pill px-4 py-2"
+                  className="btn btn-outline-light rounded-pill px-4 py-2 text-nowrap"
                 >
                   &larr; More Devotionals
                 </Link>
