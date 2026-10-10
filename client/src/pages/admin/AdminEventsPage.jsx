@@ -77,69 +77,140 @@ export const AdminEventsPage = () => {
         </button>
       </div>
 
+      {/* Content: Mobile Cards + Desktop Table */}
       {loading ? (
         <div className="text-center py-5">
           <div className="spinner-border text-primary"></div>
         </div>
       ) : (
-        <div className="card border-0 shadow-sm rounded-4 bg-white">
-          <div className="table-responsive" style={{ overflowX: 'auto', width: '100%' }}>
-            <table className="table table-hover align-middle mb-0 w-100">
-              <thead className="bg-light">
-                <tr>
-                  <th className="ps-3 ps-md-4" style={{ minWidth: '160px' }}>Title</th>
-                  <th style={{ minWidth: '120px' }}>Date</th>
-                  <th style={{ minWidth: '110px' }}>Status</th>
-                  <th style={{ minWidth: '130px' }}>Location</th>
-                  <th className="text-end pe-3 pe-md-4" style={{ minWidth: '160px' }}>Actions</th>
-                </tr>
-              </thead>
-              <tbody>
-                {events.length > 0 ? (
-                  events.map((e) => (
-                    <tr key={e.id}>
-                      <td className="ps-3 ps-md-4 fw-semibold text-dark">{e.title}</td>
-                      <td className="text-nowrap">{e.event_date ? new Date(e.event_date).toLocaleDateString() : 'N/A'}</td>
-                      <td>
-                        <span
-                          className={`badge ${
-                            e.status === 'published'
-                              ? 'bg-success-subtle text-success'
-                              : 'bg-warning-subtle text-warning'
-                          } text-capitalize px-3 py-1 rounded-pill text-nowrap`}
-                          style={{ cursor: 'pointer' }}
-                          onClick={() => handleToggleStatus(e)}
-                          title="Click to toggle Published / Draft"
-                        >
-                          <i className={`fas fa-circle me-1 small ${e.status === 'published' ? 'text-success' : 'text-warning'}`} style={{ fontSize: '8px' }}></i>
-                          {e.status || 'published'}
-                        </span>
-                      </td>
-                      <td className="text-muted">{e.location || 'Sanctuary'}</td>
-                      <td className="text-end pe-3 pe-md-4 text-nowrap">
-                        <button
-                          className="btn btn-sm btn-outline-secondary rounded-pill px-2 py-1 me-1"
-                          onClick={() => handleToggleStatus(e)}
-                        >
-                          {e.status === 'published' ? 'Unpublish' : 'Publish'}
-                        </button>
-                        <button className="btn btn-sm btn-outline-danger rounded-pill px-2 py-1" onClick={() => handleDelete(e.id)}>
-                          <i className="fas fa-trash-alt me-1"></i> Delete
-                        </button>
+        <>
+          {/* Mobile Card View (visible on < 768px screens) */}
+          <div className="d-md-none">
+            {events.length > 0 ? (
+              events.map((e) => (
+                <div key={e.id} className="admin-mobile-card">
+                  <div className="admin-mobile-card-header">
+                    <div>
+                      <div className="fw-bold text-dark fs-6">{e.title}</div>
+                      <small className="text-muted">
+                        <i className="fas fa-calendar-alt me-1"></i>
+                        {e.event_date ? new Date(e.event_date).toLocaleDateString() : 'N/A'}
+                      </small>
+                    </div>
+                    <span
+                      className={`badge ${
+                        e.status === 'published'
+                          ? 'bg-success-subtle text-success'
+                          : 'bg-warning-subtle text-warning'
+                      } text-capitalize px-2.5 py-1 rounded-pill text-nowrap`}
+                      style={{ cursor: 'pointer' }}
+                      onClick={() => handleToggleStatus(e)}
+                      title="Click to toggle Published / Draft"
+                    >
+                      <i className={`fas fa-circle me-1 small ${e.status === 'published' ? 'text-success' : 'text-warning'}`} style={{ fontSize: '8px' }}></i>
+                      {e.status || 'published'}
+                    </span>
+                  </div>
+
+                  <div className="mb-2">
+                    <div className="small text-muted mb-1">
+                      <i className="fas fa-map-marker-alt text-primary me-1"></i>
+                      {e.location || 'Sanctuary'}
+                    </div>
+                    {e.description && (
+                      <p className="small text-muted mb-0" style={{ lineHeight: '1.4' }}>
+                        {e.description}
+                      </p>
+                    )}
+                  </div>
+
+                  <div className="admin-mobile-card-footer justify-content-end gap-2">
+                    <button
+                      className="btn btn-sm btn-outline-secondary rounded-pill px-3 py-1"
+                      onClick={() => handleToggleStatus(e)}
+                    >
+                      {e.status === 'published' ? 'Unpublish' : 'Publish'}
+                    </button>
+                    <button
+                      className="btn btn-sm btn-outline-danger rounded-pill px-3 py-1"
+                      onClick={() => handleDelete(e.id)}
+                    >
+                      <i className="fas fa-trash-alt me-1"></i> Delete
+                    </button>
+                  </div>
+                </div>
+              ))
+            ) : (
+              <div className="card border-0 shadow-sm rounded-4 p-4 text-center bg-white text-muted">
+                <i className="fas fa-calendar-times fa-2x mb-2 opacity-50"></i>
+                <p className="mb-2 small">No events scheduled.</p>
+                <button className="btn btn-sm btn-outline-primary rounded-pill mx-auto" onClick={() => setShowModal(true)}>
+                  + Add First Event
+                </button>
+              </div>
+            )}
+          </div>
+
+          {/* Desktop Table View (visible on >= 768px screens) */}
+          <div className="card border-0 shadow-sm rounded-4 bg-white d-none d-md-block">
+            <div className="table-responsive" style={{ overflowX: 'auto', width: '100%' }}>
+              <table className="table table-hover align-middle mb-0 w-100">
+                <thead className="bg-light">
+                  <tr>
+                    <th className="ps-3 ps-md-4" style={{ minWidth: '160px' }}>Title</th>
+                    <th style={{ minWidth: '120px' }}>Date</th>
+                    <th style={{ minWidth: '110px' }}>Status</th>
+                    <th style={{ minWidth: '130px' }}>Location</th>
+                    <th className="text-end pe-3 pe-md-4" style={{ minWidth: '160px' }}>Actions</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {events.length > 0 ? (
+                    events.map((e) => (
+                      <tr key={e.id}>
+                        <td className="ps-3 ps-md-4 fw-semibold text-dark">{e.title}</td>
+                        <td className="text-nowrap">{e.event_date ? new Date(e.event_date).toLocaleDateString() : 'N/A'}</td>
+                        <td>
+                          <span
+                            className={`badge ${
+                              e.status === 'published'
+                                ? 'bg-success-subtle text-success'
+                                : 'bg-warning-subtle text-warning'
+                            } text-capitalize px-3 py-1 rounded-pill text-nowrap`}
+                            style={{ cursor: 'pointer' }}
+                            onClick={() => handleToggleStatus(e)}
+                            title="Click to toggle Published / Draft"
+                          >
+                            <i className={`fas fa-circle me-1 small ${e.status === 'published' ? 'text-success' : 'text-warning'}`} style={{ fontSize: '8px' }}></i>
+                            {e.status || 'published'}
+                          </span>
+                        </td>
+                        <td className="text-muted">{e.location || 'Sanctuary'}</td>
+                        <td className="text-end pe-3 pe-md-4 text-nowrap">
+                          <button
+                            className="btn btn-sm btn-outline-secondary rounded-pill px-2 py-1 me-1"
+                            onClick={() => handleToggleStatus(e)}
+                          >
+                            {e.status === 'published' ? 'Unpublish' : 'Publish'}
+                          </button>
+                          <button className="btn btn-sm btn-outline-danger rounded-pill px-2 py-1" onClick={() => handleDelete(e.id)}>
+                            <i className="fas fa-trash-alt me-1"></i> Delete
+                          </button>
+                        </td>
+                      </tr>
+                    ))
+                  ) : (
+                    <tr>
+                      <td colSpan="5" className="text-center text-muted py-4">
+                        No events scheduled.
                       </td>
                     </tr>
-                  ))
-                ) : (
-                  <tr>
-                    <td colSpan="5" className="text-center text-muted py-4">
-                      No events scheduled.
-                    </td>
-                  </tr>
-                )}
-              </tbody>
-            </table>
+                  )}
+                </tbody>
+              </table>
+            </div>
           </div>
-        </div>
+        </>
       )}
 
       {showModal && (

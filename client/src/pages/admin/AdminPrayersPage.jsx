@@ -153,37 +153,49 @@ export const AdminPrayersPage = () => {
       </div>
 
       {/* KPI Stats Cards */}
-      <div className="row g-3 mb-4">
+      <div className="row g-2 mb-3">
         <div className="col-6 col-md-3">
-          <div className="card border-0 shadow-sm rounded-4 p-3 bg-white h-100">
-            <span className="text-muted small fw-semibold text-uppercase">Total Prayer Requests</span>
-            <h3 className="fw-bold text-primary mb-0 mt-2">{totalCount}</h3>
+          <div className="card border-0 shadow-sm rounded-4 p-2.5 p-sm-3 bg-white h-100">
+            <div className="d-flex justify-content-between align-items-center">
+              <span className="text-muted fw-semibold text-uppercase" style={{ fontSize: '0.72rem' }}>Total Prayers</span>
+              <i className="fas fa-praying-hands text-primary opacity-75"></i>
+            </div>
+            <h4 className="fw-bold text-primary mb-0 mt-1">{totalCount}</h4>
           </div>
         </div>
         <div className="col-6 col-md-3">
-          <div className="card border-0 shadow-sm rounded-4 p-3 bg-white h-100">
-            <span className="text-muted small fw-semibold text-uppercase">New / Pending</span>
-            <h3 className="fw-bold text-warning mb-0 mt-2">{pendingCount}</h3>
+          <div className="card border-0 shadow-sm rounded-4 p-2.5 p-sm-3 bg-white h-100">
+            <div className="d-flex justify-content-between align-items-center">
+              <span className="text-muted fw-semibold text-uppercase" style={{ fontSize: '0.72rem' }}>New / Pending</span>
+              <i className="fas fa-clock text-warning opacity-75"></i>
+            </div>
+            <h4 className="fw-bold text-warning mb-0 mt-1">{pendingCount}</h4>
           </div>
         </div>
         <div className="col-6 col-md-3">
-          <div className="card border-0 shadow-sm rounded-4 p-3 bg-white h-100">
-            <span className="text-muted small fw-semibold text-uppercase">In Prayer</span>
-            <h3 className="fw-bold text-info mb-0 mt-2">{inPrayerCount}</h3>
+          <div className="card border-0 shadow-sm rounded-4 p-2.5 p-sm-3 bg-white h-100">
+            <div className="d-flex justify-content-between align-items-center">
+              <span className="text-muted fw-semibold text-uppercase" style={{ fontSize: '0.72rem' }}>In Prayer</span>
+              <i className="fas fa-hands-helping text-info opacity-75"></i>
+            </div>
+            <h4 className="fw-bold text-info mb-0 mt-1">{inPrayerCount}</h4>
           </div>
         </div>
         <div className="col-6 col-md-3">
-          <div className="card border-0 shadow-sm rounded-4 p-3 bg-white h-100">
-            <span className="text-muted small fw-semibold text-uppercase">Prayed / Answered</span>
-            <h3 className="fw-bold text-success mb-0 mt-2">{prayedCount}</h3>
+          <div className="card border-0 shadow-sm rounded-4 p-2.5 p-sm-3 bg-white h-100">
+            <div className="d-flex justify-content-between align-items-center">
+              <span className="text-muted fw-semibold text-uppercase" style={{ fontSize: '0.72rem' }}>Answered</span>
+              <i className="fas fa-check-circle text-success opacity-75"></i>
+            </div>
+            <h4 className="fw-bold text-success mb-0 mt-1">{prayedCount}</h4>
           </div>
         </div>
       </div>
 
       {/* Filter & Search Bar */}
-      <div className="card border-0 shadow-sm rounded-4 p-3 mb-4 bg-white">
+      <div className="card border-0 shadow-sm rounded-4 p-3 mb-3 bg-white">
         <div className="row g-2 align-items-center">
-          <div className="col-md-6">
+          <div className="col-12 col-md-6">
             <div className="input-group input-group-sm">
               <span className="input-group-text bg-light border-0">
                 <i className="fas fa-search text-muted"></i>
@@ -191,7 +203,7 @@ export const AdminPrayersPage = () => {
               <input
                 type="text"
                 className="form-control bg-light border-0"
-                placeholder="Search prayer requests by name, email, text..."
+                placeholder="Search by name, phone, text..."
                 value={search}
                 onChange={(e) => setSearch(e.target.value)}
               />
@@ -235,7 +247,7 @@ export const AdminPrayersPage = () => {
         </div>
       </div>
 
-      {/* Table */}
+      {/* Content: Mobile Cards + Desktop Table */}
       {loading ? (
         <div className="text-center py-5">
           <div className="spinner-border text-primary" role="status">
@@ -243,125 +255,227 @@ export const AdminPrayersPage = () => {
           </div>
         </div>
       ) : (
-        <div className="card border-0 shadow-sm rounded-4 bg-white">
-          <div className="table-responsive" style={{ overflowX: 'auto', width: '100%' }}>
-            <table className="table table-hover align-middle mb-0 w-100">
-              <thead className="bg-light">
-                <tr>
-                  <th className="ps-3 ps-md-4" style={{ minWidth: '120px' }}>Category</th>
-                  <th style={{ minWidth: '160px' }}>Submitted By</th>
-                  <th style={{ minWidth: '200px' }}>Request Text</th>
-                  <th style={{ minWidth: '95px' }}>Date</th>
-                  <th style={{ minWidth: '120px' }}>Status</th>
-                  <th className="text-end pe-3 pe-md-4" style={{ minWidth: '110px' }}>Actions</th>
-                </tr>
-              </thead>
-              <tbody>
-                {filteredPrayers.length > 0 ? (
-                  filteredPrayers.map((p) => (
-                    <tr key={p.id}>
-                      <td className="ps-3 ps-md-4">
-                        <span className="badge bg-primary-subtle text-primary text-uppercase px-2 py-1 rounded-pill">
-                          {p.category || 'General'}
-                        </span>
-                      </td>
-                      <td>
+        <>
+          {/* Mobile Card View (visible on < 768px screens) */}
+          <div className="d-md-none">
+            {filteredPrayers.length > 0 ? (
+              filteredPrayers.map((p) => (
+                <div key={p.id} className="admin-mobile-card">
+                  <div className="admin-mobile-card-header">
+                    <div>
+                      <div className="fw-bold text-dark fs-6">
                         {p.is_anonymous ? (
-                          <span className="text-muted fst-italic">
-                            <i className="fas fa-user-secret me-1"></i> Anonymous
-                          </span>
+                          <span className="text-muted fst-italic"><i className="fas fa-user-secret me-1"></i> Anonymous</span>
                         ) : (
-                          <div>
-                            <div className="fw-semibold text-dark">{p.name || 'Visitor'}</div>
-                            {p.email && (
-                              <small className="text-muted d-block text-truncate" style={{ maxWidth: '160px' }}>
-                                <a href={`mailto:${p.email}`} className="text-decoration-none text-muted">
-                                  {p.email}
-                                </a>
-                              </small>
-                            )}
-                            {p.phone && (
-                              <small className="text-muted d-block">
-                                <a href={`tel:${p.phone}`} className="text-decoration-none text-muted">
-                                  {p.phone}
-                                </a>
-                              </small>
-                            )}
-                          </div>
+                          p.name || 'Visitor'
                         )}
-                      </td>
-                      <td>
-                        <div
-                          className="small text-dark text-truncate"
-                          style={{ maxWidth: '260px', cursor: 'pointer' }}
-                          onClick={() => openDetailsModal(p)}
-                          title={p.request_text}
-                        >
-                          {p.request_text}
+                      </div>
+                      <small className="text-muted">
+                        <i className="fas fa-calendar-alt me-1"></i>
+                        {p.created_at ? new Date(p.created_at).toLocaleDateString() : 'Recent'}
+                      </small>
+                    </div>
+                    <span className="badge bg-primary-subtle text-primary text-uppercase px-2.5 py-1 rounded-pill">
+                      {p.category || 'General'}
+                    </span>
+                  </div>
+
+                  <div className="mb-2">
+                    {p.phone && (
+                      <div className="small mb-1">
+                        <i className="fas fa-phone-alt text-primary me-1"></i>
+                        <a href={`tel:${p.phone}`} className="text-decoration-none fw-semibold text-dark">
+                          {p.phone}
+                        </a>
+                      </div>
+                    )}
+                    {p.email && (
+                      <div className="small text-muted text-truncate mb-1">
+                        <i className="fas fa-envelope text-primary me-1"></i>
+                        <a href={`mailto:${p.email}`} className="text-decoration-none text-muted">
+                          {p.email}
+                        </a>
+                      </div>
+                    )}
+                    <div
+                      className="p-2 rounded-3 bg-light text-dark small mt-2"
+                      style={{ cursor: 'pointer', lineHeight: '1.45' }}
+                      onClick={() => openDetailsModal(p)}
+                      title="Tap to open details"
+                    >
+                      {p.request_text}
+                    </div>
+                  </div>
+
+                  <div className="admin-mobile-card-footer">
+                    <select
+                      className={`form-select form-select-sm fw-bold ${
+                        (p.status || '').toUpperCase() === 'CLOSED'
+                          ? 'text-secondary border-secondary-subtle'
+                          : (p.status || '').toUpperCase() === 'PRAYED'
+                          ? 'text-success border-success-subtle bg-success-subtle'
+                          : (p.status || '').toUpperCase() === 'IN_PRAYER'
+                          ? 'text-info border-info-subtle bg-info-subtle'
+                          : 'text-warning border-warning-subtle bg-warning-subtle'
+                      }`}
+                      style={{ maxWidth: '130px' }}
+                      value={(p.status || 'new').toLowerCase()}
+                      onChange={(e) => handleStatusChange(p.id, e.target.value)}
+                    >
+                      <option value="new">NEW</option>
+                      <option value="assigned">ASSIGNED</option>
+                      <option value="in_prayer">IN PRAYER</option>
+                      <option value="prayed">PRAYED</option>
+                      <option value="closed">CLOSED</option>
+                    </select>
+
+                    <div className="d-flex gap-1">
+                      <button
+                        className="btn btn-sm btn-outline-primary rounded-pill px-3 py-1"
+                        onClick={() => openDetailsModal(p)}
+                      >
+                        <i className="fas fa-eye me-1"></i> View
+                      </button>
+                      <button
+                        className="btn btn-sm btn-outline-danger rounded-circle p-1"
+                        style={{ width: '32px', height: '32px' }}
+                        onClick={() => handleDelete(p.id)}
+                      >
+                        <i className="fas fa-trash-alt"></i>
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              ))
+            ) : (
+              <div className="card border-0 shadow-sm rounded-4 p-4 text-center bg-white text-muted">
+                <i className="fas fa-praying-hands fa-2x mb-2 opacity-50"></i>
+                <p className="mb-0 small">No prayer requests found.</p>
+              </div>
+            )}
+          </div>
+
+          {/* Desktop Table View (visible on >= 768px screens) */}
+          <div className="card border-0 shadow-sm rounded-4 bg-white d-none d-md-block">
+            <div className="table-responsive" style={{ overflowX: 'auto', width: '100%' }}>
+              <table className="table table-hover align-middle mb-0 w-100">
+                <thead className="bg-light">
+                  <tr>
+                    <th className="ps-3 ps-md-4" style={{ minWidth: '120px' }}>Category</th>
+                    <th style={{ minWidth: '160px' }}>Submitted By</th>
+                    <th style={{ minWidth: '200px' }}>Request Text</th>
+                    <th style={{ minWidth: '95px' }}>Date</th>
+                    <th style={{ minWidth: '120px' }}>Status</th>
+                    <th className="text-end pe-3 pe-md-4" style={{ minWidth: '110px' }}>Actions</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {filteredPrayers.length > 0 ? (
+                    filteredPrayers.map((p) => (
+                      <tr key={p.id}>
+                        <td className="ps-3 ps-md-4">
+                          <span className="badge bg-primary-subtle text-primary text-uppercase px-2 py-1 rounded-pill">
+                            {p.category || 'General'}
+                          </span>
+                        </td>
+                        <td>
+                          {p.is_anonymous ? (
+                            <span className="text-muted fst-italic">
+                              <i className="fas fa-user-secret me-1"></i> Anonymous
+                            </span>
+                          ) : (
+                            <div>
+                              <div className="fw-semibold text-dark">{p.name || 'Visitor'}</div>
+                              {p.email && (
+                                <small className="text-muted d-block text-truncate" style={{ maxWidth: '160px' }}>
+                                  <a href={`mailto:${p.email}`} className="text-decoration-none text-muted">
+                                    {p.email}
+                                  </a>
+                                </small>
+                              )}
+                              {p.phone && (
+                                <small className="text-muted d-block">
+                                  <a href={`tel:${p.phone}`} className="text-decoration-none text-muted">
+                                    {p.phone}
+                                  </a>
+                                </small>
+                              )}
+                            </div>
+                          )}
+                        </td>
+                        <td>
+                          <div
+                            className="small text-dark text-truncate"
+                            style={{ maxWidth: '260px', cursor: 'pointer' }}
+                            onClick={() => openDetailsModal(p)}
+                            title={p.request_text}
+                          >
+                            {p.request_text}
+                          </div>
+                        </td>
+                        <td className="small text-muted text-nowrap">
+                          {p.created_at ? new Date(p.created_at).toLocaleDateString() : 'Recent'}
+                        </td>
+                        <td>
+                          <select
+                            className={`form-select form-select-sm fw-semibold ${
+                              (p.status || '').toUpperCase() === 'CLOSED'
+                                ? 'text-secondary border-secondary-subtle'
+                                : (p.status || '').toUpperCase() === 'PRAYED'
+                                ? 'text-success border-success-subtle bg-success-subtle'
+                                : (p.status || '').toUpperCase() === 'IN_PRAYER'
+                                ? 'text-info border-info-subtle bg-info-subtle'
+                                : 'text-warning border-warning-subtle bg-warning-subtle'
+                            }`}
+                            style={{ minWidth: '105px' }}
+                            value={(p.status || 'new').toLowerCase()}
+                            onChange={(e) => handleStatusChange(p.id, e.target.value)}
+                          >
+                            <option value="new">NEW</option>
+                            <option value="assigned">ASSIGNED</option>
+                            <option value="in_prayer">IN PRAYER</option>
+                            <option value="prayed">PRAYED</option>
+                            <option value="closed">CLOSED</option>
+                          </select>
+                        </td>
+                        <td className="text-end pe-3 pe-md-4 text-nowrap">
+                          <button
+                            className="btn btn-sm btn-outline-primary rounded-pill px-2 py-1 me-1"
+                            onClick={() => openDetailsModal(p)}
+                            title="View full request & care notes"
+                          >
+                            <i className="fas fa-eye me-1"></i> View
+                          </button>
+                          <button
+                            className="btn btn-sm btn-outline-danger rounded-pill px-2 py-1"
+                            onClick={() => handleDelete(p.id)}
+                            title="Delete prayer request"
+                          >
+                            <i className="fas fa-trash-alt"></i>
+                          </button>
+                        </td>
+                      </tr>
+                    ))
+                  ) : (
+                    <tr>
+                      <td colSpan="6" className="text-center text-muted py-5">
+                        <div className="py-4">
+                          <i className="fas fa-praying-hands fa-3x text-muted mb-3 d-block opacity-50"></i>
+                          <h5>No prayer requests found</h5>
+                          <p className="small text-muted mb-0">
+                            {search || statusFilter !== 'all' || categoryFilter !== 'all'
+                              ? 'Try resetting your search or category filter.'
+                              : 'New prayer requests submitted from the website will show up here.'}
+                          </p>
                         </div>
                       </td>
-                      <td className="small text-muted text-nowrap">
-                        {p.created_at ? new Date(p.created_at).toLocaleDateString() : 'Recent'}
-                      </td>
-                      <td>
-                        <select
-                          className={`form-select form-select-sm fw-semibold ${
-                            (p.status || '').toUpperCase() === 'CLOSED'
-                              ? 'text-secondary border-secondary-subtle'
-                              : (p.status || '').toUpperCase() === 'PRAYED'
-                              ? 'text-success border-success-subtle bg-success-subtle'
-                              : (p.status || '').toUpperCase() === 'IN_PRAYER'
-                              ? 'text-info border-info-subtle bg-info-subtle'
-                              : 'text-warning border-warning-subtle bg-warning-subtle'
-                          }`}
-                          style={{ minWidth: '105px' }}
-                          value={(p.status || 'new').toLowerCase()}
-                          onChange={(e) => handleStatusChange(p.id, e.target.value)}
-                        >
-                          <option value="new">NEW</option>
-                          <option value="assigned">ASSIGNED</option>
-                          <option value="in_prayer">IN PRAYER</option>
-                          <option value="prayed">PRAYED</option>
-                          <option value="closed">CLOSED</option>
-                        </select>
-                      </td>
-                      <td className="text-end pe-3 pe-md-4 text-nowrap">
-                        <button
-                          className="btn btn-sm btn-outline-primary rounded-pill px-2 py-1 me-1"
-                          onClick={() => openDetailsModal(p)}
-                          title="View full request & care notes"
-                        >
-                          <i className="fas fa-eye me-1"></i> View
-                        </button>
-                        <button
-                          className="btn btn-sm btn-outline-danger rounded-pill px-2 py-1"
-                          onClick={() => handleDelete(p.id)}
-                          title="Delete prayer request"
-                        >
-                          <i className="fas fa-trash-alt"></i>
-                        </button>
-                      </td>
                     </tr>
-                  ))
-                ) : (
-                  <tr>
-                    <td colSpan="6" className="text-center text-muted py-5">
-                      <div className="py-4">
-                        <i className="fas fa-praying-hands fa-3x text-muted mb-3 d-block opacity-50"></i>
-                        <h5>No prayer requests found</h5>
-                        <p className="small text-muted mb-0">
-                          {search || statusFilter !== 'all' || categoryFilter !== 'all'
-                            ? 'Try resetting your search or category filter.'
-                            : 'New prayer requests submitted from the website will show up here.'}
-                        </p>
-                      </div>
-                    </td>
-                  </tr>
-                )}
-              </tbody>
-            </table>
+                  )}
+                </tbody>
+              </table>
+            </div>
           </div>
-        </div>
+        </>
       )}
 
       {/* Details & Notes Modal */}

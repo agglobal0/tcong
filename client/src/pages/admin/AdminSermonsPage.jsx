@@ -77,92 +77,180 @@ export const AdminSermonsPage = () => {
         </button>
       </div>
 
+      {/* Content: Mobile Cards + Desktop Table */}
       {loading ? (
         <div className="text-center py-5">
           <div className="spinner-border text-primary"></div>
         </div>
       ) : (
-        <div className="card border-0 shadow-sm rounded-4 bg-white">
-          <div className="table-responsive" style={{ overflowX: 'auto', width: '100%' }}>
-            <table className="table table-hover align-middle mb-0 w-100">
-              <thead className="bg-light">
-                <tr>
-                  <th className="ps-3 ps-md-4" style={{ minWidth: '160px' }}>Title</th>
-                  <th style={{ minWidth: '130px' }}>Speaker</th>
-                  <th style={{ minWidth: '110px' }}>Status</th>
-                  <th style={{ minWidth: '140px' }}>Video Link</th>
-                  <th className="text-end pe-3 pe-md-4" style={{ minWidth: '160px' }}>Actions</th>
-                </tr>
-              </thead>
-              <tbody>
-                {sermons.length > 0 ? (
-                  sermons.map((s) => {
-                    let cleanUrl = (s.youtube_url || '').trim();
-                    if (cleanUrl.includes('<iframe') && cleanUrl.includes('src="')) {
-                      const srcMatch = cleanUrl.match(/src=["']([^"']+)["']/i);
-                      if (srcMatch) cleanUrl = srcMatch[1];
-                    }
-                    const isDirectLink = cleanUrl.startsWith('http://') || cleanUrl.startsWith('https://');
+        <>
+          {/* Mobile Card View (visible on < 768px screens) */}
+          <div className="d-md-none">
+            {sermons.length > 0 ? (
+              sermons.map((s) => {
+                let cleanUrl = (s.youtube_url || '').trim();
+                if (cleanUrl.includes('<iframe') && cleanUrl.includes('src="')) {
+                  const srcMatch = cleanUrl.match(/src=["']([^"']+)["']/i);
+                  if (srcMatch) cleanUrl = srcMatch[1];
+                }
+                const isDirectLink = cleanUrl.startsWith('http://') || cleanUrl.startsWith('https://');
 
-                    return (
-                      <tr key={s.id}>
-                        <td className="ps-3 ps-md-4 fw-semibold text-dark">{s.title}</td>
-                        <td className="text-muted">{s.speaker || 'Pastor'}</td>
-                        <td>
-                          <span
-                            className={`badge ${
-                              s.status === 'published'
-                                ? 'bg-success-subtle text-success'
-                                : 'bg-warning-subtle text-warning'
-                            } text-capitalize px-3 py-1 rounded-pill text-nowrap`}
-                            style={{ cursor: 'pointer' }}
-                            onClick={() => handleToggleStatus(s)}
-                            title="Click to toggle Published / Draft"
+                return (
+                  <div key={s.id} className="admin-mobile-card">
+                    <div className="admin-mobile-card-header">
+                      <div>
+                        <div className="fw-bold text-dark fs-6">{s.title}</div>
+                        <small className="text-muted">
+                          <i className="fas fa-user-tie me-1"></i>
+                          {s.speaker || 'Pastor'}
+                        </small>
+                      </div>
+                      <span
+                        className={`badge ${
+                          s.status === 'published'
+                            ? 'bg-success-subtle text-success'
+                            : 'bg-warning-subtle text-warning'
+                        } text-capitalize px-2.5 py-1 rounded-pill text-nowrap`}
+                        style={{ cursor: 'pointer' }}
+                        onClick={() => handleToggleStatus(s)}
+                        title="Click to toggle Published / Draft"
+                      >
+                        <i className={`fas fa-circle me-1 small ${s.status === 'published' ? 'text-success' : 'text-warning'}`} style={{ fontSize: '8px' }}></i>
+                        {s.status || 'published'}
+                      </span>
+                    </div>
+
+                    <div className="mb-2">
+                      {cleanUrl && (
+                        <div className="mb-2">
+                          <a
+                            href={isDirectLink ? cleanUrl : `https://www.youtube.com/watch?v=${cleanUrl}`}
+                            target="_blank"
+                            rel="noreferrer"
+                            className="btn btn-sm btn-outline-danger rounded-pill px-3 py-1 small"
                           >
-                            <i className={`fas fa-circle me-1 small ${s.status === 'published' ? 'text-success' : 'text-warning'}`} style={{ fontSize: '8px' }}></i>
-                            {s.status || 'published'}
-                          </span>
-                        </td>
-                        <td>
-                          {cleanUrl ? (
-                            <a
-                              href={isDirectLink ? cleanUrl : `https://www.youtube.com/watch?v=${cleanUrl}`}
-                              target="_blank"
-                              rel="noreferrer"
-                              className="badge bg-danger-subtle text-danger text-decoration-none px-2 py-1 rounded-pill text-nowrap"
-                              title="Open Video Link"
-                            >
-                              <i className="fab fa-youtube me-1"></i> Watch Video
-                            </a>
-                          ) : (
-                            <span className="text-muted small">No Link</span>
-                          )}
-                        </td>
-                        <td className="text-end pe-3 pe-md-4 text-nowrap">
-                          <button
-                            className="btn btn-sm btn-outline-secondary rounded-pill px-2 py-1 me-1"
-                            onClick={() => handleToggleStatus(s)}
-                          >
-                            {s.status === 'published' ? 'Unpublish' : 'Publish'}
-                          </button>
-                          <button className="btn btn-sm btn-outline-danger rounded-pill px-2 py-1" onClick={() => handleDelete(s.id)}>
-                            <i className="fas fa-trash-alt me-1"></i> Delete
-                          </button>
-                        </td>
-                      </tr>
-                    );
-                  })
-                ) : (
-                  <tr>
-                    <td colSpan="5" className="text-center text-muted py-4">
-                      No sermons in library.
-                    </td>
-                  </tr>
-                )}
-              </tbody>
-            </table>
+                            <i className="fab fa-youtube me-1"></i> Watch Sermon Video
+                          </a>
+                        </div>
+                      )}
+                      {s.description && (
+                        <p className="small text-muted mb-0" style={{ lineHeight: '1.4' }}>
+                          {s.description}
+                        </p>
+                      )}
+                    </div>
+
+                    <div className="admin-mobile-card-footer justify-content-end gap-2">
+                      <button
+                        className="btn btn-sm btn-outline-secondary rounded-pill px-3 py-1"
+                        onClick={() => handleToggleStatus(s)}
+                      >
+                        {s.status === 'published' ? 'Unpublish' : 'Publish'}
+                      </button>
+                      <button
+                        className="btn btn-sm btn-outline-danger rounded-pill px-3 py-1"
+                        onClick={() => handleDelete(s.id)}
+                      >
+                        <i className="fas fa-trash-alt me-1"></i> Delete
+                      </button>
+                    </div>
+                  </div>
+                );
+              })
+            ) : (
+              <div className="card border-0 shadow-sm rounded-4 p-4 text-center bg-white text-muted">
+                <i className="fas fa-video-slash fa-2x mb-2 opacity-50"></i>
+                <p className="mb-2 small">No sermons in library.</p>
+                <button className="btn btn-sm btn-outline-primary rounded-pill mx-auto" onClick={() => setShowModal(true)}>
+                  + Add First Sermon
+                </button>
+              </div>
+            )}
           </div>
-        </div>
+
+          {/* Desktop Table View (visible on >= 768px screens) */}
+          <div className="card border-0 shadow-sm rounded-4 bg-white d-none d-md-block">
+            <div className="table-responsive" style={{ overflowX: 'auto', width: '100%' }}>
+              <table className="table table-hover align-middle mb-0 w-100">
+                <thead className="bg-light">
+                  <tr>
+                    <th className="ps-3 ps-md-4" style={{ minWidth: '160px' }}>Title</th>
+                    <th style={{ minWidth: '130px' }}>Speaker</th>
+                    <th style={{ minWidth: '110px' }}>Status</th>
+                    <th style={{ minWidth: '140px' }}>Video Link</th>
+                    <th className="text-end pe-3 pe-md-4" style={{ minWidth: '160px' }}>Actions</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {sermons.length > 0 ? (
+                    sermons.map((s) => {
+                      let cleanUrl = (s.youtube_url || '').trim();
+                      if (cleanUrl.includes('<iframe') && cleanUrl.includes('src="')) {
+                        const srcMatch = cleanUrl.match(/src=["']([^"']+)["']/i);
+                        if (srcMatch) cleanUrl = srcMatch[1];
+                      }
+                      const isDirectLink = cleanUrl.startsWith('http://') || cleanUrl.startsWith('https://');
+
+                      return (
+                        <tr key={s.id}>
+                          <td className="ps-3 ps-md-4 fw-semibold text-dark">{s.title}</td>
+                          <td className="text-muted">{s.speaker || 'Pastor'}</td>
+                          <td>
+                            <span
+                              className={`badge ${
+                                s.status === 'published'
+                                  ? 'bg-success-subtle text-success'
+                                  : 'bg-warning-subtle text-warning'
+                              } text-capitalize px-3 py-1 rounded-pill text-nowrap`}
+                              style={{ cursor: 'pointer' }}
+                              onClick={() => handleToggleStatus(s)}
+                              title="Click to toggle Published / Draft"
+                            >
+                              <i className={`fas fa-circle me-1 small ${s.status === 'published' ? 'text-success' : 'text-warning'}`} style={{ fontSize: '8px' }}></i>
+                              {s.status || 'published'}
+                            </span>
+                          </td>
+                          <td>
+                            {cleanUrl ? (
+                              <a
+                                href={isDirectLink ? cleanUrl : `https://www.youtube.com/watch?v=${cleanUrl}`}
+                                target="_blank"
+                                rel="noreferrer"
+                                className="badge bg-danger-subtle text-danger text-decoration-none px-2 py-1 rounded-pill text-nowrap"
+                                title="Open Video Link"
+                              >
+                                <i className="fab fa-youtube me-1"></i> Watch Video
+                              </a>
+                            ) : (
+                              <span className="text-muted small">No Link</span>
+                            )}
+                          </td>
+                          <td className="text-end pe-3 pe-md-4 text-nowrap">
+                            <button
+                              className="btn btn-sm btn-outline-secondary rounded-pill px-2 py-1 me-1"
+                              onClick={() => handleToggleStatus(s)}
+                            >
+                              {s.status === 'published' ? 'Unpublish' : 'Publish'}
+                            </button>
+                            <button className="btn btn-sm btn-outline-danger rounded-pill px-2 py-1" onClick={() => handleDelete(s.id)}>
+                              <i className="fas fa-trash-alt me-1"></i> Delete
+                            </button>
+                          </td>
+                        </tr>
+                      );
+                    })
+                  ) : (
+                    <tr>
+                      <td colSpan="5" className="text-center text-muted py-4">
+                        No sermons in library.
+                      </td>
+                    </tr>
+                  )}
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </>
       )}
 
       {showModal && (

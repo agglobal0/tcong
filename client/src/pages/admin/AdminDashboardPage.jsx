@@ -57,69 +57,69 @@ export const AdminDashboardPage = () => {
       </div>
 
       {/* KPI Stats Cards */}
-      <div className="row g-3 mb-4">
+      <div className="row g-2 mb-4">
         <div className="col-6 col-md-4 col-lg">
-          <div className="card border-0 shadow-sm rounded-4 p-3 p-sm-4 h-100 bg-white">
-            <div className="d-flex justify-content-between align-items-center mb-2 gap-2">
-              <span className="text-muted small fw-semibold text-truncate pe-1">PRAYER REQUESTS</span>
-              <i className="fas fa-praying-hands text-warning flex-shrink-0" style={{ fontSize: '1.25rem' }}></i>
+          <div className="card border-0 shadow-sm rounded-4 p-2.5 p-sm-3 h-100 bg-white">
+            <div className="d-flex justify-content-between align-items-center mb-1 gap-1">
+              <span className="text-muted small fw-semibold text-truncate pe-1" style={{ fontSize: '0.72rem' }}>PRAYERS</span>
+              <i className="fas fa-praying-hands text-warning flex-shrink-0"></i>
             </div>
-            <h3 className="fw-bold text-warning mb-1">
-              {pendingPrayersCount} Pending
-            </h3>
-            <small className="text-muted">{s.total_prayer_requests || 0} Total</small>
+            <h4 className="fw-bold text-warning mb-0 mt-1">
+              {pendingPrayersCount} <span className="fs-6 fw-normal text-muted">Pending</span>
+            </h4>
+            <small className="text-muted" style={{ fontSize: '0.72rem' }}>{s.total_prayer_requests || 0} Total</small>
           </div>
         </div>
 
         <div className="col-6 col-md-4 col-lg">
-          <div className="card border-0 shadow-sm rounded-4 p-3 p-sm-4 h-100 bg-white">
-            <div className="d-flex justify-content-between align-items-center mb-2 gap-2">
-              <span className="text-muted small fw-semibold text-truncate pe-1">LAY HAND PRAYERS</span>
-              <i className="fas fa-hand-holding-heart text-danger flex-shrink-0" style={{ fontSize: '1.25rem' }}></i>
+          <div className="card border-0 shadow-sm rounded-4 p-2.5 p-sm-3 h-100 bg-white">
+            <div className="d-flex justify-content-between align-items-center mb-1 gap-1">
+              <span className="text-muted small fw-semibold text-truncate pe-1" style={{ fontSize: '0.72rem' }}>LAY HAND</span>
+              <i className="fas fa-hand-holding-heart text-danger flex-shrink-0"></i>
             </div>
-            <h3 className="fw-bold text-danger mb-1">
-              {pendingLayHandCount} Pending
-            </h3>
-            <small className="text-muted">{s.total_lay_hand || 0} Total Submissions</small>
+            <h4 className="fw-bold text-danger mb-0 mt-1">
+              {pendingLayHandCount} <span className="fs-6 fw-normal text-muted">Pending</span>
+            </h4>
+            <small className="text-muted" style={{ fontSize: '0.72rem' }}>{s.total_lay_hand || 0} Total</small>
           </div>
         </div>
 
         <div className="col-6 col-md-4 col-lg">
-          <div className="card border-0 shadow-sm rounded-4 p-3 p-sm-4 h-100 bg-white">
-            <div className="d-flex justify-content-between align-items-center mb-2 gap-2">
-              <span className="text-muted small fw-semibold text-truncate pe-1">PUBLISHED BLOGS</span>
-              <i className="fas fa-blog text-success flex-shrink-0" style={{ fontSize: '1.25rem' }}></i>
+          <div className="card border-0 shadow-sm rounded-4 p-2.5 p-sm-3 h-100 bg-white">
+            <div className="d-flex justify-content-between align-items-center mb-1 gap-1">
+              <span className="text-muted small fw-semibold text-truncate pe-1" style={{ fontSize: '0.72rem' }}>BLOGS</span>
+              <i className="fas fa-blog text-success flex-shrink-0"></i>
             </div>
-            <h3 className="fw-bold text-success mb-1">
+            <h4 className="fw-bold text-success mb-0 mt-1">
               {publishedBlogsCount}
-            </h3>
-            <small className="text-muted">Articles active</small>
+            </h4>
+            <small className="text-muted" style={{ fontSize: '0.72rem' }}>Articles active</small>
           </div>
         </div>
 
         <div className="col-6 col-md-6 col-lg">
-          <div className="card border-0 shadow-sm rounded-4 p-3 p-sm-4 h-100 bg-white">
-            <div className="d-flex justify-content-between align-items-center mb-2 gap-2">
-              <span className="text-muted small fw-semibold text-truncate pe-1">CONTACT INQUIRIES</span>
-              <i className="fas fa-envelope text-info flex-shrink-0" style={{ fontSize: '1.25rem' }}></i>
+          <div className="card border-0 shadow-sm rounded-4 p-2.5 p-sm-3 h-100 bg-white">
+            <div className="d-flex justify-content-between align-items-center mb-1 gap-1">
+              <span className="text-muted small fw-semibold text-truncate pe-1" style={{ fontSize: '0.72rem' }}>INQUIRIES</span>
+              <i className="fas fa-envelope text-info flex-shrink-0"></i>
             </div>
-            <h3 className="fw-bold text-info mb-1">
-              {unreadMessagesCount} Unread
-            </h3>
-            <small className="text-muted">Visitor inquiries</small>
+            <h4 className="fw-bold text-info mb-0 mt-1">
+              {unreadMessagesCount} <span className="fs-6 fw-normal text-muted">Unread</span>
+            </h4>
+            <small className="text-muted" style={{ fontSize: '0.72rem' }}>Visitor messages</small>
           </div>
         </div>
 
         <div className="col-12 col-md-6 col-lg">
-          <div className="card border-0 shadow-sm rounded-4 p-3 p-sm-4 h-100 bg-white">
-            <div className="d-flex justify-content-between align-items-center mb-2 gap-2">
-              <span className="text-muted small fw-semibold text-truncate pe-1">SERMONS</span>
-              <i className="fas fa-video text-primary flex-shrink-0" style={{ fontSize: '1.25rem' }}></i>
+          <div className="card border-0 shadow-sm rounded-4 p-2.5 p-sm-3 h-100 bg-white">
+            <div className="d-flex justify-content-between align-items-center mb-1 gap-1">
+              <span className="text-muted small fw-semibold text-truncate pe-1" style={{ fontSize: '0.72rem' }}>SERMONS</span>
+              <i className="fas fa-video text-primary flex-shrink-0"></i>
             </div>
-            <h3 className="fw-bold text-primary mb-1">
+            <h4 className="fw-bold text-primary mb-0 mt-1">
               {publishedSermonsCount}
-            </h3>
-            <small className="text-muted">Videos published</small>
+            </h4>
+            <small className="text-muted" style={{ fontSize: '0.72rem' }}>Published videos</small>
           </div>
         </div>
       </div>

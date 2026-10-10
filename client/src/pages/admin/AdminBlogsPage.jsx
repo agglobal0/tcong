@@ -246,118 +246,209 @@ export const AdminBlogsPage = () => {
         </div>
       </div>
 
-      {/* Blog Table */}
+      {/* Content: Mobile Cards + Desktop Table */}
       {loading ? (
         <div className="text-center py-5">
           <div className="spinner-border text-primary" role="status" style={{ color: '#4338CA' }}></div>
           <p className="text-muted small mt-2">Loading articles...</p>
         </div>
       ) : (
-        <div className="card border-0 shadow-sm rounded-4 bg-white">
-          <div className="table-responsive" style={{ overflowX: 'auto', width: '100%' }}>
-            <table className="table table-hover align-middle mb-0 w-100">
-              <thead className="bg-light">
-                <tr>
-                  <th className="ps-3 ps-md-4" style={{ minWidth: '70px', width: '70px' }}>Cover</th>
-                  <th style={{ minWidth: '200px' }}>Title & Summary</th>
-                  <th style={{ minWidth: '120px' }}>Featured</th>
-                  <th style={{ minWidth: '110px' }}>Status</th>
-                  <th style={{ minWidth: '95px' }}>Date</th>
-                  <th className="text-end pe-3 pe-md-4" style={{ minWidth: '145px' }}>Actions</th>
-                </tr>
-              </thead>
-              <tbody>
-                {filteredBlogs.length > 0 ? (
-                  filteredBlogs.map((b, index) => (
-                    <tr key={b.id}>
-                      <td className="ps-3 ps-md-4">
-                        <img
-                          src={getBlogImage(b, index)}
-                          alt={b.title}
-                          className="rounded-3 shadow-sm object-fit-cover"
-                          style={{ width: '55px', height: '42px' }}
-                          onError={(e) => {
-                            e.currentTarget.onerror = null;
-                            e.currentTarget.src = FALLBACK_BLOG_IMAGES[index % FALLBACK_BLOG_IMAGES.length];
-                          }}
-                        />
-                      </td>
-                      <td>
-                        <div className="d-flex flex-column">
-                          <span className="fw-bold text-dark">{b.title}</span>
-                          {b.excerpt && (
-                            <small className="text-muted text-truncate" style={{ maxWidth: '320px' }}>
-                              {b.excerpt}
-                            </small>
-                          )}
-                        </div>
-                      </td>
-                      <td>
-                        <span
-                          className={`badge ${
-                            Boolean(b.is_featured === 1 || b.is_featured === '1' || b.is_featured === true)
-                              ? 'bg-warning text-dark'
-                              : 'bg-light text-muted border'
-                          } px-3 py-1 rounded-pill small text-nowrap`}
-                          style={{ cursor: 'pointer' }}
-                          onClick={() => handleToggleFeatured(b)}
-                          title="Click to toggle Featured ON / OFF"
-                        >
-                          <i className={`fas fa-star me-1 ${Boolean(b.is_featured === 1 || b.is_featured === '1' || b.is_featured === true) ? 'text-dark' : 'text-secondary'}`}></i>
-                          {Boolean(b.is_featured === 1 || b.is_featured === '1' || b.is_featured === true) ? 'Featured' : 'Not Featured'}
-                        </span>
-                      </td>
-                      <td>
-                        <span
-                          className={`badge ${
-                            b.status === 'published'
-                              ? 'bg-success-subtle text-success'
-                              : 'bg-warning-subtle text-warning'
-                          } text-capitalize px-3 py-1 rounded-pill text-nowrap`}
-                          style={{ cursor: 'pointer' }}
-                          onClick={() => handleToggleStatus(b)}
-                          title="Click to toggle Published / Draft"
-                        >
-                          <i className={`fas fa-circle me-1 small ${b.status === 'published' ? 'text-success' : 'text-warning'}`} style={{ fontSize: '8px' }}></i>
-                          {b.status || 'published'}
-                        </span>
-                      </td>
-                      <td className="text-nowrap">
-                        <small className="text-muted">{new Date(b.created_at || Date.now()).toLocaleDateString()}</small>
-                      </td>
-                      <td className="text-end pe-3 pe-md-4 text-nowrap">
-                        <button
-                          className="btn btn-sm btn-outline-primary rounded-pill px-2 py-1 me-1"
-                          onClick={() => openEditModal(b)}
-                          title="Edit Blog"
-                        >
-                          <i className="fas fa-edit me-1"></i> Edit
-                        </button>
-                        <button
-                          className="btn btn-sm btn-outline-danger rounded-pill px-2 py-1"
-                          onClick={() => handleDelete(b.id)}
-                          title="Delete Blog"
-                        >
-                          <i className="fas fa-trash-alt me-1"></i> Delete
+        <>
+          {/* Mobile Card View (visible on < 768px screens) */}
+          <div className="d-md-none">
+            {filteredBlogs.length > 0 ? (
+              filteredBlogs.map((b, index) => (
+                <div key={b.id} className="admin-mobile-card">
+                  <div className="d-flex gap-3 align-items-start mb-2">
+                    <img
+                      src={getBlogImage(b, index)}
+                      alt={b.title}
+                      className="rounded-3 shadow-sm object-fit-cover flex-shrink-0"
+                      style={{ width: '64px', height: '56px' }}
+                      onError={(e) => {
+                        e.currentTarget.onerror = null;
+                        e.currentTarget.src = FALLBACK_BLOG_IMAGES[index % FALLBACK_BLOG_IMAGES.length];
+                      }}
+                    />
+                    <div className="flex-grow-1">
+                      <div className="fw-bold text-dark fs-6 line-clamp-2">{b.title}</div>
+                      <small className="text-muted">
+                        <i className="fas fa-calendar-alt me-1"></i>
+                        {new Date(b.created_at || Date.now()).toLocaleDateString()}
+                      </small>
+                    </div>
+                  </div>
+
+                  {b.excerpt && (
+                    <p className="small text-muted mb-2 line-clamp-2" style={{ lineHeight: '1.4' }}>
+                      {b.excerpt}
+                    </p>
+                  )}
+
+                  <div className="d-flex flex-wrap align-items-center gap-2 mb-2">
+                    <span
+                      className={`badge ${
+                        Boolean(b.is_featured === 1 || b.is_featured === '1' || b.is_featured === true)
+                          ? 'bg-warning text-dark'
+                          : 'bg-light text-muted border'
+                      } px-2.5 py-1 rounded-pill small text-nowrap`}
+                      style={{ cursor: 'pointer' }}
+                      onClick={() => handleToggleFeatured(b)}
+                      title="Click to toggle Featured ON / OFF"
+                    >
+                      <i className={`fas fa-star me-1 ${Boolean(b.is_featured === 1 || b.is_featured === '1' || b.is_featured === true) ? 'text-dark' : 'text-secondary'}`}></i>
+                      {Boolean(b.is_featured === 1 || b.is_featured === '1' || b.is_featured === true) ? 'Featured' : 'Not Featured'}
+                    </span>
+
+                    <span
+                      className={`badge ${
+                        b.status === 'published'
+                          ? 'bg-success-subtle text-success'
+                          : 'bg-warning-subtle text-warning'
+                      } text-capitalize px-2.5 py-1 rounded-pill text-nowrap`}
+                      style={{ cursor: 'pointer' }}
+                      onClick={() => handleToggleStatus(b)}
+                      title="Click to toggle Published / Draft"
+                    >
+                      <i className={`fas fa-circle me-1 small ${b.status === 'published' ? 'text-success' : 'text-warning'}`} style={{ fontSize: '8px' }}></i>
+                      {b.status || 'published'}
+                    </span>
+                  </div>
+
+                  <div className="admin-mobile-card-footer justify-content-end gap-2">
+                    <button
+                      className="btn btn-sm btn-outline-primary rounded-pill px-3 py-1"
+                      onClick={() => openEditModal(b)}
+                    >
+                      <i className="fas fa-edit me-1"></i> Edit
+                    </button>
+                    <button
+                      className="btn btn-sm btn-outline-danger rounded-pill px-3 py-1"
+                      onClick={() => handleDelete(b.id)}
+                    >
+                      <i className="fas fa-trash-alt me-1"></i> Delete
+                    </button>
+                  </div>
+                </div>
+              ))
+            ) : (
+              <div className="card border-0 shadow-sm rounded-4 p-4 text-center bg-white text-muted">
+                <i className="fas fa-newspaper fa-2x mb-2 opacity-50"></i>
+                <p className="mb-2 fw-semibold">No blog posts found.</p>
+                <button className="btn btn-sm btn-outline-primary rounded-pill mx-auto" onClick={openCreateModal}>
+                  + Create First Article
+                </button>
+              </div>
+            )}
+          </div>
+
+          {/* Desktop Table View (visible on >= 768px screens) */}
+          <div className="card border-0 shadow-sm rounded-4 bg-white d-none d-md-block">
+            <div className="table-responsive" style={{ overflowX: 'auto', width: '100%' }}>
+              <table className="table table-hover align-middle mb-0 w-100">
+                <thead className="bg-light">
+                  <tr>
+                    <th className="ps-3 ps-md-4" style={{ minWidth: '70px', width: '70px' }}>Cover</th>
+                    <th style={{ minWidth: '200px' }}>Title & Summary</th>
+                    <th style={{ minWidth: '120px' }}>Featured</th>
+                    <th style={{ minWidth: '110px' }}>Status</th>
+                    <th style={{ minWidth: '95px' }}>Date</th>
+                    <th className="text-end pe-3 pe-md-4" style={{ minWidth: '145px' }}>Actions</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {filteredBlogs.length > 0 ? (
+                    filteredBlogs.map((b, index) => (
+                      <tr key={b.id}>
+                        <td className="ps-3 ps-md-4">
+                          <img
+                            src={getBlogImage(b, index)}
+                            alt={b.title}
+                            className="rounded-3 shadow-sm object-fit-cover"
+                            style={{ width: '55px', height: '42px' }}
+                            onError={(e) => {
+                              e.currentTarget.onerror = null;
+                              e.currentTarget.src = FALLBACK_BLOG_IMAGES[index % FALLBACK_BLOG_IMAGES.length];
+                            }}
+                          />
+                        </td>
+                        <td>
+                          <div className="d-flex flex-column">
+                            <span className="fw-bold text-dark">{b.title}</span>
+                            {b.excerpt && (
+                              <small className="text-muted text-truncate" style={{ maxWidth: '320px' }}>
+                                {b.excerpt}
+                              </small>
+                            )}
+                          </div>
+                        </td>
+                        <td>
+                          <span
+                            className={`badge ${
+                              Boolean(b.is_featured === 1 || b.is_featured === '1' || b.is_featured === true)
+                                ? 'bg-warning text-dark'
+                                : 'bg-light text-muted border'
+                            } px-3 py-1 rounded-pill small text-nowrap`}
+                            style={{ cursor: 'pointer' }}
+                            onClick={() => handleToggleFeatured(b)}
+                            title="Click to toggle Featured ON / OFF"
+                          >
+                            <i className={`fas fa-star me-1 ${Boolean(b.is_featured === 1 || b.is_featured === '1' || b.is_featured === true) ? 'text-dark' : 'text-secondary'}`}></i>
+                            {Boolean(b.is_featured === 1 || b.is_featured === '1' || b.is_featured === true) ? 'Featured' : 'Not Featured'}
+                          </span>
+                        </td>
+                        <td>
+                          <span
+                            className={`badge ${
+                              b.status === 'published'
+                                ? 'bg-success-subtle text-success'
+                                : 'bg-warning-subtle text-warning'
+                            } text-capitalize px-3 py-1 rounded-pill text-nowrap`}
+                            style={{ cursor: 'pointer' }}
+                            onClick={() => handleToggleStatus(b)}
+                            title="Click to toggle Published / Draft"
+                          >
+                            <i className={`fas fa-circle me-1 small ${b.status === 'published' ? 'text-success' : 'text-warning'}`} style={{ fontSize: '8px' }}></i>
+                            {b.status || 'published'}
+                          </span>
+                        </td>
+                        <td className="text-nowrap">
+                          <small className="text-muted">{new Date(b.created_at || Date.now()).toLocaleDateString()}</small>
+                        </td>
+                        <td className="text-end pe-3 pe-md-4 text-nowrap">
+                          <button
+                            className="btn btn-sm btn-outline-primary rounded-pill px-2 py-1 me-1"
+                            onClick={() => openEditModal(b)}
+                            title="Edit Blog"
+                          >
+                            <i className="fas fa-edit me-1"></i> Edit
+                          </button>
+                          <button
+                            className="btn btn-sm btn-outline-danger rounded-pill px-2 py-1"
+                            onClick={() => handleDelete(b.id)}
+                            title="Delete Blog"
+                          >
+                            <i className="fas fa-trash-alt me-1"></i> Delete
+                          </button>
+                        </td>
+                      </tr>
+                    ))
+                  ) : (
+                    <tr>
+                      <td colSpan="5" className="text-center text-muted py-5">
+                        <i className="fas fa-newspaper fa-3x text-muted opacity-50 mb-3 d-block"></i>
+                        <p className="mb-0 fw-semibold">No blog posts found.</p>
+                        <button className="btn btn-sm btn-outline-primary mt-3 rounded-pill" onClick={openCreateModal}>
+                          + Create First Article
                         </button>
                       </td>
                     </tr>
-                  ))
-                ) : (
-                  <tr>
-                    <td colSpan="5" className="text-center text-muted py-5">
-                      <i className="fas fa-newspaper fa-3x text-muted opacity-50 mb-3 d-block"></i>
-                      <p className="mb-0 fw-semibold">No blog posts found.</p>
-                      <button className="btn btn-sm btn-outline-primary mt-3 rounded-pill" onClick={openCreateModal}>
-                        + Create First Article
-                      </button>
-                    </td>
-                  </tr>
-                )}
-              </tbody>
-            </table>
+                  )}
+                </tbody>
+              </table>
+            </div>
           </div>
-        </div>
+        </>
       )}
 
       {/* ═══════ CREATE / EDIT MODAL ═══════ */}
