@@ -49,6 +49,36 @@ export const AdminMessagesPage = () => {
         </button>
       </div>
 
+      {/* KPI Stats Cards */}
+      <div className="row g-2 mb-4">
+        <div className="col-6 col-md-4">
+          <div className="card border-0 shadow-sm rounded-4 p-3 bg-white h-100">
+            <div className="d-flex justify-content-between align-items-center mb-2">
+              <span className="text-muted fw-bold text-uppercase" style={{ fontSize: '0.72rem', letterSpacing: '0.3px' }}>TOTAL MESSAGES</span>
+              <div className="rounded-circle d-flex align-items-center justify-content-center bg-info-subtle text-info" style={{ width: '28px', height: '28px' }}>
+                <i className="fas fa-envelope" style={{ fontSize: '0.85rem' }}></i>
+              </div>
+            </div>
+            <h3 className="fw-bold text-info mb-0">{messages.length}</h3>
+            <div className="small text-muted mt-1" style={{ fontSize: '0.75rem' }}>Visitor inquiries</div>
+          </div>
+        </div>
+        <div className="col-6 col-md-4">
+          <div className="card border-0 shadow-sm rounded-4 p-3 bg-white h-100">
+            <div className="d-flex justify-content-between align-items-center mb-2">
+              <span className="text-muted fw-bold text-uppercase" style={{ fontSize: '0.72rem', letterSpacing: '0.3px' }}>RECENT INQUIRIES</span>
+              <div className="rounded-circle d-flex align-items-center justify-content-center bg-primary-subtle text-primary" style={{ width: '28px', height: '28px' }}>
+                <i className="fas fa-clock" style={{ fontSize: '0.85rem' }}></i>
+              </div>
+            </div>
+            <h3 className="fw-bold text-primary mb-0">
+              {messages.filter(m => (Date.now() - new Date(m.created_at || Date.now()).getTime()) < 7 * 86400000).length}
+            </h3>
+            <div className="small text-muted mt-1" style={{ fontSize: '0.75rem' }}>Past 7 days</div>
+          </div>
+        </div>
+      </div>
+
       {/* Content: Mobile Cards + Desktop Table */}
       {loading ? (
         <div className="text-center py-5">

@@ -199,41 +199,53 @@ export const AdminLayHandPrayersPage = () => {
       </div>
 
       {/* KPI Stats Cards */}
-      <div className="row g-2 mb-3">
+      <div className="row g-2 mb-4">
         <div className="col-6 col-md-3">
-          <div className="card border-0 shadow-sm rounded-4 p-2.5 p-sm-3 bg-white h-100">
-            <div className="d-flex justify-content-between align-items-center">
-              <span className="text-muted fw-semibold text-uppercase" style={{ fontSize: '0.72rem' }}>Total Lay Hand</span>
-              <i className="fas fa-hand-holding-heart text-primary opacity-75"></i>
+          <div className="card border-0 shadow-sm rounded-4 p-3 bg-white h-100">
+            <div className="d-flex justify-content-between align-items-center mb-2">
+              <span className="text-muted fw-bold text-uppercase" style={{ fontSize: '0.72rem', letterSpacing: '0.3px' }}>TOTAL LAY HAND</span>
+              <div className="rounded-circle d-flex align-items-center justify-content-center bg-primary-subtle text-primary" style={{ width: '28px', height: '28px' }}>
+                <i className="fas fa-hand-holding-heart" style={{ fontSize: '0.85rem' }}></i>
+              </div>
             </div>
-            <h4 className="fw-bold text-primary mb-0 mt-1">{totalCount}</h4>
+            <h3 className="fw-bold text-primary mb-0">{totalCount}</h3>
+            <div className="small text-muted mt-1" style={{ fontSize: '0.75rem' }}>Total submissions</div>
           </div>
         </div>
         <div className="col-6 col-md-3">
-          <div className="card border-0 shadow-sm rounded-4 p-2.5 p-sm-3 bg-white h-100">
-            <div className="d-flex justify-content-between align-items-center">
-              <span className="text-muted fw-semibold text-uppercase" style={{ fontSize: '0.72rem' }}>In-Person (VIC)</span>
-              <i className="fas fa-church text-success opacity-75"></i>
+          <div className="card border-0 shadow-sm rounded-4 p-3 bg-white h-100">
+            <div className="d-flex justify-content-between align-items-center mb-2">
+              <span className="text-muted fw-bold text-uppercase" style={{ fontSize: '0.72rem', letterSpacing: '0.3px' }}>IN-PERSON (VIC)</span>
+              <div className="rounded-circle d-flex align-items-center justify-content-center bg-success-subtle text-success" style={{ width: '28px', height: '28px' }}>
+                <i className="fas fa-church" style={{ fontSize: '0.85rem' }}></i>
+              </div>
             </div>
-            <h4 className="fw-bold text-success mb-0 mt-1">{inPersonCount}</h4>
+            <h3 className="fw-bold text-success mb-0">{inPersonCount}</h3>
+            <div className="small text-muted mt-1" style={{ fontSize: '0.75rem' }}>Service attendees</div>
           </div>
         </div>
         <div className="col-6 col-md-3">
-          <div className="card border-0 shadow-sm rounded-4 p-2.5 p-sm-3 bg-white h-100">
-            <div className="d-flex justify-content-between align-items-center">
-              <span className="text-muted fw-semibold text-uppercase" style={{ fontSize: '0.72rem' }}>Not Done</span>
-              <i className="fas fa-clock text-danger opacity-75"></i>
+          <div className="card border-0 shadow-sm rounded-4 p-3 bg-white h-100">
+            <div className="d-flex justify-content-between align-items-center mb-2">
+              <span className="text-muted fw-bold text-uppercase" style={{ fontSize: '0.72rem', letterSpacing: '0.3px' }}>NOT DONE</span>
+              <div className="rounded-circle d-flex align-items-center justify-content-center bg-danger-subtle text-danger" style={{ width: '28px', height: '28px' }}>
+                <i className="fas fa-clock" style={{ fontSize: '0.85rem' }}></i>
+              </div>
             </div>
-            <h4 className="fw-bold text-danger mb-0 mt-1">{notDoneCount}</h4>
+            <h3 className="fw-bold text-danger mb-0">{notDoneCount}</h3>
+            <div className="small text-muted mt-1" style={{ fontSize: '0.75rem' }}>Pending ministry</div>
           </div>
         </div>
         <div className="col-6 col-md-3">
-          <div className="card border-0 shadow-sm rounded-4 p-2.5 p-sm-3 bg-white h-100">
-            <div className="d-flex justify-content-between align-items-center">
-              <span className="text-muted fw-semibold text-uppercase" style={{ fontSize: '0.72rem' }}>Done (Prayed)</span>
-              <i className="fas fa-check-circle text-success opacity-75"></i>
+          <div className="card border-0 shadow-sm rounded-4 p-3 bg-white h-100">
+            <div className="d-flex justify-content-between align-items-center mb-2">
+              <span className="text-muted fw-bold text-uppercase" style={{ fontSize: '0.72rem', letterSpacing: '0.3px' }}>DONE</span>
+              <div className="rounded-circle d-flex align-items-center justify-content-center bg-success-subtle text-success" style={{ width: '28px', height: '28px' }}>
+                <i className="fas fa-check-circle" style={{ fontSize: '0.85rem' }}></i>
+              </div>
             </div>
-            <h4 className="fw-bold text-success mb-0 mt-1">{doneCount}</h4>
+            <h3 className="fw-bold text-success mb-0">{doneCount}</h3>
+            <div className="small text-muted mt-1" style={{ fontSize: '0.75rem' }}>Completed prayers</div>
           </div>
         </div>
       </div>

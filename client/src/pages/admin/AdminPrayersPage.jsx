@@ -153,41 +153,53 @@ export const AdminPrayersPage = () => {
       </div>
 
       {/* KPI Stats Cards */}
-      <div className="row g-2 mb-3">
+      <div className="row g-2 mb-4">
         <div className="col-6 col-md-3">
-          <div className="card border-0 shadow-sm rounded-4 p-2.5 p-sm-3 bg-white h-100">
-            <div className="d-flex justify-content-between align-items-center">
-              <span className="text-muted fw-semibold text-uppercase" style={{ fontSize: '0.72rem' }}>Total Prayers</span>
-              <i className="fas fa-praying-hands text-primary opacity-75"></i>
+          <div className="card border-0 shadow-sm rounded-4 p-3 bg-white h-100">
+            <div className="d-flex justify-content-between align-items-center mb-2">
+              <span className="text-muted fw-bold text-uppercase" style={{ fontSize: '0.72rem', letterSpacing: '0.3px' }}>TOTAL PRAYERS</span>
+              <div className="rounded-circle d-flex align-items-center justify-content-center bg-primary-subtle text-primary" style={{ width: '28px', height: '28px' }}>
+                <i className="fas fa-praying-hands" style={{ fontSize: '0.85rem' }}></i>
+              </div>
             </div>
-            <h4 className="fw-bold text-primary mb-0 mt-1">{totalCount}</h4>
+            <h3 className="fw-bold text-primary mb-0">{totalCount}</h3>
+            <div className="small text-muted mt-1" style={{ fontSize: '0.75rem' }}>Total requests</div>
           </div>
         </div>
         <div className="col-6 col-md-3">
-          <div className="card border-0 shadow-sm rounded-4 p-2.5 p-sm-3 bg-white h-100">
-            <div className="d-flex justify-content-between align-items-center">
-              <span className="text-muted fw-semibold text-uppercase" style={{ fontSize: '0.72rem' }}>New / Pending</span>
-              <i className="fas fa-clock text-warning opacity-75"></i>
+          <div className="card border-0 shadow-sm rounded-4 p-3 bg-white h-100">
+            <div className="d-flex justify-content-between align-items-center mb-2">
+              <span className="text-muted fw-bold text-uppercase" style={{ fontSize: '0.72rem', letterSpacing: '0.3px' }}>NEW / PENDING</span>
+              <div className="rounded-circle d-flex align-items-center justify-content-center bg-warning-subtle text-warning" style={{ width: '28px', height: '28px' }}>
+                <i className="fas fa-clock" style={{ fontSize: '0.85rem' }}></i>
+              </div>
             </div>
-            <h4 className="fw-bold text-warning mb-0 mt-1">{pendingCount}</h4>
+            <h3 className="fw-bold text-warning mb-0">{pendingCount}</h3>
+            <div className="small text-muted mt-1" style={{ fontSize: '0.75rem' }}>Awaiting prayer</div>
           </div>
         </div>
         <div className="col-6 col-md-3">
-          <div className="card border-0 shadow-sm rounded-4 p-2.5 p-sm-3 bg-white h-100">
-            <div className="d-flex justify-content-between align-items-center">
-              <span className="text-muted fw-semibold text-uppercase" style={{ fontSize: '0.72rem' }}>In Prayer</span>
-              <i className="fas fa-hands-helping text-info opacity-75"></i>
+          <div className="card border-0 shadow-sm rounded-4 p-3 bg-white h-100">
+            <div className="d-flex justify-content-between align-items-center mb-2">
+              <span className="text-muted fw-bold text-uppercase" style={{ fontSize: '0.72rem', letterSpacing: '0.3px' }}>IN PRAYER</span>
+              <div className="rounded-circle d-flex align-items-center justify-content-center bg-info-subtle text-info" style={{ width: '28px', height: '28px' }}>
+                <i className="fas fa-hands-helping" style={{ fontSize: '0.85rem' }}></i>
+              </div>
             </div>
-            <h4 className="fw-bold text-info mb-0 mt-1">{inPrayerCount}</h4>
+            <h3 className="fw-bold text-info mb-0">{inPrayerCount}</h3>
+            <div className="small text-muted mt-1" style={{ fontSize: '0.75rem' }}>Active prayer</div>
           </div>
         </div>
         <div className="col-6 col-md-3">
-          <div className="card border-0 shadow-sm rounded-4 p-2.5 p-sm-3 bg-white h-100">
-            <div className="d-flex justify-content-between align-items-center">
-              <span className="text-muted fw-semibold text-uppercase" style={{ fontSize: '0.72rem' }}>Answered</span>
-              <i className="fas fa-check-circle text-success opacity-75"></i>
+          <div className="card border-0 shadow-sm rounded-4 p-3 bg-white h-100">
+            <div className="d-flex justify-content-between align-items-center mb-2">
+              <span className="text-muted fw-bold text-uppercase" style={{ fontSize: '0.72rem', letterSpacing: '0.3px' }}>ANSWERED</span>
+              <div className="rounded-circle d-flex align-items-center justify-content-center bg-success-subtle text-success" style={{ width: '28px', height: '28px' }}>
+                <i className="fas fa-check-circle" style={{ fontSize: '0.85rem' }}></i>
+              </div>
             </div>
-            <h4 className="fw-bold text-success mb-0 mt-1">{prayedCount}</h4>
+            <h3 className="fw-bold text-success mb-0">{prayedCount}</h3>
+            <div className="small text-muted mt-1" style={{ fontSize: '0.75rem' }}>Prayed & blessed</div>
           </div>
         </div>
       </div>
