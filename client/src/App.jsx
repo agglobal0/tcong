@@ -19,6 +19,7 @@ const BlogDetailPage = lazyPage(() => import('./pages/public/BlogDetailPage'), '
 const PrayerRequestPage = lazyPage(() => import('./pages/public/PrayerRequestPage'), 'PrayerRequestPage');
 const ContactPage = lazyPage(() => import('./pages/public/ContactPage'), 'ContactPage');
 const TestimonialsPage = lazyPage(() => import('./pages/public/TestimonialsPage'), 'TestimonialsPage');
+const GalleryPage = lazyPage(() => import('./pages/public/GalleryPage'), 'GalleryPage');
 
 // Admin pages (lazy loaded)
 const AdminLoginPage = lazyPage(() => import('./pages/admin/AdminLoginPage'), 'AdminLoginPage');
@@ -53,6 +54,7 @@ export function App() {
           <Route path="prayer-request" element={<PrayerRequestPage />} />
           <Route path="contact" element={<ContactPage />} />
           <Route path="testimonials" element={<TestimonialsPage />} />
+          <Route path="gallery" element={<GalleryPage />} />
         </Route>
 
         {/* Admin Login */}
