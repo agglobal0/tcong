@@ -162,7 +162,7 @@ async function runSeeders() {
         ('maps_embed_url', '', 'contact', 'text'),
         
         ('facebook_url', 'https://facebook.com/tcong', 'social', 'url'),
-        ('instagram_url', 'https://instagram.com/tcong', 'social', 'url'),
+        ('instagram_url', 'https://www.instagram.com/pastorjaskaranheer?vrfl=MWsxcTkzZHF3d3h5ZA==', 'social', 'url'),
         ('youtube_url', 'https://youtube.com/@tcong', 'social', 'url'),
         ('twitter_url', 'https://twitter.com/tcong', 'social', 'url'),
         

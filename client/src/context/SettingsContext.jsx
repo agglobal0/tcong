@@ -12,7 +12,7 @@ const defaultSettings = {
   address: 'Progress Community Hall, Unit 27/59 Almurta Ave, Coolaroo VIC 3048',
   maps_embed_url: '',
   facebook_url: 'https://www.facebook.com/Pastorjaskaranheer',
-  instagram_url: 'https://instagram.com/thechurchofnewgeneration',
+  instagram_url: 'https://www.instagram.com/pastorjaskaranheer?vrfl=MWsxcTkzZHF3d3h5ZA==',
   youtube_url: 'https://www.youtube.com/@Pastorjaskaranheer',
   twitter_url: 'https://x.com/Jaskaranhee5',
   hero_heading: "Experience God's Love in Community",

@@ -17,8 +17,8 @@ export const Footer = () => {
     ? 'https://www.youtube.com/@Pastorjaskaranheer'
     : settings.youtube_url;
 
-  const instagramLink = (!settings.instagram_url || settings.instagram_url === 'https://instagram.com' || settings.instagram_url === 'https://instagram.com/tcong')
-    ? 'https://instagram.com/thechurchofnewgeneration'
+  const instagramLink = (!settings.instagram_url || settings.instagram_url === 'https://instagram.com' || settings.instagram_url === 'https://instagram.com/tcong' || settings.instagram_url === 'https://instagram.com/thechurchofnewgeneration')
+    ? 'https://www.instagram.com/pastorjaskaranheer?vrfl=MWsxcTkzZHF3d3h5ZA=='
     : settings.instagram_url;
 
   return (
