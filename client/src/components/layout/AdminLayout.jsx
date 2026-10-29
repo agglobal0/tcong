@@ -58,7 +58,9 @@ export const AdminLayout = () => {
 
       <aside className={`admin-sidebar ${sidebarOpen ? 'open' : ''}`}>
         <div className="admin-sidebar-header">
-          <div className="admin-sidebar-logo">✝</div>
+          <div className="admin-sidebar-logo p-0 overflow-hidden" style={{ background: 'transparent' }}>
+            <img src="/favicon.svg" alt="TCONG Logo" style={{ width: '100%', height: '100%', borderRadius: '8px' }} />
+          </div>
           <div className="admin-sidebar-title">
             TCONG Admin
             <small>Content Management</small>

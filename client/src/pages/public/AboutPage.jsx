@@ -133,19 +133,19 @@ export const AboutPage = () => {
               <ScrollReveal animation="zoom-in" delay={150}>
                 <div className="position-relative rounded-4 overflow-hidden shadow-lg border border-light img-reveal-wrapper">
                   <img
-                    src="/assets/slide-pastor.jpg"
+                    src="/assets/pastor-calling.jpg"
                     alt="Pastor Jaskaran Heer"
                     className="w-100 h-auto rounded-4"
-                    style={{ maxHeight: '460px', objectFit: 'cover', objectPosition: 'center top' }}
+                    style={{ maxHeight: '480px', objectFit: 'cover', objectPosition: 'center 15%' }}
                     onError={(e) => {
                       e.target.onerror = null;
-                      e.target.src = '/assets/pastor-prayer.jpg';
+                      e.target.src = '/assets/slide-pastor.jpg';
                     }}
                   />
                   <div
                     className="position-absolute bottom-0 start-0 end-0 p-3 text-white"
                     style={{
-                      background: 'linear-gradient(180deg, rgba(0,0,0,0) 0%, rgba(15,23,42,0.9) 100%)',
+                      background: 'linear-gradient(180deg, rgba(0,0,0,0) 50%, rgba(15,23,42,0.92) 100%)',
                     }}
                   >
                     <span className="badge bg-warning text-dark fw-bold px-2 py-1 mb-1">LEAD PASTOR</span>

@@ -38,7 +38,9 @@ export const Header = () => {
         <div className="header-inner">
           {/* Logo */}
           <Link to="/" className="header-logo" id="headerLogo">
-            <div className="header-logo-icon">✝</div>
+            <div className="header-logo-icon p-0 overflow-hidden" style={{ background: 'transparent', boxShadow: 'none' }}>
+              <img src="/favicon.svg" alt="TCONG Logo" style={{ width: '100%', height: '100%', borderRadius: '10px', boxShadow: '0 4px 10px rgba(126, 34, 206, 0.25)' }} />
+            </div>
             <div className="header-logo-text">
               <span className="brand-main">THE CHURCH OF NEW GENERATION</span>
               <span className="brand-sub">PRAYING FOR THE WORLD • MELBOURNE</span>
@@ -111,7 +113,7 @@ export const Header = () => {
         <div className="mobile-menu-inner">
           <div className="mobile-menu-top">
             <div className="d-flex align-items-center gap-2">
-              <div className="header-logo-icon" style={{ width: '32px', height: '32px', fontSize: '0.9rem' }}>✝</div>
+              <img src="/favicon.svg" alt="TCONG Logo" style={{ width: '32px', height: '32px', borderRadius: '8px' }} />
               <span className="fw-bold text-dark fs-6">Menu</span>
             </div>
             <button

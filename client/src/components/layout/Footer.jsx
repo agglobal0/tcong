@@ -26,7 +26,9 @@ export const Footer = () => {
       <div className="footer-grid">
         <div className="footer-about">
           <div className="footer-logo">
-            <div className="footer-logo-icon">✝</div>
+            <div className="footer-logo-icon p-0 overflow-hidden" style={{ background: 'transparent' }}>
+              <img src="/favicon.svg" alt="TCONG Logo" style={{ width: '100%', height: '100%', borderRadius: '10px' }} />
+            </div>
             <div className="footer-logo-text">{settings.church_name || 'The Church of New Generation'}</div>
           </div>
           <p className="footer-description">
